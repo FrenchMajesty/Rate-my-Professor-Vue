@@ -15,7 +15,14 @@ class CreateProfessorsTable extends Migration
     {
         Schema::create('professors', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('directory_url')->nullable();
+            $table->integer('school_id');
+            $table->integer('department_id');
+            $table->boolean('approved')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
