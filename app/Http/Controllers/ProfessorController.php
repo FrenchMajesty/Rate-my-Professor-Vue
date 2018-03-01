@@ -2,22 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use Optimus\Bruno\EloquentBuilderTrait;
+use Optimus\Bruno\LaravelController;
 use Illuminate\Http\Request;
+use App\Professor\Professor;
 
-class ProfessorController extends Controller
+class ProfessorController extends LaravelController
 {	
+    use EloquentBuilderTrait;
+
 	/**
 	 * Handle request to search and fetch professors
-	 * @param  \Illuminate\Http\Request $request Request
 	 * @return \Illuminate\Http\Response           Json Response
 	 */	
-    public function fetch(Request $request)
+    public function fetch()
     {
-    	return ['cool','potato','chips'];
+        $resourceOptions = $this->parseResourceOptions();
+
+        $query = Professor::query();
+        $this->applyResourceOptions($query, $resourceOptions);
+        $books = $query->get();
+
+        // Parse the data using Optimus\Architect
+        $parsedData = $this->parseData($books, $resourceOptions, 'users');
+
+        // Create JSON response of parsed data
+        return $this->response($parsedData);
     }
 
-    public function update(Request $request)
+    public function update(Professor $prof, Request $request)
     {
-    	return 'Congrats Admin ' . $request->user()->name.' !';
+    	$this->validate($request, [
+    		'firstname' => 'required|string',
+    	]);
+    }
+
+    protected function filterSchool(Builder $query, $method, $clauseOperator, $value, $in)
+    {
+        // check if value is true
+        if ($value) {
+            $query->whereIn('schools.id', [$value]);
+        }
     }
 }
