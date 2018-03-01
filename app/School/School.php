@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class School extends Model
 {	
 	use SoftDeletes;
-	
+
 	/**
 	 * The attributes that are mass assignable
 	 * @var array
@@ -38,4 +38,13 @@ class School extends Model
     protected $casts = [
     	'approved' => 'boolean',
     ];
+
+    /**
+     * Get all the professors that attend this school
+     * @return array 
+     */
+    public function professors()
+    {
+    	return $this->hasMany('\App\Professor\Professor');
+    }
 }

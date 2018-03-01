@@ -48,4 +48,13 @@ class Professor extends Model
    	{
    		return $this->firstname . ' ' . $this->lastname;
    	}
+
+    /**
+     * Get the school where this professor teaches
+     * @return \App\School\School
+     */
+    public function school()
+    {
+        return $this->belongsTo('\App\School\School'); 
+    }
 }
