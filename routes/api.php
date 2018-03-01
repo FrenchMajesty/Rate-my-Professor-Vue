@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::model('user', 'App\User');
 Route::model('prof', 'App\Professor\Professor');
+Route::model('school', 'App\School\School');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -38,9 +39,7 @@ Route::group(['prefix' => '/prof'], function() {
 
 	Route::group(['middleware' => ['auth:api','isAdmin']], function() {
 
-		Route::get('/test/cool', 'ProfessorController@update')->name('prof.update');
-
-		//Route::put('/{prof}', 'ProfessorController@update')->name('prof.update');
+		Route::put('/{prof}', 'ProfessorController@update')->name('prof.update');
 
 		Route::delete('/{prof}', 'ProfessorController@delete')->name('prof.delete');
 
