@@ -43,6 +43,22 @@ class ProfessorController extends LaravelController
     }
 
     /**
+     * Handle the request to approve/reject a professor
+     * @param  \App\Professor\Professor $prof    Professor
+     * @param  \Illuminate\Http\Request   $request Request
+     * @return void             
+     */
+    public function approve(Professor $prof, Request $request)
+    {
+        Validator::make($request->all(), [
+            'status' => 'required|boolean',
+        ])->validate();
+
+        $prof->approved = $request->status;
+        $prof->save();
+    }
+
+    /**
      * Handle the request to create a new professor
      * @param  \Illuminate\Http\Request $request Request
      * @return void          
