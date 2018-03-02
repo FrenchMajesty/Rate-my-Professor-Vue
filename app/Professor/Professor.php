@@ -57,4 +57,13 @@ class Professor extends Model
     {
         return $this->belongsTo('\App\School\School'); 
     }
+
+    /**
+     * Get the department where this professor teaches
+     * @return \App\School\Department 
+     */
+    public function department()
+    {
+        return $this->belongsTo('\App\School\Department');
+    }
 }
