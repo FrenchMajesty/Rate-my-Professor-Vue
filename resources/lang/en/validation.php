@@ -39,7 +39,7 @@ return [
     'dimensions'           => 'The :attribute has invalid image dimensions.',
     'distinct'             => 'The :attribute field has a duplicate value.',
     'email'                => 'The :attribute must be a valid email address.',
-    'exists'               => 'The selected :attribute is invalid.',
+    'exists'               => 'The selected :attribute could not be found.',
     'file'                 => 'The :attribute must be a file.',
     'filled'               => 'The :attribute field must have a value.',
     'image'                => 'The :attribute must be an image.',
@@ -116,6 +116,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'e-mail address',
+        'firstname' => 'first name',
+        'lastname' => 'last name',
+        'nickname' => 'nick name',
+        'directory_url' => 'directory url',
+        'school_id' => 'school',
+        'department_id' => 'department',
+    ],
 
 ];
