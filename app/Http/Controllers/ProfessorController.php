@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Optimus\Bruno\EloquentBuilderTrait;
 use Optimus\Bruno\LaravelController;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class ProfessorController extends LaravelController
 
 	/**
 	 * Handle request to search and fetch professors
-	 * @return \Illuminate\Http\Response           Json Response
+	 * @return \Illuminate\Http\Response           
 	 */	
     public function fetch()
     {
@@ -28,6 +29,30 @@ class ProfessorController extends LaravelController
 
         // Create JSON response of parsed data
         return $this->response($parsedData);
+    }
+
+    /**
+     * Handle the request to create a new professor
+     * @param  \Illuminate\Http\Request $request Request
+     * @return \Illuminate\Http\Response           
+     */
+    public function create(Request $request)
+    {
+        Validator::make($request->all(), [
+            'firstname' => 'required|alpha_dash|max:25',
+            'lastname' => 'required|alpha_dash|max:30',
+            'school_id' => 'required|numeric|exists:schools,id',
+            'department_id' => 'required|numeric|exists:departments,id',
+            'directory_url' => 'nullable|url',
+        ])->validate();
+
+        Professor::create([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'school_id' => $request->school_id,
+            'department_id' => $request->department_id,
+            'directory_url' => $request->directory_url,
+        ]);
     }
 
     public function update(Professor $prof, Request $request)

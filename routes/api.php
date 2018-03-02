@@ -31,7 +31,7 @@ Route::group(['prefix' => '/profile', 'middleware' => 'auth:api'], function() {
 
 Route::group(['prefix' => '/prof'], function() {
 
-	Route::post('/new', 'ProfessorController@create')->name('prof.create');
+	Route::post('/new', 'ProfessorController@create')->middleware('auth:api')->name('prof.create');
 
 	Route::get('/fetch', 'ProfessorController@fetch')->name('prof.fetch');
 
