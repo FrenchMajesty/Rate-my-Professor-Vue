@@ -2,6 +2,8 @@
 
 namespace App\Traits\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait ProfessorQueryFilters 
 {	
 	/**
@@ -13,11 +15,10 @@ trait ProfessorQueryFilters
 	 * @param  boolean  $in             Indicate whether this is an in-array filter
 	 * @return void                  
 	 */
-	protected function filterSchool(Builder $query, $method, $clauseOperator, $value, $in)
+	public function filterIsApproved(Builder $query, $method, $clauseOperator, $value, $in)
     {
-        // check if value is true
         if ($value) {
-            $query->whereIn('schools.id', [$value]);
+            $query->whereIn('approved', [$value]);
         }
     }
 }
