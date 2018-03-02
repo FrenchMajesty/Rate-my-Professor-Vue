@@ -7,10 +7,11 @@ use Optimus\Bruno\EloquentBuilderTrait;
 use Optimus\Bruno\LaravelController;
 use Illuminate\Http\Request;
 use App\Professor\Professor;
+use App\Traits\Filters\ProfessorQueryFilters;
 
 class ProfessorController extends LaravelController
 {	
-    use EloquentBuilderTrait;
+    use EloquentBuilderTrait, ProfessorQueryFilters;
 
 	/**
 	 * Handle request to search and fetch professors
@@ -97,13 +98,5 @@ class ProfessorController extends LaravelController
     public function delete(Professor $prof)
     {
         $prof->delete();
-    }
-
-    protected function filterSchool(Builder $query, $method, $clauseOperator, $value, $in)
-    {
-        // check if value is true
-        if ($value) {
-            $query->whereIn('schools.id', [$value]);
-        }
     }
 }
