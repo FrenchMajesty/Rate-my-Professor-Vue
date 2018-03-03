@@ -58,24 +58,28 @@ export default {
   },
   data() {
     return {
-      className: 
-        'form-control' + 
-        (this.fullWidth ? ' full-width' : ''),
+      className: [
+        'form-control',
+        this.fullWidth ? ' full-width' : '',
+      ].join(' '),
 
-      wrapperClass:
-        (this.navInput ? '' : 'md-form') +
-        (this.size ? 'form-' + this.size : '') +
-        (this.fullWidth ? ' full-width' : '') +
-        (this.waves ? 'ripple-parent' : ''),
+      wrapperClass: [
+        this.navInput ? '' : 'md-form',
+        this.size ? 'form-' + this.size : '',
+        this.fullWidth ? 'full-width' : '',
+        this.waves ? 'ripple-parent' : '',
+      ].join(' '),
 
-      iconClass:
-        'fa' + 
-        (this.icon ? 'fa-'+this.icon : '') +
+      iconClass: [
+        'fa',
+        this.icon ? 'fa-'+this.icon : '',
         'prefix',
+      ].join(' '),
 
-      labelClass: 
-        (this.placeholder ? 'active': '') +
-        (this.disabled ? 'disabled' : ''),
+      labelClass: [
+        this.placeholder ? 'active': '',
+        this.disabled ? 'disabled' : '',
+      ].join(' '),
     };
   },
   methods: {
