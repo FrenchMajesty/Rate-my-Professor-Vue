@@ -18,5 +18,10 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "bootstrap-sass": "^3.3.7",
+        "bootstrap-vue": "^2.0.0-rc.1",
+        "vue-router": "^3.0.1"
     }
 }
