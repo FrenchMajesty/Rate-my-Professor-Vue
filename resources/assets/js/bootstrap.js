@@ -3,6 +3,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.min.css';
 
 window.Popper = require('popper.js').default;
 window.Vue = Vue;
@@ -10,6 +12,7 @@ window._ = lodash;
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(VueMaterial);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
