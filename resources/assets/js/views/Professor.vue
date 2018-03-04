@@ -1,26 +1,17 @@
 <template>
-	<div>
-		<Navbar :user="shared.user" :searchData="searchData"></Navbar>
-		<div class="row space-above">
-			<div class="col-md-4">
-				<QuickSearch :searchData="searchData" />
-			</div>
-			<div class="col-md-8">
-				Synopsis here son..
-			</div>
-		</div>
-	</div>
+	<ProfileContainer :user="shared.user" :searchData="searchData">
+		The profile goes here mate
+	</ProfileContainer>
 </template>
 
 <script>
-	import Navbar from '../components/common/Navbar';
-	import QuickSearch from '../components/QuickSearch';
+	import ProfileContainer from '../components/ProfileContainer';
 	import {user} from '../shared';
 
 	export default {
 		name: 'Professor',
 		components: {
-			Navbar, QuickSearch
+			ProfileContainer,
 		},
 		data() {
 			return {
@@ -32,9 +23,3 @@
 		},
 	};
 </script>
-
-<style scoped>
-	.space-above {
-		padding-top: 5em;
-	}
-</style>
