@@ -32,14 +32,14 @@
       <md-content class="md-layout-item md-xsmall-size-100 vertical-spacing">
       	<h1>{{prof.school.name}}</h1>
       	<p>Located at {{prof.school.location}}.</p>
-      	<a v-if="numberOfProfsAtSchool > 0" href="#">
-      		Check out {{numberOfProfsAtSchool}} other professors from this school.
+      	<a v-if="numberOfSimilarProfs.school > 0" href="#">
+      		Check out {{numberOfSimilarProfs.school}} other professors from this school.
       	</a>
       	<md-divider class="divider"></md-divider>
       	<p>Other professors in the deparment of {{departmentName}}.</p>
 
-      	<a v-if="numberOfProfsInDept > 0" href="#">
-      		Click to see {{numberOfProfsInDept}} other {{departmentName}} professors at this school.
+      	<a v-if="numberOfSimilarProfs.department > 0" href="#">
+      		Click to see {{numberOfSimilarProfs.department}} other {{departmentName}} professors at this school.
       	</a>
       	<p v-else class="caption">
       		This professor seems to be the only one in this department on the website.
@@ -56,16 +56,8 @@
 				type: Object,
 				required: true,
 			},
-			numberOfProfsAtSchool: {
-				type: Number,
-				default: 0,
-			},
-			numberOfProfsInDept: {
-				type: Number,
-				default: 0,
-			},
-			similarProfs: {
-				type: Array,
+			numberOfSimilarProfs: {
+				type: Object,
 				required: true,
 			},
 		},
