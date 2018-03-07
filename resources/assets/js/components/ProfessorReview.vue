@@ -20,7 +20,18 @@
 				<p class="no-margin"><b>Would take again:</b> {{wouldRetakeClass}}</p>
 				<p class="no-margin"><b>Grade Received:</b> {{rating.grade_received}}</p>
 			</md-content>
-			<md-content class="md-layout-item">{{rating.comment}}</md-content>
+			<md-content class="md-layout-item">
+				<p class="review-content">{{rating.comment}}</p>
+				<div class="md-layout md-alignment-bottom-right">
+					<ReviewFeedback 
+						class="md-layout-item" 
+						:itemId="rating.id"
+						:positiveVotes="positiveVotes"
+						:negativeVotes="negativeVotes"
+						@leaveFeedback="processUserVoteOfReview"
+					></ReviewFeedback>
+				</div>
+			</md-content>
 		</div>
 		<div class="md-layout md-alignment-top-right">
 			<span class="date"><md-icon>access_time</md-icon> January 1st, 2019 At 8:30am</span>
@@ -30,8 +41,13 @@
 </template>
 
 <script>
+	import ReviewFeedback from './Profile/ReviewFeedback';
+
 	export default {
 		name: 'ProfessorReview',
+		components: {
+			ReviewFeedback,
+		},
 		props: {
 			rating: {
 				type: Object,
@@ -43,6 +59,8 @@
 				ratingContainerClass: 'md-layout-item md-size-80',
 				ratingLabelClass: 'md-subtitle',
 				ratingValueClass: 'md-headline text-size3',
+				positiveVotes: 0,
+				negativeVotes: 0,
 			};
 		},
 		computed: {
@@ -51,6 +69,17 @@
 			},
 			wouldRetakeClass() {
 				return this.rating.would_retake ? 'Yes' : 'No';
+			},
+		},
+		methods: {
+			processUserVoteOfReview(foundItHelpful) {
+				console.log(`A user just found review (#:${this.rating.id}) ${foundItHelpful ? 'helpful' : 'not helpful'}.`);
+
+				if(foundItHelpful) {
+					this.positiveVotes++;
+				}else {
+					this.negativeVotes++;
+				}
 			}
 		},
 	};
@@ -80,5 +109,9 @@
 	.date {
 		font-size: .8em;
 		opacity: .4;
+	}
+	.review-content {
+		display: block;
+		height: 65%;
 	}
 </style>
