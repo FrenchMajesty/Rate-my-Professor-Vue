@@ -6,7 +6,7 @@
 				:searchData="searchData" 
 				class="md-layout-item md-medium-size-95 md-size-33 md-small-hide vertical-spacing"
 			/>
-			<div class="md-layout-item md-medium-size-90">
+			<div class="md-layout-item">
 				<slot></slot>
 			</div>
 		</div>

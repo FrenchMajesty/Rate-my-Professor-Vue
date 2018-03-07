@@ -1,18 +1,17 @@
 <template>
-	<md-card class="md-layout padding-above">
+	<md-card class="md-layout md-gutter no-margin padding-above text-align-sm">
 		<!-- Ratings container -->
-      	<md-content class="md-layout-item md-layout text-center">
-      	
+      	<md-content class="md-layout-item md-xsmall-size-100 md-small-size-26 vertical-spacing md-layout text-center">
 	      	<md-content class="md-layout-item md-size-100 smiley-container">
 	      		<md-icon :class="'md-size-4x '+overallRankingScale">tag_faces</md-icon>
 	      	</md-content>
-	      	<table class="md-layout-item md-size-80">
-	      		<tr class="md-layout">
+	      	<table class="md-layout-item md-medium-size-100 md-size-80">
+	      		<tr class="md-layout md-alignment-center">
 	      			<td :class="`${scoreNumberClass} ${overallRankingScale}`">{{avgOverall}}</td>
-	      			<td :class="scoreTextClass">Average Overall</td>
+	      			<td :class="scoreTextClass">Average Rating</td>
 	      		</tr>
 	      		<br/>
-	      		<tr class="md-layout">
+	      		<tr class="md-layout md-alignment-center">
 	      			<td :class="`${scoreNumberClass} ${difficultyRankingScale}`">{{avgDifficulty}}</td> 
 	      			<td :class="scoreTextClass">Average Difficulty</td>
 	      		</tr>
@@ -20,7 +19,7 @@
      	</md-content>
 
       <!-- Prof info container -->
-      <md-content class="md-layout-item">
+      <md-content class="md-layout-item md-xsmall-size-100 vertical-spacing">
       	<h1 class="prof-name">{{prof.name}}</h1>
 
       	<p class="md-subtitle">Professor of {{departmentName}} at <a href="#">{{prof.school.name}}</a>, {{prof.school.location}}.</p>
@@ -30,7 +29,7 @@
       </md-content>
 
       <!-- School info container -->
-      <md-content class="md-layout-item">
+      <md-content class="md-layout-item md-xsmall-size-100 vertical-spacing">
       	<h1>{{prof.school.name}}</h1>
       	<p>Located at {{prof.school.location}}</p>
       	<a href="#">Check out 2 other professors from this school</a>.
@@ -57,7 +56,7 @@
 		},
 		data() {
 			return {
-				scoreNumberClass: 'score md-layout-item md-size-50',
+				scoreNumberClass: 'score md-layout-item md-medium-size-20 md-size-50',
 				scoreTextClass: 'score-text md-layout-item md-size-50',
 			};
 		},
@@ -119,5 +118,15 @@
 	.caption {
 		opacity: 0.65;
 		font-style: italic;
+	}
+
+	.text-align-sm {
+		text-align: center;
+	}
+
+	@media (min-width: 600px) {
+		.text-align-sm {
+			text-align: inherit;
+		}
 	}
 </style>

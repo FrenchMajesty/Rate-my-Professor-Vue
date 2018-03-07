@@ -1,6 +1,6 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons");
 
 // Variables
 @import "variables";
@@ -9,7 +9,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Material Design Bootstrap
-@import 'theme/mdb';
+//@import 'theme/mdb';
 
 // VueMaterial
 @import "~vue-material/dist/theme/engine"; 
@@ -20,7 +20,5 @@
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+// Custom Styles
+@import "custom";
