@@ -1,6 +1,6 @@
 <template>
-	<div class="row">
-		<div class="col-md-12 col-lg-2 offset-sm-0 offset-md-05">
+	<div class="md-layout md-alignment-center">
+		<div class="md-layout-item md-medium-size-100 md-size-20 text-center">
 			<md-button v-show="false" class="md-fab"></md-button>
 			<!-- That button is there so that the 3 below are aligned correctly -->
 			<md-button :class="generateButtonClass('prof')" @click="currentMode = 'prof'">
@@ -14,7 +14,7 @@
 		     </md-button>
 
 		</div>
-		<div class="col-md-12 col-lg-8">
+		<div class="md-layout-item md-medium-size-80">
 			<transition name="component-fade" mode="out-in">
 				<md-card key="prof" v-if="currentMode == 'prof'" md-with-hover>
 			      <md-ripple>
@@ -91,7 +91,7 @@
 
 <style scoped>
 .offset-md-05 {
-	margin-left: 4.15%;
+	margin-left: 1.15%;
 }
 .component-fade-enter-active, .component-fade-leave-active {
   transition: opacity .2s ease;
