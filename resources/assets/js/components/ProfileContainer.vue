@@ -1,11 +1,12 @@
 <template>
 	<div>
 		<Navbar :user="user" :searchData="searchData"></Navbar>
-		<div class="md-layout space-above">
-			<div class="md-layout-item md-size-33">
-				<QuickSearch :searchData="searchData" />
-			</div>
-			<div class="md-layout-item">
+		<div class="md-layout md-gutter no-margin md-alignment-top-center space-above">
+			<QuickSearch 
+				:searchData="searchData" 
+				class="md-layout-item md-medium-size-95 md-size-33 md-small-hide vertical-spacing"
+			/>
+			<div class="md-layout-item md-medium-size-90">
 				<slot></slot>
 			</div>
 		</div>
