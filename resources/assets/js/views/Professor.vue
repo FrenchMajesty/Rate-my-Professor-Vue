@@ -1,23 +1,28 @@
 <template>
 	<ProfileContainer :user="shared.user" :searchData="searchData">
-		<ProfessorDetailsCard :prof="prof" :similarProfs="[]"></ProfessorDetailsCard>
+		<ProfessorDetailsCard 
+			:prof="prof" 
+			:numberOfSimilarProfs="numberOfSimilarProfs"
+		></ProfessorDetailsCard>
 		
-		<p v-if="prof.ratings.length > 0" class="md-title">Student Reviews</p>
-		<div class="md-layout md-gutter" v-if="prof.ratings.length > 0">
+		<div class="md-layout-item md-size-100 md-layout">
+			<p v-if="hasRatings" class="md-layout-item md-title md-size-100">Student Reviews</p>
 			<ProfessorReview
-				size="md-size-80"
+				v-if="hasRatings"
 				v-for="rating in prof.ratings"
 				:key="rating.id"
 				:rating="rating"
 			></ProfessorReview>
-		</div>
-		<div v-else>
-			<md-empty-state
-	      md-icon="info_outline"
-	      md-label="No reviews for the moment"
-	      md-description="There seems to be no review available for this professor.. Why not be the first to write one?">
-	      <md-button class="md-primary md-raised">Write a review</md-button>
-	    </md-empty-state>
+
+			<div v-if="!hasRatings" class="md-layout md-alignment-center-center">
+				<md-empty-state
+					class="md-layout-item"
+			      	md-icon="info_outline"
+			      	md-label="No reviews for the moment"
+			      	md-description="There seems to be no review available for this professor.. Why not be the first to write one?">
+			     	<md-button class="md-primary md-raised">Write a review</md-button>
+			    </md-empty-state>
+			</div>
 		</div>
 	</ProfileContainer>
 </template>
@@ -47,16 +52,26 @@
 						name: 'Harvard',
 						location: 'College Station,TX',
 					},
-					avgRatings: {
-						overall: 2.3,
-						difficulty: 4.5,
-					},
 					ratings: [
 						{
 							id: 1,
 							overall_rating: 2.4,
 							difficulty_rating: 3.0,
 							comment: 'I dont even like eating ice cream!!',
+							class: 'MATH0022',
+							grade_received: 'B+',
+							textbook_used: true,
+							would_retake: true,
+						},
+						{
+							id: 2,
+							overall_rating: 4.9,
+							difficulty_rating: 3.0,
+							comment: 'Pretty chill guy.',
+							class: 'MATH4502',
+							grade_received: 'C-',
+							textbook_used: true,
+							would_retake: false,
 						},
 					],
 				},
@@ -64,6 +79,17 @@
 					user,
 				}
 			};
+		},
+		computed: {
+			hasRatings() {
+				return this.prof.ratings.length > 0;
+			},
+			numberOfSimilarProfs() {
+				return {
+					school: 2,
+					department: 7,
+				};
+			},
 		},
 	};
 </script>
