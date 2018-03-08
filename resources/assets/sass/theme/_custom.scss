@@ -1,1 +1,15 @@
 // Your custom styles
+
+.vertical-spacing {
+	border-bottom: 20px solid #ffffff00;
+}
+
+@media (min-width: 1280px) {
+	.vertical-spacing {
+		border-bottom: 0;
+	}
+}
+ 
+.no-margin {
+	margin: 0 !important;
+}
