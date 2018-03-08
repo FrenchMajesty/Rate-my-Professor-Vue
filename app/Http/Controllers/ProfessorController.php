@@ -23,10 +23,10 @@ class ProfessorController extends LaravelController
 
         $query = Professor::query();
         $this->applyResourceOptions($query, $resourceOptions);
-        $books = $query->get();
+        $profs = $query->get();
 
         // Parse the data using Optimus\Architect
-        $parsedData = $this->parseData($books, $resourceOptions, 'users');
+        $parsedData = $this->parseData($profs, $resourceOptions, 'profs');
 
         // Create JSON response of parsed data
         return $this->response($parsedData);
