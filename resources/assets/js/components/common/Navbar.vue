@@ -4,16 +4,9 @@
 	  <b-navbar-brand href="#">Company Logo</b-navbar-brand>
 
 	  <b-collapse is-nav id="nav_collapse">
-		<b-nav-form class="ml-auto mr-auto col-sm-8 col-md-7 col-lg-5" @submit.prevent="performSearch">
-	        <md-field class="reduced-margin-bottom">
-		      	<label>I'm looking for</label>
-		    	<md-input 
-		    		v-model="query"
-		    		placeholder="Search here"
-		    		autocomplete="off"
-		    		></md-input>
-		   	</md-field>
-	    </b-nav-form>
+
+	  		<!-- Search input -->
+			<NavbarSearchForm></NavbarSearchForm>
 
 	    <b-navbar-nav>
 	    	<md-button href="#" class="no-margin">Home</md-button>
@@ -39,16 +32,17 @@
 </template>
 
 <script>
+	import NavbarSearchForm from './NavbarSearchForm';
+
 	export default {
 		name: 'Navbar',
+		components: {
+			NavbarSearchForm,
+		},
 		props: {
 			user: {
 				type: Object,
 			},
-			searchData: {
-				type: Array,
-				required: true,
-			}
 		},
 		computed: {
 			isLoggedIn() {
@@ -61,23 +55,10 @@
 				return window.innerWidth < 775;
 			},
 		},
-		methods: {
-		    performSearch(e) {
-		    	console.log(e);
-		    } 
-		},
-		data() {
-			return {
-				query: '',
-			};
-		},
 	};
 </script>
 
 <style scoped>
-	.reduced-margin-bottom {
-		margin-bottom: 5px;
-	}
 	.no-margin {
 		margin: 0;
 	}
