@@ -36,6 +36,6 @@
 
 <style scoped>
 	.space-above {
-		padding-top: 5em;
+		padding-top: 6.5em;
 	}
 </style>
