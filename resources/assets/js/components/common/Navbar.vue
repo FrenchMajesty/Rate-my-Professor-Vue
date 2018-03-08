@@ -1,34 +1,44 @@
 <template>
-	<b-navbar toggleable="md" type="dark" variant="info" fixed="top">
+	<b-navbar toggleable="md" type="light" variant="white" fixed="top">
 	  <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 	  <b-navbar-brand href="#">Company Logo</b-navbar-brand>
 
 	  <b-collapse is-nav id="nav_collapse">
 		<b-nav-form class="ml-auto mr-auto col-sm-8 col-md-7 col-lg-5" @submit.prevent="performSearch">
-	        <!-- b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/-->
-	        <Input class="mr-sm-2" type="text" placeholder="Search" style="margin-top: 0" :fullWidth="true" @input="updateQuery" :value="query" />
-	        <!--b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button-->
+	        <md-field class="reduced-margin-bottom">
+		      	<label>I'm looking for</label>
+		    	<md-input 
+		    		v-model="query"
+		    		placeholder="Search here"
+		    		autocomplete="off"
+		    		></md-input>
+		   	</md-field>
 	    </b-nav-form>
 
 	    <b-navbar-nav>
-	      <b-nav-item href="#">Home</b-nav-item>
-	      <b-nav-item v-show="isAdmin" href="#">Admin Panel</b-nav-item>
-	      <b-nav-item v-show="! isLoggedIn" href="#">Sign in</b-nav-item>
-	      <b-nav-item-dropdown v-show="isLoggedIn" right>
-	        <template slot="button-content">
-	          User
-	        </template>
-	        <b-dropdown-item href="#">Profile</b-dropdown-item>
-	        <b-dropdown-item href="#">Signout</b-dropdown-item>
-	      </b-nav-item-dropdown>
+	    	<md-button href="#" class="no-margin">Home</md-button>
+	    	<md-button v-if="isAdmin" href="#" class="no-margin">Admin Panel</md-button>
+	    	<md-button v-if="! isLoggedIn" href="#" class="no-margin">Sign In</md-button>
+	    	<div v-else>
+			    <div v-if="smallScreenSize">
+				    <md-divider></md-divider>
+		    		<md-button href="#" class="no-margin full-width">Profile</md-button>
+		    		<md-button href="#" class="no-margin full-width">Sign out</md-button>
+			    </div>
+		    	<md-menu v-else md-size="auto" md-align-trigger>
+			      <md-button href="#" class="full-width" md-menu-trigger>User's name</md-button>
+			      <md-menu-content class="above-all">
+			        <md-menu-item to="#poo">Profile</md-menu-item>
+			        <md-menu-item to="#out">Sign out</md-menu-item>
+			      </md-menu-content>
+			    </md-menu>
+			</div>
 	    </b-navbar-nav>
 	  </b-collapse>
 	</b-navbar>
 </template>
 
 <script>
-	import Input from './form/Input';
-
 	export default {
 		name: 'Navbar',
 		props: {
@@ -40,9 +50,6 @@
 				required: true,
 			}
 		},
-		components: {
-			Input,
-		},
 		computed: {
 			isLoggedIn() {
 				return Boolean(this.user);
@@ -50,11 +57,11 @@
 			isAdmin() {
 				return this.user && this.user.rank > 3;
 			},
+			smallScreenSize(){
+				return window.innerWidth < 775;
+			},
 		},
 		methods: {
-		    updateQuery({target: {value}}) {
-		    	this.query = value;
-		    },
 		    performSearch(e) {
 		    	console.log(e);
 		    } 
@@ -66,3 +73,18 @@
 		},
 	};
 </script>
+
+<style scoped>
+	.reduced-margin-bottom {
+		margin-bottom: 5px;
+	}
+	.no-margin {
+		margin: 0;
+	}
+	.full-width {
+		width: 100%;
+	}
+	.above-all {
+		z-index: 9999;
+	}
+</style>
