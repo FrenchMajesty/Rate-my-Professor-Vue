@@ -1,6 +1,7 @@
 import lodash from 'lodash';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
 import VueMaterial from 'vue-material';
@@ -10,6 +11,7 @@ window.Popper = require('popper.js').default;
 window.Vue = Vue;
 window._ = lodash;
 
+Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueMaterial);
