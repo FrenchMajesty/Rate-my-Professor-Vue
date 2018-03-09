@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Navbar :user="user" :searchData="searchData"></Navbar>
+		<Navbar :user="user"></Navbar>
 		<div class="md-layout md-gutter no-margin md-alignment-top-center space-above">
 			<QuickSearch 
 				:searchData="searchData" 
@@ -26,16 +26,6 @@
 			user: {
 				type: Object,
 			},
-			searchData: {
-				type: Array,
-				required: true,
-			}
 		},
 	};
 </script>
-
-<style scoped>
-	.space-above {
-		padding-top: 6.5em;
-	}
-</style>
