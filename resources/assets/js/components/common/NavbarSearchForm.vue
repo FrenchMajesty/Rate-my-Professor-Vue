@@ -56,14 +56,18 @@
 				const {query, profData} = this;
 				let results = [];
 
-				profData.forEach((prof) => {
-					const regex = new RegExp(query, 'gi');
-					if(prof.firstname.match(regex) || prof.lastname.match(regex)) {
-						results.push(prof);
-					}
-				});
+				if(profData && profData.length > 0) {
+					profData.forEach((prof) => {
+						const regex = new RegExp(query, 'gi');
+						if(prof.firstname.match(regex) || prof.lastname.match(regex)) {
+							results.push(prof);
+						}
 
-				return results.slice(0,5);
+						results = results.slice(0,5);
+					});
+				}
+
+				return results;
 			},
 			showSuggestions() {
 				return this.query != '' && 
@@ -82,7 +86,8 @@
 						type: 'updateProfsData',
 						data: res.data.profs,
 					});
-				});
+				})
+				.catch(error => console.log(error));
 			},
 			submitSearch(e) {
 				console.log(e);
