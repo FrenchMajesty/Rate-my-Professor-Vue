@@ -54,14 +54,10 @@
 </template>
 
 <script>
-	import Button from './common/form/Button';
 	import 'vue-material/dist/vue-material.min.css';
 
 	export default {
 		name: 'QuickSearch',
-		components: {
-			Button,
-		},
 		props: {
 			searchData: {
 				type: Array,
