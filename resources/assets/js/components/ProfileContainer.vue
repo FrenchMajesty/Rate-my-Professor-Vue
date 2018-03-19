@@ -3,9 +3,8 @@
 		<Navbar :user="user"></Navbar>
 		<div class="md-layout md-gutter no-margin md-alignment-top-center space-above">
 			<QuickSearch 
-				:searchData="searchData" 
 				class="md-layout-item md-medium-size-95 md-size-33 md-small-hide vertical-spacing"
-			/>
+			></QuickSearch>
 			<div class="md-layout-item">
 				<slot></slot>
 			</div>

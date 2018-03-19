@@ -59,10 +59,6 @@
 	export default {
 		name: 'QuickSearch',
 		props: {
-			searchData: {
-				type: Array,
-				required: true,
-			},
 			defaultMode: {
 				type: String,
 				default: 'prof',
@@ -72,6 +68,11 @@
 			return {
 				currentMode: this.defaultMode,
 			};
+		},
+		computed: {
+			profData() {
+				return this.$store.state.prof.data;
+			},
 		},
 		methods: {
 			generateButtonClass(key) {
