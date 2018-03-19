@@ -1,5 +1,5 @@
 <template>
-	<md-card class="md-layout-item md-size-40 md-layout md-gutter md-alignment-top-space-around" md-with-hover>
+	<md-card md-with-hover>
 		<form class="md-layout-item md-size-90" @submit.preventDefault="submitForm">
 			<md-card-header>
 				<h1 class="md-title">Sign up today!</h1>
@@ -46,9 +46,8 @@
 
 			<md-checkbox 
 				v-model="terms"
-			>
-				By clicking this box you agree to the <a href="#">Terms and Conditions of Use</a> as well as our <a href="#">Privacy Policy</a>.
-			</md-checkbox>
+			></md-checkbox>
+				By clicking this box you agree to the <a href="#">Terms and Conditions of Use</a> as well as our <a href="http://google.com" target="_blank">Privacy Policy</a>.
 
 			<md-card-actions>
 			<md-button class="md-primary md-raised space-below" :disabled="!formIsComplete" type="submit">Create an Account</md-button>	
@@ -67,6 +66,7 @@
 				email: '',
 				password: '',
 				terms: false,
+				errors: [],
 			};
 		},
 		computed: {
@@ -75,7 +75,8 @@
 						this.lastname.length > 0 &&
 						this.email.length > 0 &&
 						this.password.length > 0 &&
-						this.terms == true;
+						this.terms == true &&
+						errors.length == 0;
 			}
 		},
 		methods: {

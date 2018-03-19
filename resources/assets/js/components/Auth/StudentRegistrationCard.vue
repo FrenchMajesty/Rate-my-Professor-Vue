@@ -1,5 +1,5 @@
 <template>
-	<md-card class="md-layout-item md-size-40 md-layout md-gutter md-alignment-top-space-around" md-with-hover>
+	<md-card md-with-hover>
 		<form class="md-layout-item md-size-90" @submit.preventDefault="submitForm">
 			<md-card-header>
 				<h1 class="md-title">Sign up today!</h1>
