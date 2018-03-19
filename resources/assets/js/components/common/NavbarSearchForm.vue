@@ -29,14 +29,13 @@
 </template>
 
 <script>
-	import { loadAllProfessorsData } from 'Js/store/api';
 	export default {
 		name: 'NavbarSearchForm',
-		created() {
-			const {data, beingFetched} = this.$store.state.prof;
-			if(!data && !beingFetched) {
-				this.fetchData();
-			}
+		props: {
+			profData: {
+				type: Array,
+				required: true,
+			},
 		},
 		data() {
 			return {
@@ -48,9 +47,6 @@
 		computed: {
 			schoolMatches() {
 				return ['a'];
-			},
-			profData() {
-				return this.$store.state.prof.data;
 			},
 			profMatches() {
 				const {query, profData} = this;
@@ -78,17 +74,6 @@
 			},
 		},
 		methods: {
-			fetchData() {
-				this.$store.commit('updateProfsDataFetchingStatus', true);
-
-				loadAllProfessorsData().then(res => {
-					this.$store.commit({
-						type: 'updateProfsData',
-						data: res.data.profs,
-					});
-				})
-				.catch(error => console.log(error));
-			},
 			submitSearch(e) {
 				console.log(e);
 			},
