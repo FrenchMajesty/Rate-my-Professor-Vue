@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Navbar :user="user"></Navbar>
+		<Navbar></Navbar>
 		<div class="md-layout md-gutter no-margin md-alignment-top-space-around space-above">
 				<div class="md-layout-item md-small-size-100 md-medium-size-50 md-size-40">
 					<h1 class="md-display-1 md-small-hide">Why sign up you ask?</h1>
@@ -76,17 +76,13 @@
 				 * @type {Boolean}
 				 */
 				studentRegistration: true,
+
+				/**
+				 * The class to set to the registrations cards
+				 * @type {String}
+				 */
 				registrationCardClass: 'md-layout-item md-small-size-75 md-size-40 md-layout md-gutter md-alignment-top-space-around',
 			};
-		},
-		computed: {
-			/**
-			 * Get the user model from the store's state
-			 * @return {Object} 
-			 */
-			user() {
-				return this.$store.state.user;
-			},
 		},
 	};
 </script>

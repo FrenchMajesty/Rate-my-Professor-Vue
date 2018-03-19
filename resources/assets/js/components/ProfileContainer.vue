@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Navbar :user="user"></Navbar>
+		<Navbar></Navbar>
 		<div class="md-layout md-gutter no-margin md-alignment-top-center space-above">
 			<QuickSearch 
 				class="md-layout-item md-medium-size-95 md-size-33 md-small-hide vertical-spacing"
@@ -20,11 +20,6 @@
 		name: 'ProfileContainer',
 		components: {
 			Navbar, QuickSearch
-		},
-		props: {
-			user: {
-				type: Object,
-			},
 		},
 	};
 </script>

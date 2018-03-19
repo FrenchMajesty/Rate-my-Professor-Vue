@@ -56,15 +56,6 @@
 		components: {
 			NavbarSearchForm,
 		},
-		props: {
-			/**
-			 * The user's object model
-			 * @type {Object}
-			 */
-			user: {
-				type: Object,
-			},
-		},
 		/**
 		 * Wait 1 sec before allowing the search bar to show to avoid useless transitions
 		 */
@@ -91,12 +82,21 @@
 		},
 		computed: {
 			/**
+			 * Get the user object model from the state
+			 * @return {Object} 
+			 */
+			user() {
+				return this.$store.state.user;
+			},
+
+			/**
 			 * Determine if the user is logged in
 			 * @return {Boolean} 
 			 */
 			isLoggedIn() {
 				return Boolean(this.user);
 			},
+
 			/**
 			 * Determine if the user is an administrator
 			 * @return {Boolean} 
@@ -104,6 +104,7 @@
 			isAdmin() {
 				return this.user && this.user.rank > 3;
 			},
+
 			/**
 			 * Determine whether the screen is small (< 775px)
 			 * @return {Boolean} 
@@ -111,6 +112,7 @@
 			smallScreenSize(){
 				return window.innerWidth < 775;
 			},
+
 			/**
 			 * Current state of the search data fetching request
 			 * @return {Boolean} 

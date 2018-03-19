@@ -1,5 +1,5 @@
 <template>
-	<ProfileContainer :user="shared.user" :searchData="searchData">
+	<ProfileContainer>
 		<ProfessorDetailsCard 
 			:prof="prof" 
 			:numberOfSimilarProfs="numberOfSimilarProfs"
@@ -31,7 +31,6 @@
 	import ProfileContainer from '../components/ProfileContainer';
 	import ProfessorDetailsCard from '../components/ProfessorDetailsCard';
 	import ProfessorReview from '../components/ProfessorReview';
-	import {user} from '../shared';
 
 	export default {
 		name: 'Professor',
@@ -40,7 +39,6 @@
 		},
 		data() {
 			return {
-				searchData: [],
 				prof: {
 					name: 'John Doe',
 					department: {
@@ -75,9 +73,6 @@
 						},
 					],
 				},
-				shared: {
-					user,
-				}
 			};
 		},
 		computed: {
