@@ -60,7 +60,7 @@
 		 * Wait 1 sec before allowing the search bar to show to avoid useless transitions
 		 */
 		mounted() {
-			setTimeout(() => this.canShowSearchBar = true, 1000);
+			setTimeout(() => this.canShowSearchBar = true, 700);
 		},
 		/**
 		 * Verify if the search data is being loaded and if not, call fetchData() method
