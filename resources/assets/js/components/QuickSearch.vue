@@ -34,17 +34,22 @@
 					  			enter-active-class="animated bounceIn"
 					  			leave-active-class="animated bounceOut"
 					  		>
-				        		<md-field v-if="searchIsReady">
-					        		<label>I'm looking for a professor named</label>
-					        		<md-input
-					        			placeholder="Enter the professor's name"
-					        			autocomplete="off"
-					        			v-model="prof.profName"
-					        			@input="performingSearch = true"
-
-					        			required
-					        		></md-input>
-					        	</md-field>
+				        		<md-autocomplete 
+				        			v-if="searchIsReady" 
+				        			v-model="prof.selected" 
+				        			:md-options="profMatches"
+				        			:md-open-on-focus="false"
+				        			md-input-placeholder="Enter your professor's name"
+				        			md-dense
+				        		>
+								    <label>I'm looking for a professor named</label>
+								     <template slot="md-autocomplete-item" slot-scope="{ item, term }">
+								        <md-highlight-text :md-term="term">{{item.firstname}} {{item.lastname}}</md-highlight-text>
+								     </template>
+							      	<template slot="md-autocomplete-empty" slot-scope="{ term }">
+							        	No profs matching "{{term}}" were found. <a @click="alert('added')">Add a new</a> one!
+							      	</template>
+							    </md-autocomplete>
 					        	<div v-else class="mr-auto ml-auto text-center">
 					    			<md-progress-spinner 
 					    				:md-diameter="30"
@@ -53,20 +58,6 @@
 					    			></md-progress-spinner>
 								</div>
 							</transition>
-
-							<!-- Suggestions list for professors -->
-				        	<md-list v-if="showProfessorsSuggestions" class="full-width autocomplete-list" @click="performingSearch = true">
-								<md-list-item
-									class="full-width autocomplete-result"
-									v-for="(prof, i) in profMatches"
-									:key="prof.id"
-								>
-									<md-button
-										class="full-width" 
-										@click="selectProfessor(prof.id)"
-									>{{prof.firstname}} {{prof.lastname}}</md-button>
-								</md-list-item>
-							</md-list>
 			        	</form>
 			        </md-card-content>
 
@@ -158,16 +149,16 @@
 					searchBySchool: false,
 
 					/**
-					 * The input value of the professor's name
-					 * @type {String}
+					 * The professor that was selected by the user
+					 * @type {Object}
 					 */
-					profName: '',
+					selected: null,
 
 					/**
-					 * The input value of the school's name
-					 * @type {String}
+					 * The school that was selected to filter down professors
+					 * @type {Object}
 					 */
-					schoolName: '',
+					school: null,
 				},
 
 				/**
@@ -227,28 +218,13 @@
 			},
 
 			/**
-			 * Determine whether the professors suggestions list should be shown
-			 * @return {Boolean} 
-			 */
-			showProfessorsSuggestions() {
-				const {prof: {profName}, profMatches, performingSearch} = this;
-
-				return profName.length > 0 &&
-						profMatches.length > 0 &&
-						performingSearch === true &&
-						window.innerWidth > 775;				
-			},
-
-			/**
 			 * Determine whether the form to search for a professor is completed and 
 			 * can be sumitted
 			 * @return {Boolean} 
 			 */
 			isProfSearchComplete() {
-				const {profName, schoolName} = this.prof;
-				return profName.length > 0 && schoolName.length > 0;
+				return this.prof.selected && this.prof.school;
 			}
-
 		},
 		methods: {
 			/**
@@ -262,20 +238,6 @@
 				}
 
 				return 'md-fab md-plain';
-			},
-
-			/**
-			 * Navigate to the page of the professor with the given ID
-			 * @param  {Number} id ID of the professor
-			 * @return {Void}    
-			 */
-			selectProfessor(id) {
-				const prof = this.profData.find((prof) => prof.id == id);
-				console.log('Navigate to this guy!', prof);
-				this.prof.profName = prof.firstname+' '+prof.lastname;
-
-				// Set this variable's update at the end of the queue or else it gets overwritten
-				setTimeout(() => this.performingSearch = false, 0);
 			},
 
 			/**
