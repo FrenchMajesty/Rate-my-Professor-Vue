@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<Navbar></Navbar>
-		<div class="md-layout md-gutter no-margin md-alignment-top-space-around space-above">
+		<div class="md-layout md-gutter no-margin md-alignment-top-space-around">
 				<div class="md-layout-item md-small-size-100 md-medium-size-50 md-size-40">
 					<h1 class="md-display-1 md-small-hide">Why sign up you ask?</h1>
 					<div class="md-small-hide">
