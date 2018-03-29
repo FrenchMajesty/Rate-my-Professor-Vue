@@ -1,7 +1,7 @@
 import './bootstrap';
 import router from './routes';
 import store from './store/store';
-
+import AppWrapper from './AppWrapper';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -12,5 +12,5 @@ import store from './store/store';
 const app = new Vue({
 	router,
 	store,
-    el: '#app',
-});
+    render: (h) => h(AppWrapper) 
+}).$mount('#app');
