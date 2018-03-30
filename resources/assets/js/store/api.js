@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-const BASE_URL= 'http://localhost/ratemy';
+const BASE_URL= 'http://localhost/ratemy/api';
 
 export function loadAllProfessorsData() {
-	return axios.get(`${BASE_URL}/api/prof/fetch`);
+	return axios.get(`${BASE_URL}/prof/fetch`);
+}
+
+export function submitStudentRegistration(data) {
+	return axios.post(`${BASE_URL}/signup/student`, data);
 }
