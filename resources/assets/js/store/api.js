@@ -23,3 +23,9 @@ export function loadUserData(accessToken) {
 		Authorization: `Bearer ${accessToken}`
 	}});
 } 
+
+export function submitLogout(accessToken) {
+	return axios.post(`${BASE_URL}/logout`,null, {headers: {
+		Authorization: `Bearer ${accessToken}`
+	}});
+}

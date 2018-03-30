@@ -19,6 +19,8 @@ Route::model('school', 'App\School\School');
 
 Route::post('login', 'Auth\LoginController@login')->name('login');
 
+Route::post('logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth:api');
+
 Route::post('/signup/student', 'Auth\RegisterController@create')->name('signup');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
