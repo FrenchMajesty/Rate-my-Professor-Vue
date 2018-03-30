@@ -185,8 +185,11 @@
 			 * @return {Void} 
 			 */
 			submitForm() {
+				const {query} = this.$router.history.context;
+				const target = query.redirect ? query.redirect : 'index';
+
 				this.form.submit(submitStudentRegistration)
-				.then(() => console.log('registration form for student was submitted '));
+				.then(() => this.$router.push({name: target}));
 			},
 
 			/**
