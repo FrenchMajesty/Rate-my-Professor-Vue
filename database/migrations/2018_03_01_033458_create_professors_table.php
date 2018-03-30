@@ -17,6 +17,7 @@ class CreateProfessorsTable extends Migration
             $table->increments('id');
             $table->string('firstname');
             $table->string('lastname');
+            $table->string('slug');
             $table->string('directory_url')->nullable();
             $table->integer('school_id');
             $table->integer('department_id');

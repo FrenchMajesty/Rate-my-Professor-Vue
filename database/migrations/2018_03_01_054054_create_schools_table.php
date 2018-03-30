@@ -18,6 +18,7 @@ class CreateSchoolsTable extends Migration
             $table->string('name');
             $table->string('nickname');
             $table->string('location');
+            $table->string('slug');
             $table->string('website');
             $table->boolean('approved')->nullable();
             $table->timestamps();
