@@ -1,27 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {user} from '../shared';
+import schools from './sub/schools';
+import profs from './sub/profs';
 
 export default new Vuex.Store({
 	state: {
 		user,
-		prof: {
-			data: null,
-			beingFetched: false,
-		},
+		...profs.state,
+		...schools.state,
 	},
 	getters: {
-		profDataIsFetching(state) {
-			return state.prof.beingFetched;
-		},
+		...profs.getters,
+		...schools.getters,
 	},
 	mutations: {
-		updateProfsDataFetchingStatus(state, value) {
-			state.prof.beingFetched = value;
-		},
-		updateProfsData(state, payload) {
-			state.prof.data = payload.data;
-			state.prof.beingFetched = false;
-		},
+		...profs.mutations,
+		...schools.mutations,
 	},
 });
