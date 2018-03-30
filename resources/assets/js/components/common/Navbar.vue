@@ -25,9 +25,9 @@
 				</div>
 			</transition>
 	    <b-navbar-nav>
-	    	<md-button :to="{name: 'index'}" class="no-margin">Home</md-button>
+	    	<md-button :to="{name: 'professor'}" class="no-margin">Home</md-button>
 	    	<md-button v-if="isAdmin" href="#" class="no-margin">Admin Panel</md-button>
-	    	<md-button v-if="! isLoggedIn" href="#" class="no-margin">Sign In</md-button>
+	    	<md-button v-if="! isLoggedIn" :to="{name: 'signin'}" class="no-margin">Sign In</md-button>
 	    	<div v-else>
 			    <div v-if="smallScreenSize">
 				    <md-divider></md-divider>
@@ -35,10 +35,10 @@
 		    		<md-button href="#" class="no-margin full-width">Sign out</md-button>
 			    </div>
 		    	<md-menu v-else md-size="auto" md-align-trigger>
-			      <md-button href="#" class="full-width" md-menu-trigger>User's name</md-button>
+			      <md-button href="#" class="full-width" md-menu-trigger>{{user.name}}</md-button>
 			      <md-menu-content class="above-all">
-			        <md-menu-item to="#poo">Profile</md-menu-item>
-			        <md-menu-item to="#out">Sign out</md-menu-item>
+			        <md-menu-item :to="{name: 'home'}">Profile</md-menu-item>
+			        <md-menu-item href="#" @click="logout">Sign out</md-menu-item>
 			      </md-menu-content>
 			    </md-menu>
 			</div>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-	import { loadAllProfessorsData } from 'Js/store/api';
+	import { loadAllProfessorsData, submitLogout } from 'Js/store/api';
 	import NavbarSearchForm from './NavbarSearchForm';
 
 	export default {
@@ -135,7 +135,32 @@
 					});
 				})
 				.catch(error => console.log(error));
-			}
+			},
+
+			/**
+			 * Process a request to log out a user
+			 * @return {Void} 
+			 */
+			logout() {
+				const {accessToken} = this.$store.state.auth;
+
+				submitLogout(accessToken)
+				.then(() => {
+					this.$store.commit({
+						type: 'updateUser',
+						user: null,
+					});
+
+					this.$store.commit({
+						type: 'updateAccessToken',
+						token: null,
+						expire: null,
+					});
+
+					this.$router.push({name: 'index'});
+				})
+				.catch(err => console.log(err));
+			},
 		},
 	};
 </script>
