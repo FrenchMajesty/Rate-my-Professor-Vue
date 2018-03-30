@@ -33,6 +33,7 @@ class LoginController extends Controller
         Validator::make($request->all(), [
             'email' => 'required|email|exists:users',
             'password' => 'required|string',
+            'remember' => 'nullable',
         ])->validate();
 
         return $this->loginProxy->attemptLogin($request->email, $request->password);
