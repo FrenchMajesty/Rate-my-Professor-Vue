@@ -3,6 +3,7 @@ import Index from './views/Index';
 import Professor from './views/Professor';
 import Register from './views/Register';
 import SignIn from './views/SignIn';
+import Home from './views/Home';
 import store from './store/store';
 
 /**
@@ -14,7 +15,10 @@ import store from './store/store';
  */
 const userOnly = (to, from, next) => {
 	if(! store.state.user) {
-		next({name: 'signin'});
+		next({
+			name: 'signin',
+			query: {redirect: to.name}
+		});
 	}
 
 	next();
@@ -60,6 +64,9 @@ const routes = [
 	},
 	{
 		path: '/home',
+		name: 'home',
+		component: Home,
+		beforeEnter: userOnly,
 	}
 ];
 
