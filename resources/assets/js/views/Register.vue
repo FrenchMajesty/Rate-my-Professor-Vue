@@ -59,14 +59,13 @@
 </template>
 
 <script>
-	import Navbar from '../components/common/Navbar';
 	import StudentRegistrationCard from '../components/Auth/StudentRegistrationCard';
 	import TeacherRegistrationCard from '../components/Auth/TeacherRegistrationCard';
 
 	export default {
 		name: 'Register',
 		components: {
-			Navbar, StudentRegistrationCard, TeacherRegistrationCard,
+			StudentRegistrationCard, TeacherRegistrationCard,
 		},
 		data() {
 			return {
