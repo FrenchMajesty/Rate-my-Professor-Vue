@@ -44,8 +44,13 @@ export default class Form {
 		});
 	}
 
+	/**
+	 * Clear the form's fields
+	 * @param  {Object} res The server's response
+	 * @return {Void}     
+	 */
 	onSuccess(res) {
-		console.log(res);
+		this.reset();
 	}
 
 	/**
