@@ -1,20 +1,22 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {user} from '../shared';
+import auth from './sub/auth';
 import schools from './sub/schools';
 import profs from './sub/profs';
 
 export default new Vuex.Store({
 	state: {
-		user,
+		...auth.state,
 		...profs.state,
 		...schools.state,
 	},
 	getters: {
+		...auth.getters,
 		...profs.getters,
 		...schools.getters,
 	},
 	mutations: {
+		...auth.mutations,
 		...profs.mutations,
 		...schools.mutations,
 	},
