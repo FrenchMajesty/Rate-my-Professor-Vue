@@ -19,7 +19,7 @@ const auth = {
 		 */
 		updateAccessToken(state, {token, expire}) {
 			state.auth.accessToken = token;
-			state.auth.expire = Date.now() + expire * 1000;
+			state.auth.expire = expire ? (Date.now() + expire * 1000) : null;
 		},
 
 		/**
