@@ -17,6 +17,10 @@ Route::model('user', 'App\User');
 Route::model('prof', 'App\Professor\Professor');
 Route::model('school', 'App\School\School');
 
+Route::post('login', 'Auth\LoginController@login')->name('login');
+
+Route::post('/signup/student', 'Auth\RegisterController@create')->name('signup');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
