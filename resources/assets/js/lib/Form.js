@@ -29,10 +29,15 @@ export default class Form {
 
 		return data;
 	}
-	
-	submit(apiMethod, requestType, url) {
+		
+	/**
+	 * Handle the submit of the form by running the api function
+	 * @param  {Function} apiFunction The API function to run for submitting the form
+	 * @return {Void}           
+	 */
+	submit(apiFunction) {
 		return new Promise((resolve, reject) => {
-			apiMethod(this.getData())
+			apiFunction(this.getData())
 			.then(res => {
 				this.onSuccess(res);
 				resolve(res);
