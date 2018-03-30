@@ -11,6 +11,10 @@
 		<div class="space-above">
 
 			<transition
+				enter-class="hidden"
+				enter-to-class="visible"
+				leave-class="visible"
+				leave-to-class="hidden"
 	            enter-active-class="animated fadeIn"
 	            leave-active-class="animated fadeOut"
 			>
@@ -85,3 +89,12 @@
 		}
 	}
 </script>
+
+<style scoped>
+	.hidden {
+		opacity: 0;
+	}
+	.visible {
+		opacity: 1;
+	}
+</style>
