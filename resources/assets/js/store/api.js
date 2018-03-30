@@ -13,3 +13,13 @@ export function loadAllSchoolsData() {
 export function submitStudentRegistration(data) {
 	return axios.post(`${BASE_URL}/signup/student`, data);
 }
+
+export function submitLogin(data) {
+	return axios.post(`${BASE_URL}/login`, data);
+}
+
+export function loadUserData(accessToken) {
+	return axios.get(`${BASE_URL}/user`, {headers: {
+		Authorization: `Bearer ${accessToken}`
+	}});
+} 
