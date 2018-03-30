@@ -98,7 +98,7 @@ class LoginProxy
         $this->cookie->queue(
             self::REFRESH_TOKEN,
             $data->refresh_token,
-            864000, // 10 days
+            3600 * 24 * 10, // 10 days
             null,
             null,
             false,
