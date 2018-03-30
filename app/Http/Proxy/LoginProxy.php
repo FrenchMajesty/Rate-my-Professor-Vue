@@ -46,7 +46,12 @@ class LoginProxy
             ]);
         }
 
-        abort(401);
+        $errors = [
+                'email' => ['No user with this email address could be found.'],
+            ];
+
+        return response()
+                ->json(['errors' => $errors], 401);
     }
 
     /**
@@ -79,7 +84,12 @@ class LoginProxy
         $response = $this->apiConsumer->post('/oauth/token', $data);
 
         if (!$response->isSuccessful()) {
-            abort(401);
+            $errors = [
+                'password' => ['The credentials that were provided are incorrect.'],
+            ];
+
+            return response()
+                    ->json(['errors' => $errors], 401);
         }
 
         $data = json_decode($response->getContent());
