@@ -4,6 +4,7 @@ import VuexPersist from 'vuex-persist';
 import auth from './sub/auth';
 import schools from './sub/schools';
 import profs from './sub/profs';
+import reviews from './sub/reviews';
 
 const vuexLocalStorage = new VuexPersist({
 	key: 'vuex', 
@@ -20,16 +21,19 @@ export default new Vuex.Store({
 		...auth.state,
 		...profs.state,
 		...schools.state,
+		...reviews.state,
 	},
 	getters: {
 		...auth.getters,
 		...profs.getters,
 		...schools.getters,
+		...reviews.getters,
 	},
 	mutations: {
 		...auth.mutations,
 		...profs.mutations,
 		...schools.mutations,
+		...reviews.mutations,
 	},
 	plugins: [vuexLocalStorage.plugin],
 });
