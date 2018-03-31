@@ -50,6 +50,7 @@
 <script>
 	import { loadAllProfessorsData, loadAllSchoolsData, submitLogout } from 'Js/store/api';
 	import NavbarSearchForm from './NavbarSearchForm';
+	import Fetcher from 'Js/lib/Fetcher';
 
 	export default {
 		name: 'Navbar',
@@ -126,32 +127,8 @@
 			 * Fetch all the professors's and schools data from the API and commit the actions
 			 */
 			fetchData() {
-				this.$store.commit('updateProfsDataFetchingStatus', true);
-				this.$store.commit('updateSchoolsDataFetchingStatus', true);
-
-				// Load schools data
-				loadAllSchoolsData().then(({data}) => {
-					this.$store.commit({
-						type: 'updateSchoolsData',
-						data: data.schools,
-					});
-				})
-				.catch(error => {
-					this.$store.commit('updateSchoolsDataFetchingStatus', false);
-					console.log(error);
-				});
-
-				// Load professors data
-				loadAllProfessorsData().then(({data}) => {
-					this.$store.commit({
-						type: 'updateProfsData',
-						data: data.profs,
-					});
-				})
-				.catch(error => {
-					this.$store.commit('updateProfsDataFetchingStatus', false);
-					console.log(error);
-				});
+				Fetcher.schools(this);
+				Fetcher.profs(this);
 			},
 
 			/**

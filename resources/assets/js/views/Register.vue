@@ -61,11 +61,16 @@
 <script>
 	import StudentRegistrationCard from '../components/Auth/StudentRegistrationCard';
 	import TeacherRegistrationCard from '../components/Auth/TeacherRegistrationCard';
+	import Fetcher from 'Js/lib/Fetcher';
 
 	export default {
 		name: 'Register',
 		components: {
 			StudentRegistrationCard, TeacherRegistrationCard,
+		},
+		created() {
+			// Load all schools data
+			Fetcher.schools(this);
 		},
 		data() {
 			return {
