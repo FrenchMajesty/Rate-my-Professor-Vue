@@ -10,7 +10,7 @@
 			>
 				<md-card-header>
 					<h1 class="md-title">Sign In</h1>
-					<span class="md-subhead">Don't have an account yet? No worries you can <router-link :to="{name: 'signup', query: $router.history.current.query}">sign up here</router-link> for free.</span>
+					<span class="md-subhead">Don't have an account yet? No worries you can <router-link :to="{name: 'signup', query: $route.query}">sign up here</router-link> for free.</span>
 				</md-card-header>
 
 				<md-field :class="{'md-invalid': form.errors.has('email')}">
@@ -111,7 +111,7 @@
 			 * @return {Void}              
 			 */
 			updateStateWithUserData({data}) {
-				const {query} = this.$router.history.current;
+				const {query} = this.$route;
 
 				this.$store.commit({
 					type: 'updateAccessToken',

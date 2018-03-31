@@ -185,7 +185,7 @@
 			 * @return {Void} 
 			 */
 			submitForm() {
-				const {query} = this.$router.history.context;
+				const {query} = this.$route;
 				const target = query.redirect ? query.redirect : 'index';
 
 				this.form.submit(submitStudentRegistration)
