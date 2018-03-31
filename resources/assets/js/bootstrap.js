@@ -5,7 +5,6 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
 import VueMaterial from 'vue-material';
-import 'vue-material/dist/vue-material.min.css';
 
 window.Popper = require('popper.js').default;
 window.Vue = Vue;

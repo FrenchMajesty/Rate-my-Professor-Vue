@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Victron Tech</title>
         <link rel="stylesheet" type="text/css" href="{{asset('public/css/app.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('public/css/vue-material.min.css')}}">
     </head>
     <body>
         <div id="app">
