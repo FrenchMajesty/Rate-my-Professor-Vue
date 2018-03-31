@@ -34,7 +34,7 @@
 		props: {
 			profData: {
 				type: Array,
-				required: true,
+				default: () => [],
 			},
 		},
 		data() {
