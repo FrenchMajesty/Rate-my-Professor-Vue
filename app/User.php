@@ -40,4 +40,19 @@ class User extends Authenticatable
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * The attributes to append to a JSON response
+     * @var array
+     */
+    protected $appends = ['name'];
+
+    /**
+     * Return the full name of the user
+     * @return string 
+     */
+    public function getNameAttribute()
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
 }
