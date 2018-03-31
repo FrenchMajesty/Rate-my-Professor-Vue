@@ -6,7 +6,7 @@ use Validator;
 use Optimus\Bruno\EloquentBuilderTrait;
 use Optimus\Bruno\LaravelController;
 use Illuminate\Http\Request;
-use App\Professor\Professor;
+use App\Models\Professor\Professor;
 use App\Traits\Filters\ProfessorQueryFilters;
 
 class ProfessorController extends LaravelController

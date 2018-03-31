@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::model('user', 'App\User');
-Route::model('prof', 'App\Professor\Professor');
-Route::model('school', 'App\School\School');
+Route::model('user', 'App\Models\User');
+Route::model('prof', 'App\Models\Professor\Professor');
+Route::model('school', 'App\Models\School\School');
 
 Route::post('login', 'Auth\LoginController@login')->name('login');
 

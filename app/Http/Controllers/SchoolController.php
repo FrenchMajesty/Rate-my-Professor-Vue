@@ -6,7 +6,7 @@ use Validator;
 use Optimus\Bruno\EloquentBuilderTrait;
 use Optimus\Bruno\LaravelController;
 use Illuminate\Http\Request;
-use App\School\School;
+use App\Models\School\School;
 use App\Traits\Filters\SchoolQueryFilters;
 
 class SchoolController extends LaravelController

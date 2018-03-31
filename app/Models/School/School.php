@@ -1,6 +1,6 @@
 <?php
 
-namespace App\School;
+namespace App\Models\School;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +16,7 @@ class School extends Model
     protected $fillable = [
     	'name',
     	'nickname',
+        'slug',
     	'location',
     	'website',
     	'approved',

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Professor;
+namespace App\Models\Professor;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +16,7 @@ class Professor extends Model
     protected $fillable = [
     	'firstname',
     	'lastname',
+      'slug',
     	'school_id',
     	'department_id',
     	'directory_url',
@@ -39,6 +40,28 @@ class Professor extends Model
    	protected $casts = [
    		'approved' => 'boolean',
    	];
+
+    /**
+     * Update the slug when saving the model
+     * @return void 
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->slug = $model->id.'-'.str_slug($model->firstname).'-'.str_slug($model->lastname);
+        });
+    }
+
+    /**
+     * Change the column with which to bind the model route
+     * @return string 
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
    	/**
    	 * Get the full name of the professor
