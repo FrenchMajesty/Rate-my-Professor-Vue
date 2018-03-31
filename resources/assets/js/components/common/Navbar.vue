@@ -25,7 +25,7 @@
 				</div>
 			</transition>
 	    <b-navbar-nav>
-	    	<md-button :to="{name: 'professor'}" class="no-margin">Home</md-button>
+	    	<md-button :to="{name: 'professor', params:{slug: 'fredrick-weimann'}}" class="no-margin">Home</md-button>
 	    	<md-button v-if="isAdmin" href="#" class="no-margin">Admin Panel</md-button>
 	    	<md-button v-if="! isLoggedIn" :to="{name: 'signin'}" class="no-margin">Sign In</md-button>
 	    	<div v-else>
