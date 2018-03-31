@@ -42,6 +42,12 @@ class Professor extends Model
    	];
 
     /**
+     * The attributes to append to a JSON response
+     * @var array
+     */
+    protected $appends = ['name'];
+
+    /**
      * Update the slug when saving the model
      * @return void 
      */
