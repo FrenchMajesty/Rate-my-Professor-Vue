@@ -1,7 +1,8 @@
 <template>
 	<div class="md-layout md-gutter no-margin md-alignment-top-space-around">
 		<md-card 
-			class="md-layout-item md-xsmall-size-90 md-small-size-80 md-medium-size-50 md-size-40"
+			class="md-layout-item md-xsmall-size-90 md-small-size-80 md-medium-size-50 md-size-40 animated slideInDown"
+			v-if="canShowSchoolInput"
 			md-with-hover
 		>
 			<form 
