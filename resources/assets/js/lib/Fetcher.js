@@ -40,7 +40,7 @@ export default class Fetcher {
 			loadAllProfessorsData().then(({data}) => {
 				vm.$store.commit({
 					type: 'updateProfsData',
-					data: data.prof,
+					data: data.profs,
 				});
 			})
 			.catch(error => {
