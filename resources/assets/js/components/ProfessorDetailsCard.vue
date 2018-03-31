@@ -1,7 +1,10 @@
 <template>
 	<md-card class="md-layout md-gutter no-margin padding-above text-align-sm">
 		<!-- Ratings container -->
-      	<md-content class="md-layout-item md-xsmall-size-100 md-small-size-26 vertical-spacing md-layout text-center">
+      	<md-content 
+      		class="md-layout-item md-xsmall-size-100 md-small-size-26 vertical-spacing md-layout text-center"
+      		v-if="ratings"
+      	>
 	      	<md-content class="md-layout-item md-size-100 smiley-container">
 	      		<md-icon :class="'md-size-4x '+overallRankingScale">tag_faces</md-icon>
 	      	</md-content>
@@ -17,12 +20,17 @@
 	      		</tr>
 	      	</table>
      	</md-content>
+     	<div 
+     		v-else 
+     		class="md-layout-item md-xsmall-size-100 md-small-size-26 vertical-spacing md-layout text-center"
+     	></div>
+
 
       <!-- Prof info container -->
       <md-content class="md-layout-item md-xsmall-size-100 vertical-spacing">
       	<h1 class="prof-name">{{prof.name}}</h1>
 
-      	<p class="md-subtitle">Professor of {{departmentName}} at <a href="#">{{prof.school.name}}</a>, {{prof.school.location}}.</p>
+      	<p class="md-subtitle">Professor of {{departmentName}} at <a href="#">{{school.name}} ({{school.nickname}})</a>, {{school.location}}.</p>
       	<div>
       		<a href="#">Submit a correction</a>
       	</div>
@@ -30,8 +38,8 @@
 
       <!-- School info container -->
       <md-content class="md-layout-item md-xsmall-size-100 vertical-spacing">
-      	<h1>{{prof.school.name}}</h1>
-      	<p>Located at {{prof.school.location}}.</p>
+      	<h1>{{school.name}}</h1>
+      	<p>Located at {{school.location}}.</p>
       	<a v-if="numberOfSimilarProfs.school > 0" href="#">
       		Check out {{numberOfSimilarProfs.school}} other professors from this school.
       	</a>
@@ -56,6 +64,14 @@
 				type: Object,
 				required: true,
 			},
+			school: {
+				type: Object,
+				required: true,
+			},
+			ratings: {
+				type: Array,
+				default: null,
+			},
 			numberOfSimilarProfs: {
 				type: Object,
 				required: true,
@@ -69,7 +85,7 @@
 		},
 		computed: {
 			departmentName() {
-				return this.prof.department.name.toLowerCase();
+				return 'department name';
 			},
 			avgOverall() {
 				return 3.3;
