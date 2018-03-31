@@ -1,15 +1,15 @@
 <template>
-	<md-card class="md-layout-item md-small-size-100 md-medium-size-95 md-size-100 space-below container" md-with-hover>
+	<md-card class="md-layout-item md-small-size-100 md-medium-size-95 md-size-100 space-below container" v-if="canShow" md-with-hover>
 		<div class="md-layout">
 			<md-content class="md-layout-item md-layout text-center md-xsmall-size-25 md-small-size-20 md-size-15">
-				<div :class="ratingContainerClass">
-					<p :class="ratingLabelClass">Rating</p> 
-					<p :class="ratingValueClass">{{rating.overall_rating}}</p>
+				<div class="md-layout-item md-size-80">
+					<p class="md-subtitle">Rating</p> 
+					<p class="md-headline text-size3">{{rating.overall_rating}}</p>
 				</div>
 
-				<div :class="ratingContainerClass">
-					<p :class="ratingLabelClass">Difficulty</p> 
-					<p :class="ratingValueClass">{{rating.difficulty_rating}}</p>
+				<div class="md-layout-item md-size-80">
+					<p class="md-subtitle">Difficulty</p> 
+					<p class="md-headline text-size3">{{rating.difficulty_rating}}</p>
 				</div>
 			</md-content>
 
@@ -28,7 +28,7 @@
 						:itemId="rating.id"
 						:positiveVotes="positiveVotes"
 						:negativeVotes="negativeVotes"
-						@leaveFeedback="processUserVoteOfReview"
+						@leaveFeedback="voteOnReview"
 					></ReviewFeedback>
 				</div>
 			</md-content>
@@ -49,38 +49,88 @@
 			ReviewFeedback,
 		},
 		props: {
+			/**
+			 * The rating model
+			 * @type {Object}
+			 */
 			rating: {
 				type: Object,
 				required: true,
 			},
+
+			/**
+			 * The number of ms to delay to rendering of this review
+			 * @type {Number}
+			 */
+			delay: {
+				type: Number,
+				default: null,
+			},
+		},
+
+		/**
+		 * Determine whether to delay the rending of the component or not
+		 */
+		created() {
+			if(this.delay) {
+				setTimeout(() => this.canShow = true, this.delay);
+			}else {
+				this.canShow = true;
+			}
 		},
 		data() {
 			return {
-				ratingContainerClass: 'md-layout-item md-size-80',
-				ratingLabelClass: 'md-subtitle',
-				ratingValueClass: 'md-headline text-size3',
+				/**
+				 * Whether the component is allowed to be shown
+				 * @type {Boolean}
+				 */
+				canShow: false,
+
+				/**
+				 * The number of positive votes
+				 * @type {Number}
+				 */
 				positiveVotes: 0,
+
+				/**
+				 * The number of negative votes
+				 * @type {Number}
+				 */
 				negativeVotes: 0,
 			};
 		},
 		computed: {
+			/**
+			 * Determine the textbook value of the review
+			 * @return {String} 
+			 */
 			textbookWasUsed() {
 				return this.rating.textbook_used ? 'Yes' : 'No';
 			},
+
+			/**
+			 * Determine the 'would retake' value of the review
+			 * @return {String} 
+			 */
 			wouldRetakeClass() {
 				return this.rating.would_retake ? 'Yes' : 'No';
 			},
 		},
 		methods: {
-			processUserVoteOfReview(foundItHelpful) {
-				console.log(`A user just found review (#:${this.rating.id}) ${foundItHelpful ? 'helpful' : 'not helpful'}.`);
+			/**
+			 * Process to handle the vote on this review
+			 * @param  {Boolean} positiveVote Whether value of the feedback is positive
+			 * @return {Void}                
+			 */
+			voteOnReview(positiveVote) {
+				console.log(`A user just found review (#:${this.rating.id}) ${positiveVote ? 'helpful' : 'not helpful'}.`);
 
-				if(foundItHelpful) {
+				if(positiveVote) {
 					this.positiveVotes++;
 				}else {
 					this.negativeVotes++;
 				}
-			}
+			},
 		},
 	};
 </script>
