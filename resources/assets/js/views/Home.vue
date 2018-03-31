@@ -72,7 +72,7 @@
 
 	    		<md-progress-bar v-if="accountWaitingResponse" md-mode="query"></md-progress-bar>
 				<md-card-actions>
-				<md-button class="md-primary" :disabled="form.errors.any()" type="submit">Login</md-button>
+				<md-button class="md-primary" :disabled="form.errors.any()" type="submit">Update</md-button>
 				</md-card-actions>
 			</form>
 		</md-card>
@@ -80,8 +80,9 @@
 </template>
 
 <script>
-	import Form from 'Js/lib/Form';
 	import { loadAllSchoolsData } from 'Js/store/api';
+	import Form from 'Js/lib/Form';
+	import Fetcher from 'Js/lib/Fetcher';
 
 	export default {
 		name: 'Home',
@@ -91,7 +92,8 @@
 		 */
 		mounted() {
 			setTimeout(() => this.canShowSchoolInput = true, 250);
-			this.loadSchoolsData();
+			// Load all schools data
+			Fetcher.schools(this);
 		},
 
 		data() {
@@ -113,8 +115,8 @@
 				 * @type {Form}
 				 */
 				form: new Form({
-					firstname: this.$store.state.user.name,
-					lastname: this.$store.state.user.name,
+					firstname: this.$store.state.user.firstname,
+					lastname: this.$store.state.user.lastname,
 					school: '',
 				}),
 
@@ -163,31 +165,8 @@
 			 * @return {Void} 
 			 */
 			submitForm() {
-				this.waitingResponse = true;
-
-				this.form.submit(submitLogin)
-				.then(this.updateStateWithUserData)
-				.catch(_ => this.waitingResponse = false);
-			},
-
-			/**
-			 * Init a request to load the schools' data
-			 * @return {Void} 
-			 */
-			loadSchoolsData() {
-				const {beingFetched} = this.$store.state.school;
-
-				if(!beingFetched) {
-					this.$store.commit('updateSchoolsDataFetchingStatus', true);
-
-					loadAllSchoolsData().then(({data}) => {
-						this.$store.commit({
-							type: 'updateSchoolsData',
-							data: data.schools,
-						});
-					})
-					.catch(error => console.log(error));
-				}
+				//this.accountWaitingResponse = true;
+				console.log('form submitted!');
 			},
 		},
 	}
