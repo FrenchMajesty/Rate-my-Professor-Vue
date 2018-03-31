@@ -46,7 +46,7 @@ const routes = [
 		component: Index,
 	},
 	{
-		path: '/prof',
+		path: '/prof/:slug',
 		name: 'professor',
 		component: Professor,
 	},
