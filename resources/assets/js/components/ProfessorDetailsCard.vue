@@ -40,14 +40,14 @@
       <md-content class="md-layout-item md-xsmall-size-100 vertical-spacing">
       	<h1>{{school.name}}</h1>
       	<p>Located at {{school.location}}.</p>
-      	<a v-if="numberOfSimilarProfs.school > 0" href="#">
-      		Check out {{numberOfSimilarProfs.school}} other professors from this school.
+      	<a v-if="profsInSchool > 0" href="#">
+      		Check out {{profsInSchool}} other professors from this school.
       	</a>
       	<md-divider class="divider"></md-divider>
       	<p>Other professors in the deparment of {{departmentName}}.</p>
 
-      	<a v-if="numberOfSimilarProfs.department > 0" href="#">
-      		Click to see {{numberOfSimilarProfs.department}} other {{departmentName}} professors at this school.
+      	<a v-if="profsInDepartment > 0" href="#">
+      		Click to see {{profsInDepartment}} other {{departmentName}} professors at this school.
       	</a>
       	<p v-else class="caption">
       		This professor seems to be the only one in this department on the website.
@@ -60,21 +60,29 @@
 	export default {
 		name: 'ProfessorDetailsCard',
 		props: {
+			/**
+			 * The professor's model
+			 * @type {Object}
+			 */
 			prof: {
 				type: Object,
 				required: true,
 			},
+			/**
+			 * The professor's school model
+			 * @type {Object}
+			 */
 			school: {
 				type: Object,
 				required: true,
 			},
+			/**
+			 * The reviews of this professor
+			 * @type {Array}
+			 */
 			ratings: {
 				type: Array,
 				default: null,
-			},
-			numberOfSimilarProfs: {
-				type: Object,
-				required: true,
 			},
 		},
 		data() {
@@ -87,12 +95,52 @@
 			departmentName() {
 				return 'department name';
 			},
+
+			/**
+			 * Calculate the number of professors in the same department
+			 * @return {Number} 
+			 */
+			profsInDepartment() {
+				return 2;
+			},
+
+			/**
+			 * Calculate the number of professors at the same school
+			 * @return {Number} 
+			 */
+			profsInSchool() {
+				return 7;
+			},
+			/**
+			 * Calculate the average of the overall ratings
+			 * @return {Number|Null} 
+			 */
 			avgOverall() {
-				return 3.3;
+				if(this.ratings.length > 0) { 
+					const total = this.ratings.reduce((accu, rating) => rating.overall_rating + accu, 0);
+					return Number(total / this.ratings.length).toFixed(1);
+				}
+
+				return null;
 			},
+
+			/**
+			 * Calculate the average of the difficulty ratings
+			 * @return {Number|Null} 
+			 */
 			avgDifficulty() {
-				return 4.6;
+				if(this.ratings.length > 0) {
+					const total = this.ratings.reduce((accu, rating) => rating.difficulty_rating + accu, 0);
+					return Number(total / this.ratings.length).toFixed(1);
+				}
+
+				return null;
 			},
+
+			/**
+			 * Determine the smiley and text color for the given overall rating
+			 * @return {String} 
+			 */
 			overallRankingScale() {
 				const {avgOverall: overall} = this;
 
@@ -100,10 +148,15 @@
 					return 'text-success';
 				}else if(overall > 2.8) {
 					return 'text-warning';
-				}else {
-					return 'text-danger';
 				}
+				
+				return 'text-danger';
 			},
+
+			/**
+			 * Determine the smiley and text color for the given average difficulty
+			 * @return {String} 
+			 */
 			difficultyRankingScale() {
 				const {avgDifficulty: difficulty} = this;
 
@@ -111,9 +164,9 @@
 					return 'text-danger';
 				}else if(difficulty > 2.7) {
 					return 'text-warning';
-				}else {
-					return 'text-success';
 				}
+				
+				return 'text-success';
 			},
 		},
 	};
