@@ -48,7 +48,7 @@
 </template>
 
 <script>
-	import { loadAllProfessorsData, submitLogout } from 'Js/store/api';
+	import { loadAllProfessorsData, loadAllSchoolsData, submitLogout } from 'Js/store/api';
 	import NavbarSearchForm from './NavbarSearchForm';
 
 	export default {
@@ -118,23 +118,40 @@
 			 * @return {Boolean} 
 			 */
 			dataIsLoading() {
-				return this.$store.state.prof.beingFetched;
+				return this.$store.state.prof.beingFetched || this.$store.state.school.beingFetched;
 			},
 		},
 		methods: {
 			/**
-			 * Fetch all the professors's data from the API and commit the action
+			 * Fetch all the professors's and schools data from the API and commit the actions
 			 */
 			fetchData() {
 				this.$store.commit('updateProfsDataFetchingStatus', true);
+				this.$store.commit('updateSchoolsDataFetchingStatus', true);
 
-				loadAllProfessorsData().then(res => {
+				// Load schools data
+				loadAllSchoolsData().then(({data}) => {
 					this.$store.commit({
-						type: 'updateProfsData',
-						data: res.data.profs,
+						type: 'updateSchoolsData',
+						data: data.schools,
 					});
 				})
-				.catch(error => console.log(error));
+				.catch(error => {
+					this.$store.commit('updateSchoolsDataFetchingStatus', false);
+					console.log(error);
+				});
+
+				// Load professors data
+				loadAllProfessorsData().then(({data}) => {
+					this.$store.commit({
+						type: 'updateProfsData',
+						data: data.profs,
+					});
+				})
+				.catch(error => {
+					this.$store.commit('updateProfsDataFetchingStatus', false);
+					console.log(error);
+				});
 			},
 
 			/**
