@@ -6,7 +6,8 @@
       		v-if="ratings"
       	>
 	      	<md-content class="md-layout-item md-size-100 smiley-container">
-	      		<md-icon :class="'md-size-4x '+overallRankingScale">tag_faces</md-icon>
+	      		<md-icon v-if="avgOverall" :class="'md-size-4x '+overallRankingScale">tag_faces</md-icon>
+	      		<md-icon v-else class="md-size-4x">weekend</md-icon>
 	      	</md-content>
 	      	<table class="md-layout-item md-medium-size-100 md-size-80">
 	      		<tr class="md-layout md-alignment-center">
