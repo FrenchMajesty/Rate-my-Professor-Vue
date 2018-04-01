@@ -129,11 +129,13 @@
 			Fetcher.profs(this);
 		},
 		/**
-		 * Get the quick review from the store's state
+		 * Get the quick review from the store's state and reset its value
 		 */
 		created() {
 			const {quick} = this.$store.state.reviews;
 			this.form.comment = quick;
+
+			this.$store.commit('writeQuickReview','');
 		},
 		data() {
 			return {
