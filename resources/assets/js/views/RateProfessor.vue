@@ -1,6 +1,6 @@
 <template>
 	<div class="md-layout md-gutter no-margin md-alignment-top-space-around">
-		<md-card class="md-layout-item md-xsmall-size-90 md-small-size-80 md-medium-size-45 md-size-40" md-with-hover>
+		<md-card class="md-layout-item md-xsmall-size-90 md-small-size-80 md-medium-size-45 md-size-40 vertical-spacing" md-with-hover>
 			<md-card-header>
 				<md-card-header-text>
 					<div class="md-title">{{professor.name}}</div>
