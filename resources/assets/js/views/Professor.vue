@@ -1,7 +1,6 @@
 <template>
 	<ProfileContainer v-if="professor">
 		<ProfessorDetailsCard 
-			class="animated slideInDown"
 			:prof="professor" 
 			:school="professorSchool"
 			:ratings="ratingsAreReady ? ratings : null"
@@ -12,6 +11,22 @@
 			class="md-layout-item md-size-100 md-layout"
 		>
 			<p v-if="hasRatings" class="md-layout-item md-title md-size-100">Student Reviews</p>
+			<p v-else class="noreview-space"></p>
+			<form class="md-layout md-layout-item md-size-95 ml-auto mr-auto" @submit.preventDefault="continueReview">
+				<md-field class="md-layout-item md-size-70 md-xsmall-size-100">
+			      	<label>Write your review:</label>
+			     	<md-textarea 
+			     		v-model="quickReview"
+			     		placeholder="Start typing your comment of this professor here. (You can press ENTER to go to the next line)."
+			     		:maxlength="350"
+			      		md-autogrow
+			    	></md-textarea>
+			    </md-field>
+			    <md-button 
+			    	class="md-raised md-accent md-layout-item"
+			    	type="submit"
+			    >Continue your review</md-button>
+			</form>
 			<ProfessorReview
 				class="animated fadeInUp"
 				v-if="hasRatings"
@@ -27,7 +42,14 @@
 			      	md-icon="info_outline"
 			      	md-label="No reviews for the moment"
 			      	md-description="There seems to be no review available for this professor.. Why not be the first to write one?">
-			     	<md-button class="md-primary md-raised">Write a review</md-button>
+			     	<md-button class="md-primary md-raised"
+			     		:to="{name: 'rateProfessor', 
+			     			params:{
+			     				id: professor.id,
+			     				slug: professor.slug,
+			     			}
+			     		}"
+			     	>Write a review</md-button>
 			    </md-empty-state>
 			</div>
 		</div>
@@ -60,13 +82,19 @@
 		 * @return {Void} 
 		 */
 		created() {
-			setTimeout(() => this.ratingsAreReady = true, 2500);
+			setTimeout(() => this.ratingsAreReady = true, 1500);
 		},
 		data() {
 			return {
+				/**
+				 * Whether the allow the list of reviews to be shown
+				 * @type {Boolean}
+				 */
 				renderList: false,
 				ratingsAreReady: false,
-				ratings: [
+				quickReview: '',
+				ratings: [],
+				d:[
 					{
 						id: 1,
 						overall_rating: 2.4,
@@ -132,7 +160,7 @@
 				const {school_id: id} = this.professor;
 
 				if(this.professor && data) {
-					return data.find(school => school.id = id);
+					return data.find(school => school.id == id);
 				}
 			}
 		},
@@ -144,8 +172,20 @@
 			 */
 			dataIsReady: function(isReady) {
 				if(isReady && !this.professor) {
-					this.$router.push('/notFound');
+					this.$router.push({name: 'notFound'});
 				}
+			},
+		},
+		methods: {
+			/**
+			 * Save the written review to the store and navigate to full review creation page
+			 * @return {Void} 
+			 */
+			continueReview() {
+				const {quickReview: review, professor: {id, slug}} = this;
+
+				this.$store.commit('writeQuickReview', review);
+				this.$router.push({name: 'rateProfessor', params: {id, slug}});
 			},
 		},
 	};
@@ -154,5 +194,9 @@
 <style scoped>
 	.md-title {
 		margin: 2em 0;
+	}
+	.noreview-space {
+		margin-top: 2em;
+		width: 100%;
 	}
 </style>
