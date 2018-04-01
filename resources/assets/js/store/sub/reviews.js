@@ -1,8 +1,8 @@
 const reviews = {
 	state: {
 		reviews: {
-			quick: null,
-			type: null,
+			quick: '',
+			type: '',
 			inView: [],
 		},
 	},
@@ -10,7 +10,7 @@ const reviews = {
 		/**
 		 * Return the value of quick written review
 		 * @param  {Object} state The app's state
-		 * @return {String|Null}       
+		 * @return {String}       
 		 */
 		quickReview(state) {
 			return state.reviews.quick;
