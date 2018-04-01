@@ -1,10 +1,15 @@
 import VueRouter from 'vue-router';
+import store from './store/store';
+
+// Page components
 import Index from './views/Index';
 import Professor from './views/Professor';
 import Register from './views/Register';
 import SignIn from './views/SignIn';
 import Home from './views/Home';
-import store from './store/store';
+import RateProfessor from './views/RateProfessor';
+import NotFound from './views/NotFound';
+
 
 /**
  * Protect a route to only allow autheticated users
@@ -67,7 +72,18 @@ const routes = [
 		name: 'home',
 		component: Home,
 		beforeEnter: userOnly,
-	}
+	},
+	{
+		path: '/rate/professor/:id/:slug',
+		name: 'rateProfessor',
+		component: RateProfessor,
+		beforeEnter: userOnly,
+	},
+	{
+		path: '/not-found',
+		name: 'notFound',
+		component: NotFound,
+	},
 ];
 
 export default new VueRouter({
