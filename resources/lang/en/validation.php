@@ -124,6 +124,8 @@ return [
         'directory_url' => 'directory url',
         'school_id' => 'school',
         'department_id' => 'department',
+        'current_password' => 'given password',
+        'new_password' => 'new password',
     ],
 
 ];
