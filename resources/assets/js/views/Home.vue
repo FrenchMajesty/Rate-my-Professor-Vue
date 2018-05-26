@@ -5,10 +5,7 @@
 			v-if="canShowSchoolInput"
 			md-with-hover
 		>
-			<form 
-				@submit.preventDefault="submitForm" 
-				@keydown="clearFieldErrors"
-			>
+			<SmartForm :submit="submitForm" :form="form">
 				<md-card-header>
 					<h1 class="md-title">Your account</h1>
 					<span class="md-subhead">You can update your account's personal information right here.</span>
@@ -75,7 +72,7 @@
 				<md-card-actions>
 				<md-button class="md-primary" :disabled="form.errors.any()" type="submit">Update</md-button>
 				</md-card-actions>
-			</form>
+			</SmartForm>
 		</md-card>
 	</div>
 </template>
@@ -83,9 +80,13 @@
 <script>
 	import Form from 'Js/lib/Form';
 	import Fetcher from 'Js/lib/Fetcher';
+	import SmartForm from 'Js/components/common/SmartForm';
 
 	export default {
 		name: 'Home',
+		components: {
+			SmartForm,
+		},
 
 		/**
 		 * Wait 200ms before allowing the school input to be shown to avoid flickers
@@ -94,7 +95,6 @@
 			setTimeout(() => this.canShowSchoolInput = true, 250);
 			Fetcher.schools(this);
 		},
-
 		data() {
 			return {
 				/**
@@ -118,16 +118,6 @@
 					lastname: this.$store.state.user.lastname,
 					school: '',
 				}),
-
-				/**
-				 * The form object to update a user's password
-				 * @type {Form}
-				 */
-				password: new Form({
-					password: '',
-					new: '',
-					repeatNew: '',
-				}),
 			};
 		},
 		computed: {
@@ -145,20 +135,10 @@
 			 */
 			searchIsReady() {
 				const {beingFetched: fetching} = this.$store.state.school;
-
 				return this.canShowSchoolInput && !fetching;
 			},
 		},
 		methods: {
-			/**
-			 * On keyDown, clear the errors on the target input
-			 * @param  {HTMLElement} event.target The target input's HTML element
-			 * @return {Void}                 
-			 */
-			clearFieldErrors({target}) {
-				this.form.errors.clear(target.getAttribute('data-name'));
-			},
-
 			/**
 			 * Handle the submitting of the form to update an account's information
 			 * @return {Void} 
