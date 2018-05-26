@@ -81,7 +81,6 @@
 </template>
 
 <script>
-	import { loadAllSchoolsData } from 'Js/store/api';
 	import Form from 'Js/lib/Form';
 	import Fetcher from 'Js/lib/Fetcher';
 
@@ -93,7 +92,6 @@
 		 */
 		mounted() {
 			setTimeout(() => this.canShowSchoolInput = true, 250);
-			// Load all schools data
 			Fetcher.schools(this);
 		},
 
