@@ -128,11 +128,14 @@
 					this.waitingResponse = false;
 
 					const target = query.redirect ? query.redirect : 'index';
-					this.$router.push({name: target});
+					const params = { ...query };
+					delete params.redirect;
+					
+					this.$router.push({name: target, params});
 				})
 				.catch(err => {
-					console.log(err)
-					this.waitingResponse = false
+					console.log(err);
+					this.waitingResponse = false;
 				});
 			},
 
