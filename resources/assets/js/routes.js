@@ -6,6 +6,7 @@ import Index from './views/Index';
 import Professor from './views/Professor';
 import Register from './views/Register';
 import SignIn from './views/SignIn';
+import ChangePassword from './views/Auth/ChangePassword';
 import Home from './views/Home';
 import RateProfessor from './views/RateProfessor';
 import NotFound from './views/NotFound';
@@ -45,6 +46,7 @@ const guestOnly = (to, from, next) => {
 };
 
 const routes = [
+	// Universal pages
 	{
 		path: '/',
 		name: 'index',
@@ -55,6 +57,13 @@ const routes = [
 		name: 'professor',
 		component: Professor,
 	},
+	{
+		path: '/not-found',
+		name: 'notFound',
+		component: NotFound,
+	},
+
+	// Pages for guests only
 	{
 		path: '/signup',
 		name: 'signup',
@@ -67,6 +76,8 @@ const routes = [
 		component: SignIn,
 		beforeEnter: guestOnly,
 	},
+
+	// Pages for users only
 	{
 		path: '/home',
 		name: 'home',
@@ -74,15 +85,16 @@ const routes = [
 		beforeEnter: userOnly,
 	},
 	{
+		path: '/profile/password',
+		name: 'changePassword',
+		component: ChangePassword,
+		beforeEnter: userOnly,
+	},
+	{
 		path: '/rate/professor/:id/:slug',
 		name: 'rateProfessor',
 		component: RateProfessor,
 		beforeEnter: userOnly,
-	},
-	{
-		path: '/not-found',
-		name: 'notFound',
-		component: NotFound,
 	},
 ];
 
