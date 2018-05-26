@@ -18,11 +18,11 @@ import NotFound from './views/NotFound';
  * @param  {Function} next The navigation hook
  * @return {Void}        
  */
-const userOnly = (to, from, next) => {
+const userOnly = ({name: redirect, params}, from, next) => {
 	if(! store.state.user) {
 		next({
 			name: 'signin',
-			query: {redirect: to.name}
+			query: { redirect, ...params },
 		});
 	}
 
