@@ -5,7 +5,7 @@ export default class Fetcher {
 	/**
 	 * Handle the proccess to load all schools data if it hasn't been done yet
 	 * @param  {Object} vm The vue instance of the context it's invoked in
-	 * @return {Void}    
+	 * @return {Fetcher}    
 	 */
 	static schools(vm) {
 		const {beingFetched} = vm.$store.state.school;
@@ -24,12 +24,14 @@ export default class Fetcher {
 				console.log(error);
 			});
 		}
+
+		return this;
 	}
 
 	/**
 	 * Handle the process to load all professors data if it hasn't been done yet
 	 * @param  {Object} vm The vue instance of the execution context
-	 * @return {Void}    
+	 * @return {Fetcher}    
 	 */
 	static profs(vm) {
 		const {beingFetched} = vm.$store.state.prof;
@@ -48,5 +50,7 @@ export default class Fetcher {
 				console.log(error);
 			});
 		}
+
+		return this;
 	}
 }
