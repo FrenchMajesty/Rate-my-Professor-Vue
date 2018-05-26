@@ -119,6 +119,7 @@
 
 <script>
 	import Form from 'Js/lib/Form';
+	import Fetcher from 'Js/lib/Fetcher';
 	import { submitStudentRegistration, loadAllSchoolsData } from 'Js/store/api';
 
 	export default {
@@ -129,7 +130,7 @@
 		 */
 		mounted() {
 			setTimeout(() => this.canShowSchoolInput = true, 250);
-			this.loadSchoolsData();
+			Fetcher.schools(this);
 		},
 		data() {
 			return {
@@ -187,9 +188,11 @@
 			submitForm() {
 				const {query} = this.$route;
 				const target = query.redirect ? query.redirect : 'index';
+				const params = { ...query };
+				delete params.redirect;
 
 				this.form.submit(submitStudentRegistration)
-				.then(() => this.$router.push({name: target}));
+				.then(() => this.$router.push({name: target, params}));
 			},
 
 			/**
@@ -200,26 +203,6 @@
 			clearFieldErrors({target}) {
 				this.form.errors.clear(target.getAttribute('data-name'));
 			},
-
-			/**
-			 * Init a request to load the schools' data
-			 * @return {Void} 
-			 */
-			loadSchoolsData() {
-				const {beingFetched} = this.$store.state.school;
-
-				if(!beingFetched) {
-					this.$store.commit('updateSchoolsDataFetchingStatus', true);
-
-					loadAllSchoolsData().then(({data}) => {
-						this.$store.commit({
-							type: 'updateSchoolsData',
-							data: data.schools,
-						});
-					})
-					.catch(error => console.log(error));
-				}
-			}
 		},
 	};
 </script>
