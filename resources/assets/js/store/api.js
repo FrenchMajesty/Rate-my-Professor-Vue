@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from './store';
 
 const BASE_URL= 'http://localhost/ratemy/api';
 
@@ -18,14 +19,16 @@ export function submitLogin(data) {
 	return axios.post(`${BASE_URL}/login`, data);
 }
 
-export function loadUserData(accessToken) {
-	return axios.get(`${BASE_URL}/user`, {headers: {
-		Authorization: `Bearer ${accessToken}`
-	}});
+
+const auth = () => {
+	const {accessToken} = store.state.auth;
+	return { headers: { Authorization: `Bearer ${accessToken}` } };
+};
+
+export function loadUserData() {
+	return axios.get(`${BASE_URL}/user`, auth());
 } 
 
-export function submitLogout(accessToken) {
-	return axios.post(`${BASE_URL}/logout`,null, {headers: {
-		Authorization: `Bearer ${accessToken}`
-	}});
+export function submitLogout() {
+	return axios.post(`${BASE_URL}/logout`, null, auth());
 }
