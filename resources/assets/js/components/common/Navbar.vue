@@ -38,6 +38,7 @@
 			      <md-button href="#" class="full-width" md-menu-trigger>{{user.name}}</md-button>
 			      <md-menu-content class="above-all">
 			        <md-menu-item :to="{name: 'home'}">Profile</md-menu-item>
+			        <md-menu-item :to="{name: 'changePassword'}">Change Password</md-menu-item>
 			        <md-menu-item href="#" @click="logout">Sign out</md-menu-item>
 			      </md-menu-content>
 			    </md-menu>
