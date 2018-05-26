@@ -4,7 +4,7 @@
 			<md-card-header>
 				<md-card-header-text>
 					<div class="md-title">{{professor.name}}</div>
-					<div class="md-subhead">Professor of @... at @... University</div>
+					<div class="md-subhead">Professor of @... at {{professor.school.name}}</div>
 				</md-card-header-text>
 
 				<md-card-media md-medium>
@@ -98,7 +98,7 @@
 			      	<label>Write your review:</label>
 			     	<md-textarea 
 			     		v-model="form.comment"
-			     		placeholder="Start typing your comment of your professor here. (You can press ENTER to go to the next line)."
+			     		placeholder="You can press Enter to go to the next line."
 			     		:maxlength="350"
 			      		md-autogrow
 			    	></md-textarea>
@@ -107,7 +107,7 @@
 
 			    <p>By clicking the 'Submit' button, I acknowledge that I have read and agreed to the <a href="#">Site Guidelines</a>, <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p>
 
-	    		<md-progress-bar v-if="awaitingResponse" md-mode="query"></md-progress-bar>
+	    		<md-progress-bar v-if="isSubmitting" md-mode="query"></md-progress-bar>
 				<md-card-actions>
 				<md-button :disabled="form.errors.any()" type="submit">Submit my review</md-button>
 				</md-card-actions>
@@ -126,7 +126,7 @@
 		 * Fetch all the professors' datas
 		 */
 		beforeCreate() {
-			Fetcher.profs(this);
+			Fetcher.profs(this).schools(this);
 		},
 		/**
 		 * Get the quick review from the store's state and reset its value
@@ -147,16 +147,17 @@
 					overall: 0,
 					difficulty: 0,
 					retake: false,
+					textbook: false,
 					grade: '',
 					classcode: '',
 					comment: '',
 				}),
 
 				/**
-				 * Whether the form was submitted and we are waiting the server's response
+				 * Whether the form is waiting for the server's response
 				 * @type {Boolean}
 				 */
-				awaitingResponse: false,
+				isSubmitting: false,
 
 				/**
 				 * The ID of the tags that have been selected to describe this prof
@@ -188,9 +189,13 @@
 			professor() {
 				const {id} = this.$route.params;
 				const {data} = this.$store.state.prof;
+				const {data: schools} = this.$store.state.school;
 
-				if(data) {
-					return data.find(prof => prof.id == id);
+				if(data && schools) {
+					const prof = data.find((prof) => prof.id == id);
+					prof.school = schools.find(({id}) => id == prof.school_id);
+
+					return prof;
 				}
 			},
 
@@ -212,13 +217,14 @@
 		},
 		watch: {
 			/**
-			 * When the data is ready and no professor with the given slug exists then redirect
+			 * When the data is ready and no professor with the given slug exists then 
+			 * show an error page
 			 * @param  {Boolean} isReady The value of the 'dataIsReady' computed property
 			 * @return {Void}          
 			 */
-			dataIsReady: function(isReady) {
+			dataIsReady(isReady) {
 				if(isReady && !this.professor) {
-					this.$router.push('/notFound');
+					this.$router.push({name: 'notFound'});
 				}
 			},
 		},
