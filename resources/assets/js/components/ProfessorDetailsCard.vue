@@ -45,10 +45,10 @@
       		Check out {{profsInSchool}} other professors from this school.
       	</a>
       	<md-divider class="divider"></md-divider>
-      	<p>Other professors in the deparment of {{departmentName}}.</p>
+      	<p>Other professors in the department of {{department.name}}.</p>
 
       	<a v-if="profsInDepartment > 0" href="#">
-      		Click to see {{profsInDepartment}} other {{departmentName}} professors at this school.
+      		Click to see {{profsInDepartment}} other {{department.name}} professors at this school.
       	</a>
       	<p v-else class="caption">
       		This professor seems to be the only one in this department on the website.
@@ -83,7 +83,7 @@
 			 * The professor's deparment model
 			 * @type {Object}
 			 */
-			deparment: {
+			department: {
 				type: Object,
 				required: true,
 			},
