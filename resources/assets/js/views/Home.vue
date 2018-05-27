@@ -41,6 +41,21 @@
 	      			></span>
 				</md-field>
 
+				<md-field :class="{'md-invalid': form.errors.has('email')}">
+					<md-icon>mail</md-icon>
+					<label>Your email:</label>
+					<md-input
+						data-name="email"
+						v-model="form.email"
+						placeholder="Please enter your e-mail address here."
+					></md-input>
+					<span 
+	      				class="md-error"
+	      				v-if="form.errors.has('email')"
+	      				v-text="form.errors.get('email')"
+	      			></span>
+				</md-field>
+
 				<transition
 		  			name="search"
 		  			mode="out-in"
@@ -117,6 +132,7 @@
 				form: new Form({
 					firstname: this.$store.state.user.firstname,
 					lastname: this.$store.state.user.lastname,
+					email: this.$store.state.user.email,
 					school: '',
 				}),
 			};
@@ -147,7 +163,7 @@
 			submitForm() {
 				this.isSubmitting = true;
 
-				this.form.submit(updateUserData).then(({data: user}) => {
+				const refreshStore = ({data: user}) => {
 					this.isSubmitting = false;
 					this.$store.commit({
 						type: 'updateUser',
@@ -155,7 +171,10 @@
 					});
 
 					alert('Your account information was successfully updated!');
-				});
+					this.$router.back();
+				};
+
+				this.form.submit(updateUserData).then(refreshStore);
 			},
 		},
 	}
