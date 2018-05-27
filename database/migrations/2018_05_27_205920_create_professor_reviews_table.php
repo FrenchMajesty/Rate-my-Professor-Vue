@@ -24,6 +24,7 @@ class CreateProfessorReviewsTable extends Migration
             $table->string('grade_received');
             $table->boolean('textbook_used');
             $table->boolean('would_retake');
+            $table->boolean('approved')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

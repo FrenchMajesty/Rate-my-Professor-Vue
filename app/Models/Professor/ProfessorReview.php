@@ -33,7 +33,8 @@ class ProfessorReview extends Model
      */
     protected $casts = [
     	'textbook_used' => 'boolean',
-    	'would_retake' => 'boolean',
+        'would_retake' => 'boolean',
+    	'approved' => 'boolean',
     	'overall_rating' => 'double',
     	'difficulty_rating' => 'double',
     ];
