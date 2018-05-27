@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::model('user', 'App\User');
 Route::model('prof', 'App\Models\Professor\Professor');
 Route::model('school', 'App\Models\School\School');
+Route::model('department', 'App\Models\School\Department');
 
 Route::group(['prefix' => '/auth'], function() {
 
