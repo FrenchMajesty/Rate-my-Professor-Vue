@@ -12,13 +12,16 @@ export function loadAllSchoolsData() {
 }
 
 export function submitStudentRegistration(data) {
-	return axios.post(`${BASE_URL}/signup/student`, data);
+	return axios.post(`${BASE_URL}/auth/signup/student`, data);
+}
+
+export function submitProfRegistration(data) {
+	return axios.post(`${BASE_URL}/auth/signup/prof`, data);
 }
 
 export function submitLogin(data) {
 	return axios.post(`${BASE_URL}/auth/login`, data);
 }
-
 
 const auth = () => {
 	const {accessToken} = store.state.auth;
