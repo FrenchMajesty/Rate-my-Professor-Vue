@@ -27,9 +27,14 @@ Route::group(['prefix' => '/auth'], function() {
 	Route::post('/pwd/change', 'Auth\ResetPasswordController@update')->middleware('auth:api')
 		->name('pwd.change');
 
-});
+	Route::group(['prefix' => '/signup'], function() {
 
-Route::post('/signup/student', 'Auth\RegisterController@create')->name('signup');
+		Route::post('/student', 'Auth\RegisterController@createStudent')->name('signup.student');
+		
+		Route::post('/prof', 'Auth\RegisterController@createProf')->name('signup.prof');
+	});
+
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

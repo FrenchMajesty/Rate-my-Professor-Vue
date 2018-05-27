@@ -16,24 +16,14 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
-
+    
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \App\User
      */
-    public function create(Request $request)
+    public function createStudent(Request $request)
     {
         Validator::make($request->all(), [
             'firstname' => 'required|alpha_dash|max:255',
