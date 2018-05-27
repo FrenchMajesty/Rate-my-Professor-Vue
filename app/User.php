@@ -42,7 +42,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes to append to a JSON response
+     * The custom attributes to append to a JSON response
      * @var array
      */
     protected $appends = ['name'];
