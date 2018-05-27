@@ -93,10 +93,12 @@
 	import Form from 'Js/lib/Form';
 	import Fetcher from 'Js/lib/Fetcher';
 	import SmartForm from 'Js/components/common/SmartForm';
+	import userData from 'Js/mixins/userData';
 	import { submitProfRegistration, submitLogin } from 'Js/store/api';
 
 	export default {
 		name: 'TeacherRegistrationCard',
+		mixins: [userData],
 		components: {
 			SmartForm,
 		},
@@ -128,6 +130,9 @@
 
 				this.form.submit(submitProfRegistration).then(() => {
 					this.$router.push({name: target, params});
+
+					const {email, password} = this.form;
+					submitLogin({email, password}).then(this.updateStateWithUserData);
 				});
 			},
 		},
