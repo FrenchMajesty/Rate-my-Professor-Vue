@@ -77,7 +77,7 @@ class ProfessorReview extends Model
 
     /**
      * Get the student who reviewed this professor
-     * @return \App\User 
+     * @return User 
      */
 	public function student()
 	{
@@ -86,10 +86,19 @@ class ProfessorReview extends Model
 
 	/**
 	 * Get the professor that was reviewed
-	 * @return \App\Models\Professor\Professor 
+	 * @return Professor 
 	 */
 	public function professor()
 	{
 		return $this->belongsTo('\App\Models\Professor\Professor');
 	}
+
+    /**
+     * Get all the tags that this review has
+     * @return array 
+     */
+    public function tags()
+    {
+        return $this->belongsToMany('\App\Models\Professor\ReviewTags', 'review_tags_pivot', 'review_id', 'tag_id');
+    }
 }
