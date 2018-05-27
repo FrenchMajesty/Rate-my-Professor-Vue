@@ -32,3 +32,7 @@ export function loadUserData() {
 export function submitLogout() {
 	return axios.post(`${BASE_URL}/logout`, null, auth());
 }
+
+export function changePassword(data) {
+	return axios.post(`${BASE_URL}/auth/pwd/change`, data, auth());
+}
