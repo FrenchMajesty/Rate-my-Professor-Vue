@@ -7,7 +7,7 @@ use App\Models\Professor\Professor;
 use App\Models\Professor\ProfessorReview;
 use Illuminate\Http\Request;
 
-class ProfessorReviewController extends LaravelController
+class ProfessorReviewController extends Controller
 {	
 	/**
 	 * Return a professor review's model
@@ -28,7 +28,6 @@ class ProfessorReviewController extends LaravelController
 	{
 		Validator::make($request->all(), [
 			'professor_id' => 'required|exists:professors,id',
-			'user_id' => 'required|exists:users,id',
 			'overall_rating' => 'required|numeric',
 			'difficulty_rating' => 'required|numeric',
 			'textbook_used' => 'required|boolean',
@@ -36,21 +35,35 @@ class ProfessorReviewController extends LaravelController
 			'comment' => 'required|string',
 			'grade_received' => 'required|string',
 			'class' => 'required|string',
+			'tags_id' => 'required|string',
 		])->validate();
 
-		$data = $request->only([
-			'professor_id',
-			'user_id',
-			'overall_rating',
-			'difficulty_rating',
-			'textbook_used',
-			'would_retake',
-			'comment',
-			'grade_received',
-			'class',
-		]);
+		$reviewAlreadyGiven = ProfessorReview::where([
+			'user_id' => $request->user()->id,
+			'professor_id' => $request->professor_id,
+		])->first();
 
-		return ProfessorReview::create($data);
+		if($reviewAlreadyGiven) {
+			$errors = ['professor_id' => ['You cannot give two reviews to the same professor.']];
+			return response()->json(compact('errors'), 401);
+		}
+
+		$tagsId = explode(',', $request->tags_id);
+		foreach($tagsId as $id) {
+			// do something with the tags..
+		}
+
+		return ProfessorReview::create([
+			'user_id' => $request->user()->id,
+			'professor_id' => $request->professor_id,
+			'overall_rating' => $request->overall_rating,
+			'difficulty_rating' => $request->difficulty_rating,
+			'textbook_used' => $request->textbook_used,
+			'would_retake' => $request->would_retake,
+			'comment' => $request->comment,
+			'grade_received' => $request->grade_received,
+			'class' => $request->class,
+		]);
 	}
 
 	/**
@@ -70,6 +83,11 @@ class ProfessorReviewController extends LaravelController
 			'grade_received' => 'required|string',
 			'class' => 'required|string',
 		])->validate();
+
+		if($review->user_id != Auth::id()) {
+			$errors = ['message' => ['This entry does not belong to you, you cannot modify it.']];
+			return response()->json(compact('errors'), 401);
+		}
 
 		$data = $request->only([
 			'overall_rating',
@@ -92,6 +110,11 @@ class ProfessorReviewController extends LaravelController
 	 */
 	public function delete(ProfessorReview $review)
 	{
+		if($review->user_id != Auth::id()) {
+			$errors = ['message' => ['This entry does not belong to you, you cannot delete it.']];
+			return response()->json(compact('errors'), 401);
+		}
+
 		$review->delete();
 	}
 }
