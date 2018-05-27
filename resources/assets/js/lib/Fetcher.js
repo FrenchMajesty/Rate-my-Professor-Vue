@@ -1,4 +1,4 @@
-import { loadAllSchoolsData, loadAllProfessorsData } from '../store/api';
+import { loadAllSchoolsData, loadAllProfessorsData, loadAllDeptsData } from '../store/api';
 
 export default class Fetcher {
 
@@ -9,9 +9,10 @@ export default class Fetcher {
 	 */
 	static schools(vm) {
 		const {beingFetched} = vm.$store.state.school;
+		const status = 'updateSchoolsDataFetchingStatus';
 
 		if(!beingFetched) {
-			vm.$store.commit('updateSchoolsDataFetchingStatus', true);
+			vm.$store.commit(status, true);
 
 			loadAllSchoolsData().then(({data}) => {
 				vm.$store.commit({
@@ -20,7 +21,7 @@ export default class Fetcher {
 				});
 			})
 			.catch(error => {
-				vm.$store.commit('updateSchoolsDataFetchingStatus', false);
+				vm.$store.commit(status, false);
 				console.log(error);
 			});
 		}
@@ -35,9 +36,10 @@ export default class Fetcher {
 	 */
 	static profs(vm) {
 		const {beingFetched} = vm.$store.state.prof;
+		const status = 'updateProfsDataFetchingStatus';
 
 		if(!beingFetched) {
-			vm.$store.commit('updateProfsDataFetchingStatus', true);
+			vm.$store.commit(status, true);
 
 			loadAllProfessorsData().then(({data}) => {
 				vm.$store.commit({
@@ -46,7 +48,34 @@ export default class Fetcher {
 				});
 			})
 			.catch(error => {
-				vm.$store.commit('updateProfsDataFetchingStatus', false);
+				vm.$store.commit(status, false);
+				console.log(error);
+			});
+		}
+
+		return this;
+	}
+
+	/**
+	 * Handle the process to load all department datas if it hasn't been done yet
+	 * @param  {Object} vm The vue instance of the execution context
+	 * @return {Fetcher}    
+	 */
+	static depts(vm) {
+		const {beingFetched} = vm.$store.state.dept;
+		const status = 'updateDeptsDataFetchingStatus';
+
+		if(!beingFetched) {
+			vm.$store.commit(status, true);
+
+			loadAllDeptsData().then(({data}) => {
+				vm.$store.commit({
+					type: 'updateDeptsData',
+					data: data.depts,
+				});
+			})
+			.catch(error => {
+				vm.$store.commit(status, false);
 				console.log(error);
 			});
 		}
