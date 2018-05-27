@@ -1,9 +1,7 @@
 ### Things to do
 
 - Complete the Auth system 
-	* TeacherRegistrationCard
 	* Forgot password
-	* Change password
 	* Make the 'Remember Me' actually work
 - Make the Profile page to update name & school functional
 - Add the departments to the API
