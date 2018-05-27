@@ -16,7 +16,7 @@ class Professor extends Model
     protected $fillable = [
     	'firstname',
     	'lastname',
-      'slug',
+      	'slug',
     	'school_id',
     	'department_id',
     	'directory_url',
