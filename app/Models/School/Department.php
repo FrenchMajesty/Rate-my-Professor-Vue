@@ -51,6 +51,15 @@ class Department extends Model
     }
 
     /**
+     * Get all the professors that teach in this department
+     * @return array 
+     */
+    public function professors()
+    {
+        return $this->hasMany('\App\Models\Professor\Professor');
+    }
+
+    /**
      * Get all the schools that have this department
      * @return array 
      */
