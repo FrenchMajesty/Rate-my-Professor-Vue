@@ -68,7 +68,7 @@
 	import Form from 'Js/lib/Form';
 	import SmartForm from 'Js/components/common/SmartForm';
 	import userData from 'Js/mixins/userData';
-	import { submitLogin, loadUserData } from 'Js/store/api';
+	import { submitLogin } from 'Js/store/api';
 
 	export default {
 		name: 'SignIn',
