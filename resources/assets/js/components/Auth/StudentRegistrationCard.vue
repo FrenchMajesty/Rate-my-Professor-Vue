@@ -117,7 +117,7 @@
 	import Form from 'Js/lib/Form';
 	import Fetcher from 'Js/lib/Fetcher';
 	import SmartForm from 'Js/components/common/SmartForm';
-	import { submitStudentRegistration, loadAllSchoolsData } from 'Js/store/api';
+	import { submitStudentRegistration } from 'Js/store/api';
 
 	export default {
 		name: 'StudentRegistrationCard',
