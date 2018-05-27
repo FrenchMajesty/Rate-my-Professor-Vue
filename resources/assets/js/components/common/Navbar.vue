@@ -137,9 +137,7 @@
 			 * @return {Void} 
 			 */
 			logout() {
-				const {accessToken} = this.$store.state.auth;
-
-				submitLogout(accessToken)
+				submitLogout()
 				.then(() => {
 					this.$store.commit({
 						type: 'updateUser',

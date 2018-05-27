@@ -107,7 +107,7 @@
 
 			/**
 			 * Update the app's state with the user's model and access token
-			 * @param  {Object} response.data The login server response
+			 * @param  {Object} response.data The token object
 			 * @return {Void}              
 			 */
 			updateStateWithUserData({data}) {
@@ -119,14 +119,14 @@
 					expire: data.expires_in,
 				});
 
-				loadUserData(data.access_token).then(({data: user}) => {
+				loadUserData().then(({data: user}) => {
+					this.waitingResponse = false;
 					this.$store.commit({
 						type: 'updateUser',
 						user,
 					});
 
-					this.waitingResponse = false;
-
+					// Figure out what page to go to next
 					const target = query.redirect ? query.redirect : 'index';
 					const params = { ...query };
 					delete params.redirect;
