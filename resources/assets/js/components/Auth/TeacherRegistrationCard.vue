@@ -119,21 +119,16 @@
 		},
 		methods: {
 			/**
-			 * Handle the submitting the form
+			 * Handle the submitting the form and login the user
 			 * @return {Void} 
 			 */
 			submitForm() {
-				const {query} = this.$route;
-				const target = query.redirect ? query.redirect : 'index';
-				const params = { ...query };
-				delete params.redirect;
-
-				this.form.submit(submitProfRegistration).then(() => {
-					this.$router.push({name: target, params});
-
-					const {email, password} = this.form;
+				const {email, password} = this.form;
+				const login = () => {
 					submitLogin({email, password}).then(this.updateStateWithUserData);
-				});
+				};
+
+				this.form.submit(submitProfRegistration).then(login);
 			},
 		},
 	};

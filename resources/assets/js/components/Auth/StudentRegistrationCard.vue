@@ -118,7 +118,7 @@
 	import Fetcher from 'Js/lib/Fetcher';
 	import SmartForm from 'Js/components/common/SmartForm';
 	import userData from 'Js/mixins/userData';
-	import { submitStudentRegistration } from 'Js/store/api';
+	import { submitStudentRegistration, submitLogin } from 'Js/store/api';
 
 	export default {
 		name: 'StudentRegistrationCard',
@@ -183,21 +183,16 @@
 		},
 		methods: {
 			/**
-			 * Handle the submitting of the form
+			 * Handle the submitting of the form and login the user
 			 * @return {Void} 
 			 */
 			submitForm() {
-				const {query} = this.$route;
-				const target = query.redirect ? query.redirect : 'index';
-				const params = { ...query };
-				delete params.redirect;
-
-				this.form.submit(submitStudentRegistration).then(() => {
-					this.$router.push({name: target, params});
-
-					const {email, password} = this.form;
+				const {email, password} = this.form;
+				const login = () => {
 					submitLogin({email, password}).then(this.updateStateWithUserData);
-				});
+				};
+
+				this.form.submit(submitStudentRegistration).then(login);
 			},
 		},
 	};
