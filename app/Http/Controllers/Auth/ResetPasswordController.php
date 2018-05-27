@@ -2,38 +2,38 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Validator;
+use Optimus\Bruno\LaravelController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
-class ResetPasswordController extends Controller
+class ResetPasswordController extends LaravelController
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
-
-    use ResetsPasswords;
-
     /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
+     * Handle an user's request to update their password
+     * @param  \Illuminate\Http\Request $request Request
+     * @return void           
      */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function update(Request $request)
     {
-        $this->middleware('guest');
+        Validator::make($request->all(), [
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ])->validate();
+
+        $credentials = [
+            'email' => $request->user()->email,
+            'password' => $request->input('current_password'),
+        ];
+
+        if(!Auth::attempt($credentials)) {
+            $errors = ['current_password' => ['The current password is incorrect.']];
+            return abort(422, compact('errors'));
+        }
+
+        $user = Auth::user();
+        $user->password = bcrypt($request->input('new_password'));
+        $user->save();
     }
 }
