@@ -5,6 +5,7 @@
 	* Forgot password
 	* Change password
 	* Make the 'Remember Me' actually work
+- Make the Profile page to update name & school functional
 - Add the departments to the API
 - Add the departments to the front-end store
 - Replace the top search bar with real autocomplete one ?
@@ -24,6 +25,7 @@
 - Create an 'About Us and How to Use' page
 - Create a 'Contact Us' page
 - Create Policy & Terms Pages
+- Fix the bug on Profile page where the top search bar is reloaded and bounces
 - Work on improving the UI and look of the platform
 - Make web app multi-lingual with French
 - Write instructions in readme on how to boot up the project
