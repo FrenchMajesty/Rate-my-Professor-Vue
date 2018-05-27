@@ -17,11 +17,12 @@ Route::model('user', 'App\Models\User');
 Route::model('prof', 'App\Models\Professor\Professor');
 Route::model('school', 'App\Models\School\School');
 
-Route::post('login', 'Auth\LoginController@login')->name('login');
-
-Route::post('logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth:api');
-
 Route::group(['prefix' => '/auth'], function() {
+
+	Route::post('login', 'Auth\LoginController@login')->name('login');
+
+	Route::post('logout', 'Auth\LoginController@logout')->middleware('auth:api')
+		->name('logout');
 
 	Route::post('/pwd/change', 'ResetPasswordController@update')->middleware('auth:api')
 		->name('pwd.change');
