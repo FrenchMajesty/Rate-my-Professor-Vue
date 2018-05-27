@@ -16,7 +16,7 @@ export function submitStudentRegistration(data) {
 }
 
 export function submitLogin(data) {
-	return axios.post(`${BASE_URL}/login`, data);
+	return axios.post(`${BASE_URL}/auth/login`, data);
 }
 
 
@@ -30,7 +30,7 @@ export function loadUserData() {
 } 
 
 export function submitLogout() {
-	return axios.post(`${BASE_URL}/logout`, null, auth());
+	return axios.post(`${BASE_URL}/auth/logout`, null, auth());
 }
 
 export function changePassword(data) {
