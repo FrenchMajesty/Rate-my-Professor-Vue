@@ -6,6 +6,7 @@ import schools from './sub/schools';
 import profs from './sub/profs';
 import depts from './sub/depts';
 import reviews from './sub/reviews';
+import tags from './sub/tags';
 
 const vuexLocalStorage = new VuexPersist({
 	key: 'vuex', 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
 		...schools.state,
 		...depts.state,
 		...reviews.state,
+		...tags.state,
 	},
 	getters: {
 		...auth.getters,
@@ -28,6 +30,7 @@ export default new Vuex.Store({
 		...schools.getters,
 		...depts.getters,
 		...reviews.getters,
+		...tags.getters,
 	},
 	mutations: {
 		...auth.mutations,
@@ -35,6 +38,7 @@ export default new Vuex.Store({
 		...schools.mutations,
 		...depts.mutations,
 		...reviews.mutations,
+		...tags.mutations,
 	},
 	plugins: [vuexLocalStorage.plugin],
 });
