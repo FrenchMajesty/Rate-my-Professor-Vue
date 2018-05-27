@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::model('user', 'App\Models\User');
+Route::model('user', 'App\User');
 Route::model('prof', 'App\Models\Professor\Professor');
 Route::model('school', 'App\Models\School\School');
 
