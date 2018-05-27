@@ -23,13 +23,13 @@ const auth = {
 		},
 
 		/**
-		 * Update the user model in the state
+		 * Update the user model in the state if existing or set it
 		 * @param  {Object} state        The app's state
 		 * @param  {Object} payload.user The new user model
 		 * @return {Void}              
 		 */
 		updateUser(state, {user}) {
-			state.user = user;
+			state.user = state.user ? { ...state.user, ...user } : user;
 		},
 	},
 };
