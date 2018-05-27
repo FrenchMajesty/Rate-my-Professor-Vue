@@ -29,7 +29,7 @@ return [
         'string'  => 'The :attribute must be between :min and :max characters.',
         'array'   => 'The :attribute must have between :min and :max items.',
     ],
-    'boolean'              => 'The :attribute field must be true or false.',
+    'boolean'              => 'The :attribute switch\'s value must be yes or no.',
     'confirmed'            => 'The :attribute confirmation does not match.',
     'date'                 => 'The :attribute is not a valid date.',
     'date_format'          => 'The :attribute does not match the format :format.',
@@ -122,10 +122,18 @@ return [
         'lastname' => 'last name',
         'nickname' => 'nick name',
         'directory_url' => 'directory url',
+        'user_id' => 'user',
         'school_id' => 'school',
+        'review_id' => 'review',
+        'professor_id' => 'professor',
         'department_id' => 'department',
         'current_password' => 'given password',
         'new_password' => 'new password',
+        'textbook_used' => 'textbook',
+        'would_retake' => 'retake',
+        'overall_rating' => 'overall course rating',
+        'difficulty_rating' => 'difficulty rating',
+        'grade_received' => 'grade'
     ],
 
 ];
