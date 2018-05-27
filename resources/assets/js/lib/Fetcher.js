@@ -1,4 +1,8 @@
-import { loadAllSchoolsData, loadAllProfessorsData, loadAllDeptsData } from '../store/api';
+import { 
+	loadAllSchoolsData,
+	loadAllProfessorsData,
+	loadAllReviewTags,
+	loadAllDeptsData } from '../store/api';
 
 export default class Fetcher {
 
@@ -72,6 +76,33 @@ export default class Fetcher {
 				vm.$store.commit({
 					type: 'updateDeptsData',
 					data: data.depts,
+				});
+			})
+			.catch(error => {
+				vm.$store.commit(status, false);
+				console.log(error);
+			});
+		}
+
+		return this;
+	}
+
+	/**
+	 * Handle the process to load all review tags if it hasn't been done yet
+	 * @param  {Object} vm The vue instance of the execution context
+	 * @return {Fetcher}    
+	 */
+	static tags(vm) {
+		const {beingFetched} = vm.$store.state.tags;
+		const status = 'updateTagsDataFetchingStatus';
+
+		if(!beingFetched) {
+			vm.$store.commit(status, true);
+
+			loadAllReviewTags().then(({data}) => {
+				vm.$store.commit({
+					type: 'updateTagsData',
+					data,
 				});
 			})
 			.catch(error => {
