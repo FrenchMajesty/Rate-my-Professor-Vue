@@ -88,17 +88,17 @@ Route::group(['prefix' => '/school'], function() {
 
 });
 
-Route::group(['prefix' => '/deptartment'], function() {
+Route::group(['prefix' => '/department'], function() {
 
-	Route::post('/new', 'DepartmentController@create')->name('deptartment.create');
+	Route::post('/new', 'DepartmentController@create')->name('department.create');
 
-	Route::get('/fetch', 'DepartmentController@fetch')->name('deptartment.fetch');
+	Route::get('/fetch', 'DepartmentController@fetch')->name('department.fetch');
 
-	Route::get('{deptartment}', 'DepartmentController@index')->name('deptartment');
+	Route::get('{department}', 'DepartmentController@index')->name('department');
 
-	Route::put('/{deptartment}', 'DepartmentController@update')->name('deptartment.update');
+	Route::put('/{department}', 'DepartmentController@update')->name('department.update');
 
-	Route::delete('/{deptartment}', 'DepartmentController@delete')->name('deptartment.delete');
+	Route::delete('/{department}', 'DepartmentController@delete')->name('department.delete');
 
 });
 
