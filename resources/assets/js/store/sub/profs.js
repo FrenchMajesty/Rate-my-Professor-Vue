@@ -24,11 +24,11 @@ const profs = {
 		/**
 		 * Update the value of the professors' data
 		 * @param  {Object} state   The app's state
-		 * @param  {Array} payload The professors's data to set
+		 * @param  {Array} payload.data The professors's data to set
 		 * @return {Void}         
 		 */
-		updateProfsData(state, payload) {
-			state.prof.data = payload.data;
+		updateProfsData(state, {data}) {
+			state.prof.data = data;
 			state.prof.beingFetched = false;
 		},
 	},

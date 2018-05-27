@@ -31,11 +31,11 @@ const schools = {
 		/**
 		 * Update the value of the schools' data
 		 * @param  {Object} state   The app's state
-		 * @param  {Array} payload The schools's data to set
+		 * @param  {Array} payload.data The schools's data to set
 		 * @return {Void}         
 		 */
-		updateSchoolsData(state, payload) {
-			state.school.data = payload.data;
+		updateSchoolsData(state, {data}) {
+			state.school.data = data;
 			state.school.beingFetched = false;
 		},
 	},
