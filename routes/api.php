@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::model('user', 'App\User');
 Route::model('prof', 'App\Models\Professor\Professor');
+Route::model('prof.review', 'App\Models\Professor\ProfessorReview');
 Route::model('school', 'App\Models\School\School');
 Route::model('department', 'App\Models\School\Department');
 
@@ -56,6 +57,18 @@ Route::group(['prefix' => '/prof'], function() {
 	Route::get('/fetch', 'ProfessorController@fetch')->name('prof.fetch');
 
 	Route::get('{prof}', 'ProfessorController@index')->name('prof');
+
+	Route::group(['prefix' => '/review'], function() {
+
+		Route::post('/', 'ProfessorReviewController@create');
+
+		Route::get('{prof.review}', 'ProfessorReviewController@index');
+
+		Route::put('{prof.review}', 'ProfessorReviewController@update');
+
+		Route::delete('{prof.review}', 'ProfessorReviewController@delete');
+
+	});
 
 	Route::group(['middleware' => ['auth:api','isAdmin']], function() {
 
