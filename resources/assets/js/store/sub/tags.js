@@ -1,7 +1,9 @@
 const tags = {
 	state: {
-		data: [],
-		beingFetched: false,
+		tags: {
+			data: [],
+			beingFetched: false,
+		},
 	},
 	getters: {
 
@@ -14,18 +16,18 @@ const tags = {
 		 * @return {Void}       
 		 */
 		updateTagsDataFetchingStatus(state, value) {
-			state.school.beingFetched = value;
+			state.tags.beingFetched = value;
 		},
 
 		/**
 		 * Update the value of the tags used to review
 		 * @param  {Object} state   The app's state
-		 * @param  {Array} payload.data The schools's data to set
+		 * @param  {Array} payload.data The review tags to set
 		 * @return {Void}         
 		 */
 		updateTagsData(state, {data}) {
-			state.school.data = data;
-			state.school.beingFetched = false;
+			state.tags.data = data;
+			state.tags.beingFetched = false;
 		},
 	},
 };
