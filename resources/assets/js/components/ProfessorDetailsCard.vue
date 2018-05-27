@@ -31,7 +31,7 @@
       <md-content class="md-layout-item md-xsmall-size-100 vertical-spacing">
       	<h1 class="prof-name">{{prof.name}}</h1>
 
-      	<p class="md-subtitle">Professor of {{departmentName}} at <a href="#">{{school.name}} ({{school.nickname}})</a>, {{school.location}}.</p>
+      	<p class="md-subtitle">Professor of {{department.name}} at <a href="#">{{school.name}} ({{school.nickname}})</a>, {{school.location}}.</p>
       	<div>
       		<a href="#">Submit a correction</a>
       	</div>
@@ -69,6 +69,7 @@
 				type: Object,
 				required: true,
 			},
+
 			/**
 			 * The professor's school model
 			 * @type {Object}
@@ -77,8 +78,18 @@
 				type: Object,
 				required: true,
 			},
+
 			/**
-			 * The reviews of this professor
+			 * The professor's deparment model
+			 * @type {Object}
+			 */
+			deparment: {
+				type: Object,
+				required: true,
+			},
+
+			/**
+			 * The reviews this professor received
 			 * @type {Array}
 			 */
 			ratings: {
@@ -93,10 +104,6 @@
 			};
 		},
 		computed: {
-			departmentName() {
-				return 'department name';
-			},
-
 			/**
 			 * Calculate the number of professors in the same department
 			 * @return {Number} 

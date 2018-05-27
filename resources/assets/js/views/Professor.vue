@@ -3,6 +3,7 @@
 		<ProfessorDetailsCard 
 			:prof="professor" 
 			:school="professor.school"
+			:department="professor.department"
 			:ratings="ratingsAreReady ? ratings : null"
 			:numberOfSimilarProfs="numberOfSimilarProfs"
 		></ProfessorDetailsCard>
@@ -68,6 +69,7 @@
 </template>
 
 <script>
+	import Fetcher from 'Js/lib/Fetcher';
 	import ProfileContainer from '../components/ProfileContainer';
 	import ProfessorDetailsCard from '../components/ProfessorDetailsCard';
 	import ProfessorReview from '../components/ProfessorReview';
@@ -83,6 +85,7 @@
 		 */
 		created() {
 			setTimeout(() => this.ratingsAreReady = true, 1500);
+			Fetcher.depts(this);
 		},
 		data() {
 			return {
@@ -144,7 +147,12 @@
 					return !beingFetched && data !== null;
 				}
 
-				return isProfReady() && isSchoolReady();
+				const isDepartmentReady = () => {
+					const {beingFetched, data} = this.$store.state.dept;
+					return !beingFetched && data !== null;
+				}
+
+				return isProfReady() && isSchoolReady() && isDepartmentReady();
 			},
 
 			/**
@@ -153,11 +161,16 @@
 			 */
 			professor() {
 				 const {slug} = this.$route.params;
-				 const {prof: {data: profs}, school: {data: schools}} = this.$store.state;
+				 const {
+				 	prof: {data: profs}, 
+				 	school: {data: schools},
+				 	dept: {data: depts}
+				 } = this.$store.state;
 
 				 if(this.dataIsReady) {
 					const prof = profs.find(prof => prof.slug == slug);
 					prof.school = schools.find(school => school.id == prof.school_id);
+					prof.department = depts.find(dept => dept.id == prof.department_id);
 
 					return prof;
 				}
