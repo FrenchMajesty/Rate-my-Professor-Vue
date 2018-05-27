@@ -23,15 +23,13 @@ class ResetPasswordController extends LaravelController
             'new_password' => 'required|confirmed',
         ])->validate();
 
-        $password = $request->input('current_password');
-
-        if(!Hash::check($password, $request->user()->password)) {
+        if(!Hash::check($request->current_password, $request->user()->password)) {
             $errors = ['current_password' => ['The current password is incorrect.']];
             return response()->json(compact('errors'), 422);
         }
 
         $user = Auth::user();
-        $user->password = bcrypt($request->input('new_password'));
+        $user->password = bcrypt($request->new_password);
         $user->save();
     }
 }
