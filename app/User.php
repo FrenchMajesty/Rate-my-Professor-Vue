@@ -55,4 +55,22 @@ class User extends Authenticatable
     {
         return $this->firstname.' '.$this->lastname;
     }
+
+    /**
+     * Get the admin model of this user
+     * @return \App\Models\Account\Admin 
+     */
+    public function admin()
+    {
+        return $this->hasOne('App\Models\Account\Admin');
+    }
+
+    /**
+     * Get the student model of this user
+     * @return \App\Models\Account\Student 
+     */
+    public function student()
+    {
+        return $this->hasOne('App\Models\Account\Student');
+    }
 }
