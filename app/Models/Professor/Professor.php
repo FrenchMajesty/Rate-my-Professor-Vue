@@ -80,19 +80,19 @@ class Professor extends Model
 
     /**
      * Get the school where this professor teaches
-     * @return \App\School\School
+     * @return \App\Models\School\School
      */
     public function school()
     {
-        return $this->belongsTo('\App\School\School'); 
+        return $this->belongsTo('\App\Models\School\School'); 
     }
 
     /**
      * Get the department where this professor teaches
-     * @return \App\School\Department 
+     * @return \App\Models\School\Department 
      */
     public function department()
     {
-        return $this->belongsTo('\App\School\Department');
+        return $this->belongsTo('\App\Models\School\Department');
     }
 }

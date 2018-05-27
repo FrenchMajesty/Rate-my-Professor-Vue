@@ -46,7 +46,7 @@ class School extends Model
      */
     public function professors()
     {
-    	return $this->hasMany('\App\Professor\Professor');
+    	return $this->hasMany('\App\Models\Professor\Professor');
     }
 
     /**
