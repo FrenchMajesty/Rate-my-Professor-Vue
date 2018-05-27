@@ -68,7 +68,7 @@
 					</div>
 				</transition>
 
-	    		<md-progress-bar v-if="accountWaitingResponse" md-mode="query"></md-progress-bar>
+	    		<md-progress-bar v-if="isSubmitting" md-mode="query"></md-progress-bar>
 				<md-card-actions>
 				<md-button class="md-primary" :disabled="form.errors.any()" type="submit">Update</md-button>
 				</md-card-actions>
@@ -81,6 +81,7 @@
 	import Form from 'Js/lib/Form';
 	import Fetcher from 'Js/lib/Fetcher';
 	import SmartForm from 'Js/components/common/SmartForm';
+	import { updateUserData } from 'Js/store/api';
 
 	export default {
 		name: 'Home',
@@ -98,10 +99,10 @@
 		data() {
 			return {
 				/**
-				 * Whether the account form has been submitted and is awaiting the response
+				 * The state of the AJAX request of the form
 				 * @type {Boolean}
 				 */
-				accountWaitingResponse: false,
+				isSubmitting: false,
 
 				/**
 				 * Whether the school input is allowed to be shown
@@ -140,12 +141,21 @@
 		},
 		methods: {
 			/**
-			 * Handle the submitting of the form to update an account's information
+			 * Handle the submitting of the form and update the user in the store
 			 * @return {Void} 
 			 */
 			submitForm() {
-				//this.accountWaitingResponse = true;
-				console.log('form submitted!');
+				this.isSubmitting = true;
+
+				this.form.submit(updateUserData).then(({data: user}) => {
+					this.isSubmitting = false;
+					this.$store.commit({
+						type: 'updateUser',
+						user,
+					});
+
+					alert('Your account information was successfully updated!');
+				});
 			},
 		},
 	}
