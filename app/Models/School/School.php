@@ -48,4 +48,13 @@ class School extends Model
     {
     	return $this->hasMany('\App\Professor\Professor');
     }
+
+    /**
+     * Get all the departments of this school
+     * @return array 
+     */
+    public function departments()
+    {
+        return $this->belongsToMany('\App\Models\School\Department','school_departments', 'school_id','department_id');
+    }
 }

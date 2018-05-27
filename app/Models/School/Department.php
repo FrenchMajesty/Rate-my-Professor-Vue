@@ -49,4 +49,13 @@ class Department extends Model
     {
         return 'slug';
     }
+
+    /**
+     * Get all the schools that have this department
+     * @return array 
+     */
+    public function schools()
+    {
+        return $this->belongsToMany('\App\Models\School\School','school_departments', 'department_id','school_id');
+    }
 }
