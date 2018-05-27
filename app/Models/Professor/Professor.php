@@ -95,4 +95,13 @@ class Professor extends Model
     {
         return $this->belongsTo('\App\Models\School\Department');
     }
+
+    /**
+     * Get the reviews that this professor has received
+     * @return array 
+     */
+    public function review()
+    {
+     	return $this->hasMany('\App\Models\Professor\ProfessorReview');
+    }
 }
