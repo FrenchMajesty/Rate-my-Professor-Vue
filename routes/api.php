@@ -24,7 +24,7 @@ Route::group(['prefix' => '/auth'], function() {
 	Route::post('logout', 'Auth\LoginController@logout')->middleware('auth:api')
 		->name('logout');
 
-	Route::post('/pwd/change', 'ResetPasswordController@update')->middleware('auth:api')
+	Route::post('/pwd/change', 'Auth\ResetPasswordController@update')->middleware('auth:api')
 		->name('pwd.change');
 
 });
