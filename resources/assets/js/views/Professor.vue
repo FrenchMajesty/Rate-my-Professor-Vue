@@ -2,7 +2,7 @@
 	<ProfileContainer v-if="professor">
 		<ProfessorDetailsCard 
 			:prof="professor" 
-			:school="professorSchool"
+			:school="professor.school"
 			:ratings="ratingsAreReady ? ratings : null"
 			:numberOfSimilarProfs="numberOfSimilarProfs"
 		></ProfessorDetailsCard>
@@ -130,12 +130,21 @@
 			},
 
 			/**
-			 * Determine whether the professors' datas are ready to be used
+			 * Determine whether the datas for this page are ready to be used
 			 * @return {Boolean} 
 			 */
 			dataIsReady() {
-				const {beingFetched, data} = this.$store.state.prof;
-				return ! beingFetched && data !== null;
+				const isProfReady = () => {
+					const {beingFetched, data} = this.$store.state.prof;
+					return !beingFetched && data !== null;
+				}
+
+				const isSchoolReady = () => {
+					const {beingFetched, data} = this.$store.state.school;
+					return !beingFetched && data !== null;
+				}
+
+				return isProfReady() && isSchoolReady();
 			},
 
 			/**
@@ -144,25 +153,15 @@
 			 */
 			professor() {
 				 const {slug} = this.$route.params;
-				 const {data} = this.$store.state.prof;
+				 const {prof: {data: profs}, school: {data: schools}} = this.$store.state;
 
 				 if(this.dataIsReady) {
-					return data.find(prof => prof.slug == slug);
+					const prof = profs.find(prof => prof.slug == slug);
+					prof.school = schools.find(school => school.id == prof.school_id);
+
+					return prof;
 				}
 			},
-
-			/**
-			 * Search for the given professor's school in the app's state
-			 * @return {Void} 
-			 */
-			professorSchool() {
-				const {data} = this.$store.state.school;
-				const {school_id: id} = this.professor;
-
-				if(this.professor && data) {
-					return data.find(school => school.id == id);
-				}
-			}
 		},
 		watch: {
 			/**
