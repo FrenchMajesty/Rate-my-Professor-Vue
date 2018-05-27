@@ -60,13 +60,13 @@ Route::group(['prefix' => '/prof'], function() {
 
 	Route::group(['prefix' => '/review'], function() {
 
-		Route::post('/', 'ProfessorReviewController@create');
+		Route::post('/', 'ProfessorReviewController@create')->middleware('auth:api');
 
 		Route::get('{prof.review}', 'ProfessorReviewController@index');
 
-		Route::put('{prof.review}', 'ProfessorReviewController@update');
+		Route::put('{prof.review}', 'ProfessorReviewController@update')->middleware('auth:api');
 
-		Route::delete('{prof.review}', 'ProfessorReviewController@delete');
+		Route::delete('{prof.review}', 'ProfessorReviewController@delete')->middleware('auth:api');
 
 	});
 
