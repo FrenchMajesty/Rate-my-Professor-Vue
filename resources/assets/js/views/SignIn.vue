@@ -4,10 +4,7 @@
 			class="md-layout-item md-xsmall-size-90 md-small-size-80 md-medium-size-50 md-size-40"
 			md-with-hover
 		>
-			<form 
-				@submit.preventDefault="submitForm" 
-				@keydown="clearFieldErrors"
-			>
+			<SmartForm :submit="submitForm" :form="form">
 				<md-card-header>
 					<h1 class="md-title">Sign In</h1>
 					<span class="md-subhead">Don't have an account yet? No worries you can <router-link :to="{name: 'signup', query: $route.query}">sign up here</router-link> for free.</span>
@@ -58,21 +55,25 @@
 	  				v-text="form.errors.get('remember')"
 	  			></span>
 
-	    			<md-progress-bar v-if="waitingResponse" md-mode="query"></md-progress-bar>
+	    			<md-progress-bar v-if="isSubmitting" md-mode="query"></md-progress-bar>
 				<md-card-actions>
 				<md-button class="md-primary" :disabled="form.errors.any()" type="submit">Login</md-button>
 				</md-card-actions>
-			</form>
+			</SmartForm>
 		</md-card>
 	</div>
 </template>
 
 <script>
 	import Form from 'Js/lib/Form';
+	import SmartForm from 'Js/components/common/SmartForm';
 	import { submitLogin, loadUserData } from 'Js/store/api';
 
 	export default {
 		name: 'SignIn',
+		components: {
+			SmartForm,
+		},
 		data() {
 			return {
 				/**
@@ -86,10 +87,10 @@
 				}),
 
 				/**
-				 * Whether the form has been submitted and is awaiting the response
+				 * The AJAX submit status of the form
 				 * @type {Boolean}
 				 */
-				waitingResponse: false,
+				isSubmitting: false,
 			};
 		},
 		methods: {
@@ -98,11 +99,11 @@
 			 * @return {Void} 
 			 */
 			submitForm() {
-				this.waitingResponse = true;
+				this.isSubmitting = true;
 
 				this.form.submit(submitLogin)
 				.then(this.updateStateWithUserData)
-				.catch(_ => this.waitingResponse = false);
+				.catch(_ => this.isSubmitting = false);
 			},
 
 			/**
@@ -120,7 +121,7 @@
 				});
 
 				loadUserData().then(({data: user}) => {
-					this.waitingResponse = false;
+					this.isSubmitting = false;
 					this.$store.commit({
 						type: 'updateUser',
 						user,
@@ -135,17 +136,8 @@
 				})
 				.catch(err => {
 					console.log(err);
-					this.waitingResponse = false;
+					this.isSubmitting = false;
 				});
-			},
-
-			/**
-			 * On keyDown, clear the errors on the target input
-			 * @param  {HTMLElement} event.target The target input's HTML element
-			 * @return {Void}                 
-			 */
-			clearFieldErrors({target}) {
-				this.form.errors.clear(target.getAttribute('data-name'));
 			},
 		},
 	}

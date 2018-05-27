@@ -1,10 +1,6 @@
 <template>
 	<md-card md-with-hover>
-		<form 
-			class="md-layout-item md-size-90" 
-			@submit.preventDefault="submitForm" 
-			@keydown="clearFieldErrors"
-		>
+		<SmartForm class="md-layout-item md-size-90" :submit="submitForm" :form="form">
 			<md-card-header>
 				<h1 class="md-title">Sign up today!</h1>
 				<span class="md-subhead">Join the ranks of the awesome students who are active members of the community and make University life better.</span>
@@ -43,7 +39,7 @@
 
 			<md-field :class="{'md-invalid': form.errors.has('email')}">
 				<md-icon>email</md-icon>
-				<label>Your Email:</label>
+				<label>Your email:</label>
 				<md-input
 					data-name="email"
 					v-model="form.email"
@@ -113,17 +109,21 @@
 			<md-card-actions>
 			<md-button class="md-primary md-raised space-below" :disabled="form.errors.any()" type="submit">Create an Account</md-button>	
 			</md-card-actions>
-		</form>
+		</SmartForm>
 	</md-card>
 </template>
 
 <script>
 	import Form from 'Js/lib/Form';
 	import Fetcher from 'Js/lib/Fetcher';
+	import SmartForm from 'Js/components/common/SmartForm';
 	import { submitStudentRegistration, loadAllSchoolsData } from 'Js/store/api';
 
 	export default {
 		name: 'StudentRegistrationCard',
+		components: {
+			SmartForm,
+		},
 
 		/**
 		 * Wait 200ms before allowing the school input to be shown to avoid flickers
@@ -176,7 +176,6 @@
 			 */
 			searchIsReady() {
 				const {beingFetched: fetching} = this.$store.state.school;
-
 				return this.canShowSchoolInput && !fetching;
 			},
 		},
@@ -193,15 +192,6 @@
 
 				this.form.submit(submitStudentRegistration)
 				.then(() => this.$router.push({name: target, params}));
-			},
-
-			/**
-			 * On keydown, clear the errors on the target input
-			 * @param  {HTMLElement} options.target The input's HTML input
-			 * @return {Void}                 
-			 */
-			clearFieldErrors({target}) {
-				this.form.errors.clear(target.getAttribute('data-name'));
 			},
 		},
 	};

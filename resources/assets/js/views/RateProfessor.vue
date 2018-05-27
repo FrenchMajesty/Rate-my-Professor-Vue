@@ -21,10 +21,7 @@
 			</md-card-actions>
 		</md-card>
 		<md-card class="md-layout-item md-xsmall-size-90 md-small-size-80 md-medium-size-45 md-size-50">
-			<form 
-				@submit.preventDefault="submitForm" 
-				@keydown="clearFieldErrors"
-			>
+			<SmartForm :submit="submitForm" :form="form">
 				<md-card-header>
 					<h1 class="md-title">Rate your professor</h1>
 					<span class="md-subhead">It's your turn to grade Professor {{professor.name}}! Make sure to give an accurate review, the fate of future students is in your hands.</span>
@@ -111,7 +108,7 @@
 				<md-card-actions>
 				<md-button :disabled="form.errors.any()" type="submit">Submit my review</md-button>
 				</md-card-actions>
-			</form>
+			</SmartForm>
 		</md-card>
 	</div>
 </template>
@@ -119,11 +116,16 @@
 <script>
 	import Form from 'Js/lib/Form';
 	import Fetcher from 'Js/lib/Fetcher';
+	import SmartForm from 'Js/components/common/SmartForm';
 
 	export default {
 		name: 'RateProfessor',
+		components: {
+			SmartForm,
+		},
+
 		/**
-		 * Fetch all the professors' datas
+		 * Fetch all the professors and schools datas
 		 */
 		beforeCreate() {
 			Fetcher.profs(this).schools(this);
@@ -260,16 +262,7 @@
 					this.selectedTagsId.push(id);
 				}
 			},
-
-			/**
-			 * On keyDown, clear the errors on the target input
-			 * @param  {HTMLElement} event.target The target input's HTML element
-			 * @return {Void}                 
-			 */
-			clearFieldErrors({target}) {
-				this.form.errors.clear(target.getAttribute('data-name'));
-			},
-
+			
 			/**
 			 * Handle the submitting of the form
 			 * @return {Void} 
