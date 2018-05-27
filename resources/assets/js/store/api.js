@@ -32,6 +32,11 @@ export function loadUserData() {
 	return axios.get(`${BASE_URL}/user`, auth());
 } 
 
+export function updateUserData(data) {
+	const {id} = store.state.user;
+	return axios.put(`${BASE_URL}/profile/${id}`, data, auth());
+} 
+
 export function submitLogout() {
 	return axios.post(`${BASE_URL}/auth/logout`, null, auth());
 }
