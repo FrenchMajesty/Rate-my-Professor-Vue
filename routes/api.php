@@ -21,6 +21,13 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 
 Route::post('logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth:api');
 
+Route::group(['prefix' => '/auth'], function() {
+
+	Route::post('/pwd/change', 'ResetPasswordController@update')->middleware('auth:api')
+		->name('pwd.change');
+
+});
+
 Route::post('/signup/student', 'Auth\RegisterController@create')->name('signup');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
