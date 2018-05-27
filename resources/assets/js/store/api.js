@@ -11,6 +11,10 @@ export function loadAllSchoolsData() {
 	return axios.get(`${BASE_URL}/school/fetch`);
 }
 
+export function loadAllDeptsData() {
+	return axios.get(`${BASE_URL}/department/fetch`);
+}
+
 export function submitStudentRegistration(data) {
 	return axios.post(`${BASE_URL}/auth/signup/student`, data);
 }
