@@ -11,14 +11,7 @@ use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
     /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-    
-    /**
-     * Create a new user instance after a valid registration.
+     * Create a new user instance for a student after a valid registration.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \App\User
@@ -35,9 +28,37 @@ class RegisterController extends Controller
         ])->validate();
            
         return User::create([
-            'name' => $request->firstname,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'account' => 'student',
+        ]);
+    }
+
+    /**
+     * Create a new user instance for a professor after a valid registration.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\User
+     */
+    public function createProf(Request $request)
+    {
+        Validator::make($request->all(), [
+            'firstname' => 'required|alpha_dash|max:255',
+            'lastname' => 'required|alpha_dash|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'terms' => 'required|accepted',
+            //'school' => 'required|exists:schools,id',
+        ])->validate();
+           
+        return User::create([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'account' => 'professor',
         ]);
     }
 }
