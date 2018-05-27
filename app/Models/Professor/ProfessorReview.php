@@ -21,6 +21,7 @@ class ProfessorReview extends Model
         'comment',
         'grade_received',
         'class',
+        'approved',
     ];
 
     /**
@@ -49,6 +50,26 @@ class ProfessorReview extends Model
      * @var array
      */
     protected $appends = [];
+
+    /**
+     * Shorten the `overall_rating` attribute to 1 digital place
+     * @param  string $value The value of the column
+     * @return string        
+     */
+    public function getOverallRatingAttribute($value)
+    {
+    	return number_format($value, 1);
+    }
+
+    /**
+     * Shorten the `difficulty_rating` attribute to 1 digital place
+     * @param  string $value The value of the column
+     * @return string        
+     */
+    public function getDifficultyRatingAttribute($value)
+    {
+    	return number_format($value, 1);
+    }
 
     /**
      * Get the student who reviewed this professor
