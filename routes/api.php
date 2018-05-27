@@ -64,6 +64,8 @@ Route::group(['prefix' => '/prof'], function() {
 
 		Route::get('{prof.review}', 'ProfessorReviewController@index');
 
+		Route::get('/tags', 'ReviewTagsController@index');
+
 		Route::put('{prof.review}', 'ProfessorReviewController@update')->middleware('auth:api');
 
 		Route::delete('{prof.review}', 'ProfessorReviewController@delete')->middleware('auth:api');
