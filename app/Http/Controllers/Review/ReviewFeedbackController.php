@@ -11,17 +11,6 @@ use App\Http\Controllers\Controller;
 
 class ReviewFeedbackController extends Controller
 {
-    /**
-     * Get all the feedback for reviews of a professor
-     * @param  string $id The ID of the professor
-     * @return array     
-     */
-    public function professor(string $id)
-    {
-        $reviews = Professor::findorFail($id)->reviews;
-        return ProfessorReviewFeedback::whereIn('review_id', $reviews->pluck('id'))->get();
-    }
-
 	/**
 	 * Handle the request to update or save feedback on the review of a professor
 	 * @param  Request $request Request
