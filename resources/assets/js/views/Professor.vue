@@ -13,25 +13,7 @@
 		>
 			<p v-if="hasRatings" class="md-layout-item md-title md-size-100">Student Reviews</p>
 			<p v-else class="noreview-space"></p>
-			<form 
-				class="md-layout md-layout-item md-size-95 ml-auto mr-auto"
-				@submit.preventDefault="continueReview"
-				v-if="dataIsReady && ratings.length > 0"
-			>
-				<md-field class="md-layout-item md-size-70 md-xsmall-size-100">
-			      	<label>Write your review:</label>
-			     	<md-textarea 
-			     		v-model="quickReview"
-			     		placeholder="Start typing your review of this professor here."
-			     		:maxlength="350"
-			      		md-autogrow
-			    	></md-textarea>
-			    </md-field>
-			    <md-button 
-			    	class="md-raised md-accent md-layout-item"
-			    	type="submit"
-			    >Continue your review</md-button>
-			</form>
+			<QuickReview :submit="finishReview" target="professor"></QuickReview>
 			<ProfessorReview
 				class="animated fadeInUp"
 				v-if="hasRatings"
@@ -77,12 +59,13 @@
 	import ProfileContainer from '../components/ProfileContainer';
 	import ProfessorDetailsCard from '../components/ProfessorDetailsCard';
 	import ProfessorReview from '../components/ProfessorReview';
+	import QuickReview from '../components/QuickReview';
 	import { loadReviews } from 'Js/store/api';
 
 	export default {
 		name: 'Professor',
 		components: {
-			ProfileContainer, ProfessorDetailsCard, ProfessorReview,
+			ProfileContainer, ProfessorDetailsCard, ProfessorReview, QuickReview,
 		},	
 		/**
 		 * Fetch the professor's additional data like department and the reviews
@@ -98,36 +81,23 @@
 				 * @type {Boolean}
 				 */
 				renderList: false,
+
+				/**
+				 * The viewing state of the reviews
+				 * @type {Boolean}
+				 */
 				ratingsAreReady: false,
-				quickReview: '',
-				d:[
-					{
-						id: 1,
-						overall_rating: 2.4,
-						difficulty_rating: 3.0,
-						comment: 'I dont even like eating ice cream!!',
-						class: 'MATH0022',
-						grade_received: 'B+',
-						textbook_used: true,
-						would_retake: true,
-					},
-					{
-						id: 2,
-						overall_rating: 4.9,
-						difficulty_rating: 3.0,
-						comment: 'Pretty chill guy.',
-						class: 'MATH4502',
-						grade_received: 'C-',
-						textbook_used: true,
-						would_retake: false,
-					},
-				],
 			};
 		},
 		computed: {
+			/**
+			 * Checks if there are any ratings
+			 * @return {Boolean} 
+			 */
 			hasRatings() {
 				return this.ratings.length > 0;
 			},
+
 			numberOfSimilarProfs() {
 				return {
 					school: 2,
@@ -182,13 +152,11 @@
 		},
 		methods: {
 			/**
-			 * Save the written review to the store and navigate to full review creation page
+			 * Navigate to the page finish writing the review
 			 * @return {Void} 
 			 */
-			continueReview() {
-				const {quickReview: review, professor: {id, slug}} = this;
-
-				this.$store.commit('writeQuickReview', review);
+			finishReview() {
+				const {id, slug} = this.professor;
 				this.$router.push({name: 'rateProfessor', params: {id, slug}});
 			},
 
@@ -198,22 +166,20 @@
 			 */
 			loadReviews() {
 				const params = {
-				  	filter_groups: [
-				    	{
-				      		filters: [
-						      	{
-							        key: 'professor_id',
-							        value: this.professor.id,
-							        operator: 'eq'
-						       	},
-						       	{
-							        key: 'approved',
-							        value: 0,
-							        operator: 'eq'
-						       	},
-					      	]
-				    	}
-				 	]
+				  	filter_groups: [{
+			      		filters: [
+					      	{
+						        key: 'professor_id',
+						        value: this.professor.id,
+						        operator: 'eq'
+					       	},
+					       	{
+						        key: 'approved',
+						        value: 0,
+						        operator: 'eq'
+					       	},
+				      	]
+			    	}]
 				};
 
 				loadReviews(params).then(({data}) => {
