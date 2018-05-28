@@ -54,7 +54,7 @@ class ProfessorReviewController extends LaravelController
 			'difficulty_rating' => 'required|numeric',
 			'textbook_used' => 'required|boolean',
 			'would_retake' => 'required|boolean',
-			'comment' => 'required|string',
+			'comment' => 'required|string|min:50|max:350',
 			'grade_received' => 'required|string',
 			'class' => 'required|string',
 			'tags_id' => 'required|string',
@@ -66,7 +66,7 @@ class ProfessorReviewController extends LaravelController
 		])->first();
 
 		if($reviewAlreadyGiven) {
-			$errors = ['professor_id' => ['You cannot give two reviews to the same professor.']];
+			$errors = ['comment' => ['You cannot give two reviews to the same professor.']];
 			return response()->json(compact('errors'), 401);
 		}
 
