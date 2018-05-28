@@ -39,7 +39,7 @@ const profs = {
 				const prof = getters.approvedProfs.find(({id}) => id == profId);
 
 				if(prof) {
-					prof.school = getters.approvedSchools.data.find(({id}) => id == prof.school_id);
+					prof.school = getters.approvedSchools.find(({id}) => id == prof.school_id);
 					prof.department = state.dept.data.find(({id}) => id == prof.department_id);
 				}
 
