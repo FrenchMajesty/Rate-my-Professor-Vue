@@ -66,4 +66,8 @@ export function createProfessorReview(data) {
 	return axios.post(`${BASE_URL}/prof/review`, data, auth());
 }
 
+export function createSchoolReview(data) {
+	return axios.post(`${BASE_URL}/school/review`, data, auth());
+}
+
 
