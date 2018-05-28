@@ -7,7 +7,7 @@
 	      	<label>Write your review:</label>
 	     	<md-textarea 
 	     		v-model="review"
-	     		:placeholder="`Start typing your review of this ${target} here.`"
+	     		:placeholder="`Start typing your review of this ${profileType} here.`"
 	     		:maxlength="maxlength"
 	      		md-autogrow
 	    	></md-textarea>
@@ -36,7 +36,7 @@
 			 * The type of entity for which this review is written. Must be professor or school.
 			 * @type {Object}
 			 */
-			target: {
+			profileType: {
 				type: String,
 				required: true,
 			}
