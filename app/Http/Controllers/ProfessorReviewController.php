@@ -3,21 +3,33 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use Optimus\Bruno\EloquentBuilderTrait;
+use Optimus\Bruno\LaravelController;
 use App\Models\Professor\Professor;
 use App\Models\Professor\ProfessorReview;
 use Illuminate\Http\Request;
 
-class ProfessorReviewController extends Controller
-{		
+class ProfessorReviewController extends LaravelController
+{	
+	use EloquentBuilderTrait;
+
 	/**
-	 * Return all the reviews a particular professor has received
-	 * @param  string $id The ID of the professor
-	 * @return array          
-	 */
-	public function professor(string $id)
-	{
-		return Professor::findOrfail($id)->reviews;
-	}
+	 * Handle request to search and fetch professors
+	 * @return Response           
+	 */	
+    public function fetch()
+    {
+        $resourceOptions = $this->parseResourceOptions();
+
+        $query = ProfessorReview::query();
+        $this->applyResourceOptions($query, $resourceOptions);
+        $reviews = $query->get();
+
+        // Parse the data using Optimus\Architect
+        $parsedData = $this->parseData($reviews, $resourceOptions, 'reviews');
+
+        return $this->response($parsedData);
+    }
 
 	/**
 	 * Return a professor review's model

@@ -64,7 +64,7 @@ Route::group(['prefix' => '/prof'], function() {
 
 		Route::get('{prof.review}', 'ProfessorReviewController@index');
 
-		Route::get('/prof/{id}', 'ProfessorReviewController@professor');
+		Route::get('/fetch', 'ProfessorReviewController@fetch');
 
 		Route::get('/tags', 'ReviewTagsController@index');
 
