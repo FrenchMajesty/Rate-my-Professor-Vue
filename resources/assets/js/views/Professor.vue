@@ -13,12 +13,16 @@
 		>
 			<p v-if="hasRatings" class="md-layout-item md-title md-size-100">Student Reviews</p>
 			<p v-else class="noreview-space"></p>
-			<form class="md-layout md-layout-item md-size-95 ml-auto mr-auto" @submit.preventDefault="continueReview">
+			<form 
+				class="md-layout md-layout-item md-size-95 ml-auto mr-auto"
+				@submit.preventDefault="continueReview"
+				v-if="dataIsReady && ratings.length > 0"
+			>
 				<md-field class="md-layout-item md-size-70 md-xsmall-size-100">
 			      	<label>Write your review:</label>
 			     	<md-textarea 
 			     		v-model="quickReview"
-			     		placeholder="Start typing your comment of this professor here. (You can press ENTER to go to the next line)."
+			     		placeholder="Start typing your review of this professor here."
 			     		:maxlength="350"
 			      		md-autogrow
 			    	></md-textarea>
@@ -73,6 +77,7 @@
 	import ProfileContainer from '../components/ProfileContainer';
 	import ProfessorDetailsCard from '../components/ProfessorDetailsCard';
 	import ProfessorReview from '../components/ProfessorReview';
+	import { loadReviews } from 'Js/store/api';
 
 	export default {
 		name: 'Professor',
@@ -84,7 +89,6 @@
 		 * @return {Void} 
 		 */
 		created() {
-			setTimeout(() => this.ratingsAreReady = true, 1500);
 			Fetcher.depts(this);
 		},
 		data() {
@@ -96,7 +100,6 @@
 				renderList: false,
 				ratingsAreReady: false,
 				quickReview: '',
-				ratings: [],
 				d:[
 					{
 						id: 1,
@@ -133,26 +136,19 @@
 			},
 
 			/**
+			 * Get the ratings of this professor in view from the store's state
+			 * @return {Array} 
+			 */
+			ratings() {
+				return this.$store.state.reviews.inView;
+			},
+
+			/**
 			 * Determine whether the datas for this page are ready to be used
 			 * @return {Boolean} 
 			 */
 			dataIsReady() {
-				const isProfReady = () => {
-					const {beingFetched, data} = this.$store.state.prof;
-					return !beingFetched && data !== null;
-				}
-
-				const isSchoolReady = () => {
-					const {beingFetched, data} = this.$store.state.school;
-					return !beingFetched && data !== null;
-				}
-
-				const isDepartmentReady = () => {
-					const {beingFetched, data} = this.$store.state.dept;
-					return !beingFetched && data !== null;
-				}
-
-				return isProfReady() && isSchoolReady() && isDepartmentReady();
+				return this.$store.getters.profDataIsReady;
 			},
 
 			/**
@@ -161,18 +157,10 @@
 			 */
 			professor() {
 				 const {slug} = this.$route.params;
-				 const {
-				 	prof: {data: profs}, 
-				 	school: {data: schools},
-				 	dept: {data: depts}
-				 } = this.$store.state;
+				 const {fullProfessorWithSlug} = this.$store.getters;
 
 				 if(this.dataIsReady) {
-					const prof = profs.find(prof => prof.slug == slug);
-					prof.school = schools.find(school => school.id == prof.school_id);
-					prof.department = depts.find(dept => dept.id == prof.department_id);
-
-					return prof;
+				 	return fullProfessorWithSlug(slug);
 				}
 			},
 		},
@@ -185,6 +173,10 @@
 			dataIsReady: function(isReady) {
 				if(isReady && !this.professor) {
 					this.$router.push({name: 'notFound'});
+				}
+
+				if(isReady && this.professor) {
+					this.loadReviews();
 				}
 			},
 		},
@@ -199,6 +191,43 @@
 				this.$store.commit('writeQuickReview', review);
 				this.$router.push({name: 'rateProfessor', params: {id, slug}});
 			},
+
+			/**
+			 * Make a request to fetch the approved reviews for this professor
+			 * @return {Void} 
+			 */
+			loadReviews() {
+				const params = {
+				  	filter_groups: [
+				    	{
+				      		filters: [
+						      	{
+							        key: 'professor_id',
+							        value: this.professor.id,
+							        operator: 'eq'
+						       	},
+						       	{
+							        key: 'approved',
+							        value: 0,
+							        operator: 'eq'
+						       	},
+					      	]
+				    	}
+				 	]
+				};
+
+				loadReviews(params).then(({data}) => {
+					this.ratingsAreReady = true;
+					this.$store.commit({
+						type: 'updateTheReviewsInView',
+						reviews: data.reviews, 
+					});
+				})
+				.catch(err => {
+					console.log(err);
+					this.ratingsAreReady = true;
+				});
+			}
 		},
 	};
 </script>
