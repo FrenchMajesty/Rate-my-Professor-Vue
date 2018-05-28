@@ -7,8 +7,17 @@ import {
 export default class Fetcher {
 
 	/**
+	 * Load everything can be loaded with this module
+	 * @param  {Vue} vm The vue instance it's invoked in
+	 * @return {Fetcher}    
+	 */
+	static all(vm) {
+		return this.schools(vm).profs(vm).depts(vm).tags(vm);
+	}
+
+	/**
 	 * Handle the proccess to load all schools data if it hasn't been done yet
-	 * @param  {Object} vm The vue instance of the context it's invoked in
+	 * @param  {Vue} vm The vue instance of the context it's invoked in
 	 * @return {Fetcher}    
 	 */
 	static schools(vm) {
@@ -35,7 +44,7 @@ export default class Fetcher {
 
 	/**
 	 * Handle the process to load all professors data if it hasn't been done yet
-	 * @param  {Object} vm The vue instance of the execution context
+	 * @param  {Vue} vm The vue instance of the execution context
 	 * @return {Fetcher}    
 	 */
 	static profs(vm) {
@@ -62,7 +71,7 @@ export default class Fetcher {
 
 	/**
 	 * Handle the process to load all department datas if it hasn't been done yet
-	 * @param  {Object} vm The vue instance of the execution context
+	 * @param  {Vue} vm The vue instance of the execution context
 	 * @return {Fetcher}    
 	 */
 	static depts(vm) {
@@ -89,7 +98,7 @@ export default class Fetcher {
 
 	/**
 	 * Handle the process to load all review tags if it hasn't been done yet
-	 * @param  {Object} vm The vue instance of the execution context
+	 * @param  {Vue} vm The vue instance of the execution context
 	 * @return {Fetcher}    
 	 */
 	static tags(vm) {
