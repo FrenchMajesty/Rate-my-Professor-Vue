@@ -25,9 +25,7 @@
 	      			></span>
 				</md-field>
 
-				<md-field 
-					:class="{'md-invalid': form.errors.has('password')}"
-				>
+				<md-field :class="{'md-invalid': form.errors.has('password')}">
 					<md-icon>lock</md-icon>
 					<label>Your password:</label>
 					<md-input
