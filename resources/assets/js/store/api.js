@@ -53,4 +53,7 @@ export function changePassword(data) {
 	return axios.post(`${BASE_URL}/auth/pwd/change`, data, auth());
 }
 
+export function createProfReview(data) {
+	return axios.post(`${BASE_URL}/prof/review/`, data, auth());
+}
 
