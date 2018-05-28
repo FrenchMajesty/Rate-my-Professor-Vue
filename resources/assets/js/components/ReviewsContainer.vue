@@ -7,7 +7,7 @@
 			<p v-if="hasRatings" class="md-layout-item md-title md-size-100">Student Reviews</p>
 			<p v-else class="noreview-space"></p>
 			
-			<slot></slot>
+			<slot v-if="hasRatings"></slot>
 
 			<div v-if="! hasRatings" class="md-layout md-alignment-center-center">
 				<md-empty-state
@@ -75,21 +75,6 @@
 				type: String,
 				required: true,
 			},
-		},
-		data() {
-			return {
-				a:''
-			};
-		},
-		computed: {
-			reviewButtonTarget() {
-				return;
-			}
-		},
-		methods: {
-			oo() {
-
-			}
 		},
 	}
 </script>
