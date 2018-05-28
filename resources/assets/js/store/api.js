@@ -24,6 +24,10 @@ export function loadProfessorReviews(params) {
 	return axios.get(`${BASE_URL}/prof/review/fetch?${$.param(params)}`);
 }
 
+export function loadSchoolReviews(params) {
+	return axios.get(`${BASE_URL}/school/review/fetch?${$.param(params)}`);
+}
+
 export function submitStudentRegistration(data) {
 	return axios.post(`${BASE_URL}/auth/signup/student`, data);
 }
