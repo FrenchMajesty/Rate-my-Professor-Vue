@@ -93,6 +93,15 @@ class SchoolReview extends Model
     }
 
     /**
+     * Get all of the feedback that this review has
+     * @return array 
+     */
+    public function feedback()
+    {
+        return $this->hasMany('\App\Models\School\ReviewFeedback','review_id');
+    }
+
+    /**
      * Get the school to whom this review belongs to
      * @return School 
      */
