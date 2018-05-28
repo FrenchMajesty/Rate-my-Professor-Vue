@@ -34,10 +34,12 @@
 	import ReviewsContainer from '../components/ReviewsContainer';
 	import ProfessorReview from '../components/ProfessorReview';
 	import QuickReview from '../components/QuickReview';
+	import hasReviews from 'Js/mixins/hasReviews';
 	import { loadProfessorReviews } from 'Js/store/api';
 
 	export default {
 		name: 'Professor',
+		mixins: [hasReviews],
 		components: {
 			ProfileContainer, ProfessorDetailsCard, ProfessorReview, ReviewsContainer, QuickReview,
 		},	

@@ -30,10 +30,12 @@
 	import SchoolReview from '../components/School/SchoolReview';
 	import QuickReview from '../components/QuickReview';
 	import DetailsCard from '../components/School/DetailsCard';
+	import hasReviews from 'Js/mixins/hasReviews';
 	import { loadSchoolReviews } from 'Js/store/api';
 
 	export default {
 		name: 'School',
+		mixins: [hasReviews],
 		components: {
 			ProfileContainer, QuickReview, SchoolReview, ReviewsContainer, DetailsCard,
 		},
