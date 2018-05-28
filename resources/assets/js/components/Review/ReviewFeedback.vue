@@ -26,30 +26,65 @@
 </template>
 
 <script>
+
 	export default {
 		name: 'ReviewFeedback',
 		props: {
+			/**
+			 * The ID of the review for the feeback
+			 * @type {Number}
+			 */
 			itemId: {
 				type: Number,
 				required: true,
 			},
-			positiveVotes: {
-				type: Number,
-				default: 0,
+
+			/**
+			 * The type of review on which this feedback is on
+			 * @type {String}
+			 */
+			reviewType: {
+				type: String,
+				required: true,
 			},
-			negativeVotes: {
-				type: Number,
-				default: 0,
+
+			/**
+			 * The feedback collection on the parent review
+			 * @type {Array}
+			 */
+			feedback: {
+				type: Array,
+				required: true,
 			},
 		},
 		computed: {
+			/**
+			 * Checks if the device is a phone
+			 * @return {Boolean} 
+			 */
 			deviceIsAPhone() {
 				return window.innerWidth < 710;
 			},
+
+			/**
+			 * Count the number of positive votes
+			 * @return {Number} 
+			 */
+			positiveVotes() {
+				return this.feedback.filter(({positive}) => positive).length;
+			},
+
+			/**
+			 * Count the number of negative votes
+			 * @return {Number} 
+			 */
+			negativeVotes() {
+				return this.feedback.filter(({positive}) => !positive).length;
+			}
 		},
 		methods: {
-			reviewWasHelpful(positiveVote) {
-				this.$emit('leaveFeedback', positiveVote);
+			reviewWasHelpful(isVotePositive) {
+				console.log('Submit form to change/set the vote!')
 			},
 		},
 	};

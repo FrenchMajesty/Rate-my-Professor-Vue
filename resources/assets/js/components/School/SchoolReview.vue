@@ -17,9 +17,8 @@
 					<ReviewFeedback 
 						class="md-layout-item" 
 						:itemId="rating.id"
-						:positiveVotes="positiveVotes"
-						:negativeVotes="negativeVotes"
-						@leaveFeedback="voteOnReview"
+						:feedback="rating.feedback"
+						reviewType="school"
 					></ReviewFeedback>
 				</div>
 			</md-content>
@@ -79,18 +78,6 @@
 				canShow: false,
 
 				/**
-				 * The number of positive votes
-				 * @type {Number}
-				 */
-				positiveVotes: 0,
-
-				/**
-				 * The number of negative votes
-				 * @type {Number}
-				 */
-				negativeVotes: 0,
-
-				/**
 				 * The list of the ratings for this review
 				 * @type {Array}
 				 */
@@ -103,39 +90,7 @@
 				],
 			};
 		},
-		computed: {
-			/**
-			 * Determine the textbook value of the review
-			 * @return {String} 
-			 */
-			textbookWasUsed() {
-				return this.rating.textbook_used ? 'Yes' : 'No';
-			},
-
-			/**
-			 * Determine the 'would retake' value of the review
-			 * @return {String} 
-			 */
-			wouldRetakeClass() {
-				return this.rating.would_retake ? 'Yes' : 'No';
-			},
-		},
 		methods: {
-			/**
-			 * Process to handle the vote on this review
-			 * @param  {Boolean} positiveVote Whether value of the feedback is positive
-			 * @return {Void}                
-			 */
-			voteOnReview(positiveVote) {
-				console.log(`A user just found review (#:${this.rating.id}) ${positiveVote ? 'helpful' : 'not helpful'}.`);
-
-				if(positiveVote) {
-					this.positiveVotes++;
-				}else {
-					this.negativeVotes++;
-				}
-			},
-
 			moment,
 		},
 	};
