@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="margin-top: 2em;">
 		<div 
 			class="md-layout-item md-size-100 md-layout"
 			v-if="isReady"
