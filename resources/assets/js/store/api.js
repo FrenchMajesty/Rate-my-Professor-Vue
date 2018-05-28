@@ -28,6 +28,10 @@ export function loadSchoolReviews(params) {
 	return axios.get(`${BASE_URL}/school/review/fetch?${$.param(params)}`);
 }
 
+export function loadReviewsFeedbackForProfessor(id) {
+	return axios.get(`${BASE_URL}/prof/review/feedback/${id}`, auth());
+}
+
 export function submitStudentRegistration(data) {
 	return axios.post(`${BASE_URL}/auth/signup/student`, data);
 }
