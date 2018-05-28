@@ -7,6 +7,7 @@ use Optimus\Bruno\EloquentBuilderTrait;
 use Optimus\Bruno\LaravelController;
 use App\Models\Professor\Professor;
 use App\Models\Professor\ProfessorReview;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ProfessorReviewController extends LaravelController
@@ -70,12 +71,7 @@ class ProfessorReviewController extends LaravelController
 			return response()->json(compact('errors'), 401);
 		}
 
-		$tagsId = explode(',', $request->tags_id);
-		foreach($tagsId as $id) {
-			// do something with the tags..
-		}
-
-		return ProfessorReview::create([
+		$review = ProfessorReview::create([
 			'user_id' => $request->user()->id,
 			'professor_id' => $request->professor_id,
 			'overall_rating' => $request->overall_rating,
@@ -86,6 +82,19 @@ class ProfessorReviewController extends LaravelController
 			'grade_received' => $request->grade_received,
 			'class' => $request->class,
 		]);
+
+		// Save the tags of the review
+		$rows = [];
+		$tagsId = explode(',', $request->tags_id);
+		foreach($tagsId as $id) {
+			$rows[] = [
+				'tag_id' => $id, 
+				'review_id' => $review->id
+			];
+		}
+		DB::table('review_tags_pivot')->insert($rows);
+
+		return $review;
 	}
 
 	/**
