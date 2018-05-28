@@ -50,25 +50,22 @@ class SchoolReviewController extends LaravelController
     {
     	Validator::make($request->all(), [
     		'professor_id' => 'required|exists:professors,id',
-    		'user_id' => 'required|exists:users,id',
-    		'overall_rating' => 'required|numeric',
-    		'location_rating' => 'required|numeric',
-    		'facilities_rating' => 'required|numeric',
-    		'opportunity_rating' => 'required|numeric',
-    		'social_rating' => 'required|numeric',
+    		'overall' => 'required|numeric',
+    		'location' => 'required|numeric',
+    		'facilities' => 'required|numeric',
+    		'opportunity' => 'required|numeric',
+    		'social' => 'required|numeric',
     	])->validate();
 
-    	$data = $request->only([
-    		'professor_id',
-    		'user_id',
-    		'overall_rating',
-    		'location_rating',
-    		'facilities_rating',
-    		'opportunity_rating',
-    		'social_rating',
-    	]);
-
-    	return SchoolReview::create($data);
+    	return SchoolReview::create([
+            'professor_id' => $request->professor_id,
+            'user_id' => $request->user()->id,
+            'overall_rating' => $request->overall,
+            'location_rating' => $request->location,
+            'facilities_rating' => $request->facilities,
+            'opportunity_rating' => $request->opportunity,
+            'social_rating' => $request->social,
+        ]);
     }
 
     /**
