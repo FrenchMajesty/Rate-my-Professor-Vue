@@ -19,6 +19,10 @@ export function loadAllReviewTags() {
 	return axios.get(`${BASE_URL}/prof/review/tags`, auth());
 }
 
+export function loadProfessorReviews(id) {
+	return axios.get(`${BASE_URL}/prof/review/prof/${id}`);
+}
+
 export function submitStudentRegistration(data) {
 	return axios.post(`${BASE_URL}/auth/signup/student`, data);
 }
