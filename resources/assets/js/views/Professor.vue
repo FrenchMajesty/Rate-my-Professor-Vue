@@ -34,7 +34,7 @@
 	import ReviewsContainer from '../components/ReviewsContainer';
 	import ProfessorReview from '../components/ProfessorReview';
 	import QuickReview from '../components/QuickReview';
-	import { loadReviews } from 'Js/store/api';
+	import { loadProfessorReviews } from 'Js/store/api';
 
 	export default {
 		name: 'Professor',
@@ -86,8 +86,8 @@
 				const {id, slug} = this.professor;
 				return { 
 					name: 'rateProfessor', 
-	     			params:{ id, slug }
-	     		}
+	     			params:{ id, slug },
+	     		};
 			},
 
 			/**
@@ -125,7 +125,7 @@
 			 * @param  {Boolean} isReady The value of the 'dataIsReady' computed property
 			 * @return {Void}          
 			 */
-			dataIsReady: function(isReady) {
+			dataIsReady(isReady) {
 				if(isReady && !this.professor) {
 					this.$router.push({name: 'notFound'});
 				}
@@ -167,7 +167,7 @@
 			    	}]
 				};
 
-				loadReviews(params).then(({data}) => {
+				loadProfessorReviews(params).then(({data}) => {
 					this.ratingsAreReady = true;
 					this.$store.commit({
 						type: 'updateTheReviewsInView',

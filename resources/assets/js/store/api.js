@@ -20,7 +20,7 @@ export function loadAllReviewTags() {
 	return axios.get(`${BASE_URL}/prof/review/tags`, auth());
 }
 
-export function loadReviews(params) {
+export function loadProfessorReviews(params) {
 	return axios.get(`${BASE_URL}/prof/review/fetch?${$.param(params)}`);
 }
 
