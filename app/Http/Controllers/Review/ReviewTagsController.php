@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Review;
 
 use App\Models\Professor\ReviewTags;
 use Illuminate\Http\Request;

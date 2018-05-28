@@ -61,17 +61,17 @@ Route::group(['prefix' => '/prof'], function() {
 
 	Route::group(['prefix' => '/review'], function() {
 
-		Route::post('/', 'ProfessorReviewController@create')->middleware('auth:api');
+		Route::post('/', 'Review\ProfessorReviewController@create')->middleware('auth:api');
 
-		Route::get('{prof.review}', 'ProfessorReviewController@index');
+		Route::get('{prof.review}', 'Review\ProfessorReviewController@index');
 
-		Route::get('/fetch', 'ProfessorReviewController@fetch');
+		Route::get('/fetch', 'Review\ProfessorReviewController@fetch');
 
-		Route::get('/tags', 'ReviewTagsController@index');
+		Route::get('/tags', 'Review\ReviewTagsController@index');
 
-		Route::put('{prof.review}', 'ProfessorReviewController@update')->middleware('auth:api');
+		Route::put('{prof.review}', 'Review\ProfessorReviewController@update')->middleware('auth:api');
 
-		Route::delete('{prof.review}', 'ProfessorReviewController@delete')->middleware('auth:api');
+		Route::delete('{prof.review}', 'Review\ProfessorReviewController@delete')->middleware('auth:api');
 
 		Route::post('/feedback', 'Review\ReviewFeedbackController@professor')->middleware('auth:api');
 
@@ -100,11 +100,11 @@ Route::group(['prefix' => '/school'], function() {
 
 	Route::group(['prefix' => '/review'], function() {
 
-		Route::post('/', 'SchoolReviewController@create');
+		Route::post('/', 'Review\SchoolReviewController@create');
 
-		Route::get('/fetch', 'SchoolReviewController@fetch');
+		Route::get('/fetch', 'Review\SchoolReviewController@fetch');
 
-		Route::delete('/{school.review}', 'SchoolReviewController@delete')->middleware('auth:api');
+		Route::delete('/{school.review}', 'Review\SchoolReviewController@delete')->middleware('auth:api');
 
 	});
 

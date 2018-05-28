@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Review;
 
 use Validator;
 use Optimus\Bruno\EloquentBuilderTrait;
