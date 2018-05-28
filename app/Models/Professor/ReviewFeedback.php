@@ -53,4 +53,13 @@ class ReviewFeedback extends Model
             $model->ip_address = $_SERVER['REMOTE_ADDR'];
         });
     }
+
+    /**
+     * Get the review that received this feedback
+     * @return ProfessorReview 
+     */
+    public function review()
+    {
+        return $this->belongsTo('\App\Models\Professor\ProfessorReview');
+    }
 }

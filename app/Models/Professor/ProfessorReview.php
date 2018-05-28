@@ -76,6 +76,15 @@ class ProfessorReview extends Model
     }
 
     /**
+     * Get all of the feedback that this review has
+     * @return array 
+     */
+    public function feedback()
+    {
+        return $this->hasMany('\App\Models\Professor\ReviewFeedback','review_id');
+    }
+
+    /**
      * Get the student who reviewed this professor
      * @return User 
      */
