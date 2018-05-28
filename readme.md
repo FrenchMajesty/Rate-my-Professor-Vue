@@ -1,19 +1,17 @@
 ### Things to do
 
-- Replace the top search bar with real autocomplete one ?
-- Create Admin and Student model/table
-- Connect Elo relationship in: departments/schools/profs; users/profs/admin;
-- Make the rating of professor functional
 - Add the school pages
 - Create the school pages rating and make them functional
 - Make the school input on the student's profile and registration functional
 - Create the index page where users can search
 - Create pre-defined smart searches (find good/easy/hot profs of x at y)
 - Create a WS connection to push data from the server / api
+- Replace the top search bar with real autocomplete one ?
 - Create full search results page
 - Make a user's preference settings (like school attended) relevant to the search
 - Make the page for users to report things (ratings, profs, schools)
 - Make a page for professors to customize their public profiles
+- Add a slider to the rating pages
 - Make the `Remember Me` work on login
 - Make the `Forgot Password` page
 - Add email notifications for whenever a student's review is accepted. 
