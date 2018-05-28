@@ -17,6 +17,7 @@ Route::model('user', 'App\User');
 Route::model('prof', 'App\Models\Professor\Professor');
 Route::model('prof.review', 'App\Models\Professor\ProfessorReview');
 Route::model('school', 'App\Models\School\School');
+Route::model('school.review', 'App\Models\School\SchoolReview');
 Route::model('department', 'App\Models\School\Department');
 
 Route::group(['prefix' => '/auth'], function() {
@@ -93,6 +94,17 @@ Route::group(['prefix' => '/school'], function() {
 	Route::get('/fetch', 'SchoolController@fetch')->name('school.fetch');
 
 	Route::get('{school}', 'SchoolController@index')->name('school');
+
+
+	Route::group(['prefix' => '/review'], function() {
+
+		Route::post('/', 'SchoolReviewController@create');
+
+		Route::get('/fetch', 'SchoolReviewController@fetch');
+
+		Route::delete('/{school.review}', 'SchoolReviewController@delete')->middleware('auth:api');
+
+	});
 
 	Route::group(['middleware' => ['auth:api','isAdmin']], function() {
 
