@@ -15,6 +15,10 @@ export function loadAllDeptsData() {
 	return axios.get(`${BASE_URL}/department/fetch`);
 }
 
+export function loadAllReviewTags() {
+	return axios.get(`${BASE_URL}/prof/review/tags`, auth());
+}
+
 export function submitStudentRegistration(data) {
 	return axios.post(`${BASE_URL}/auth/signup/student`, data);
 }
@@ -48,3 +52,5 @@ export function submitLogout() {
 export function changePassword(data) {
 	return axios.post(`${BASE_URL}/auth/pwd/change`, data, auth());
 }
+
+
