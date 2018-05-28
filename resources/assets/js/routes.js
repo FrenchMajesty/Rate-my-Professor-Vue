@@ -10,6 +10,7 @@ import SignIn from './views/SignIn';
 import ChangePassword from './views/Auth/ChangePassword';
 import Home from './views/Home';
 import RateProfessor from './views/RateProfessor';
+import RateSchool from './views/RateSchool';
 import NotFound from './views/NotFound';
 
 
@@ -100,6 +101,12 @@ const routes = [
 		path: '/rate/professor/:id/:slug',
 		name: 'rateProfessor',
 		component: RateProfessor,
+		beforeEnter: userOnly,
+	},
+	{
+		path: '/rate/school/:id/:slug',
+		name: 'rateSchool',
+		component: RateSchool,
 		beforeEnter: userOnly,
 	},
 ];
