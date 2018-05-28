@@ -1,4 +1,5 @@
 import axios from 'axios';
+import $ from 'jquery';
 import store from './store';
 
 const BASE_URL= 'http://localhost/ratemy/api';
@@ -19,8 +20,8 @@ export function loadAllReviewTags() {
 	return axios.get(`${BASE_URL}/prof/review/tags`, auth());
 }
 
-export function loadProfessorReviews(id) {
-	return axios.get(`${BASE_URL}/prof/review/prof/${id}`);
+export function loadReviews(params) {
+	return axios.get(`${BASE_URL}/prof/review/fetch?${$.param(params)}`);
 }
 
 export function submitStudentRegistration(data) {
@@ -57,7 +58,8 @@ export function changePassword(data) {
 	return axios.post(`${BASE_URL}/auth/pwd/change`, data, auth());
 }
 
-export function createProfReview(data) {
-	return axios.post(`${BASE_URL}/prof/review/`, data, auth());
+export function createProfessorReview(data) {
+	return axios.post(`${BASE_URL}/prof/review`, data, auth());
 }
+
 
