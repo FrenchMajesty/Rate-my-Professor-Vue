@@ -48,6 +48,11 @@ class School extends Model
     {
         parent::boot();
 
+        static::created(function ($model) {
+            $model->slug = str_slug("$model->id $model->nick $model->name $model->location");
+            $model->save();
+        });
+
         static::saving(function ($model) {
             $model->slug = str_slug("$model->id $model->nick $model->name $model->location");
         });

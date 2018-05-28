@@ -48,15 +48,20 @@ class Professor extends Model
     protected $appends = ['name'];
 
     /**
-     * Update the slug when saving the model
+     * Update the slug when saving and creating the model
      * @return void 
      */
     public static function boot()
     {
         parent::boot();
 
+        static::created(function ($model) {
+            $model->slug = str_slug("$model->id $model->firstname $model->lastname");
+            $model->save();
+        });
+
         static::saving(function ($model) {
-            $model->slug = $model->id.'-'.str_slug($model->firstname).'-'.str_slug($model->lastname);
+            $model->slug = str_slug("$model->id $model->firstname $model->lastname");
         });
     }
 

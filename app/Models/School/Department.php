@@ -36,8 +36,13 @@ class Department extends Model
     {
         parent::boot();
 
+        static::created(function ($model) {
+            $model->slug = str_slug("$model->id $model->name");
+            $model->save();
+        });
+
         static::saving(function ($model) {
-            $model->slug = $model->id.'-'.str_slug($model->name);
+            $model->slug = str_slug("$model->id $model->name");
         });
     }
 
