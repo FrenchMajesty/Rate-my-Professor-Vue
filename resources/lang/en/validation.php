@@ -127,6 +127,7 @@ return [
         'review_id' => 'review',
         'professor_id' => 'professor',
         'department_id' => 'department',
+        'tags_id' => 'list of tags',
         'current_password' => 'given password',
         'new_password' => 'new password',
         'textbook_used' => 'textbook',
