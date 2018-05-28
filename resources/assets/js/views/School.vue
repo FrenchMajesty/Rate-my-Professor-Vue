@@ -13,7 +13,6 @@
 			<QuickReview :submit="finishReview" profileType="school"></QuickReview>
 			<SchoolReview
 				class="animated fadeInUp"
-				v-if="hasRatings"
 				v-for="(rating, i) in ratings"
 				:key="rating.id"
 				:rating="rating"

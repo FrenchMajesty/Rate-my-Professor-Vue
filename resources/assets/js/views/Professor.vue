@@ -17,7 +17,6 @@
 			<QuickReview :submit="finishReview" profileType="professor"></QuickReview>
 			<ProfessorReview
 				class="animated fadeInUp"
-				v-if="hasRatings"
 				v-for="(rating, i) in ratings"
 				:key="rating.id"
 				:rating="rating"
