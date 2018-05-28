@@ -11,12 +11,12 @@ class ProfessorReviewController extends Controller
 {		
 	/**
 	 * Return all the reviews a particular professor has received
-	 * @param  Professor $prof The professor entry
+	 * @param  string $id The ID of the professor
 	 * @return array          
 	 */
-	public function professor(Professor $prof)
+	public function professor(string $id)
 	{
-		return $prof->reviews();
+		return Professor::findOrfail($id)->reviews;
 	}
 
 	/**
