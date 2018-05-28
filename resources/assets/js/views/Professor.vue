@@ -7,13 +7,14 @@
 			:ratings="ratingsAreReady ? ratings : null"
 			:numberOfSimilarProfs="numberOfSimilarProfs"
 		></ProfessorDetailsCard>
-		<div 
-			v-if="ratingsAreReady"
-			class="md-layout-item md-size-100 md-layout"
+
+		<ReviewsContainer 
+			:is-ready="dataIsReady"
+			:has-ratings="hasRatings"
+			:buttonTarget="buttonTarget"
+			profileType="professor" 
 		>
-			<p v-if="hasRatings" class="md-layout-item md-title md-size-100">Student Reviews</p>
-			<p v-else class="noreview-space"></p>
-			<QuickReview :submit="finishReview" target="professor"></QuickReview>
+			<QuickReview :submit="finishReview" profileType="professor"></QuickReview>
 			<ProfessorReview
 				class="animated fadeInUp"
 				v-if="hasRatings"
@@ -22,35 +23,7 @@
 				:rating="rating"
 				:delay="(i+1) * 200"
 			></ProfessorReview>
-
-			<div v-if="! hasRatings" class="md-layout md-alignment-center-center">
-				<md-empty-state
-					class="md-layout-item"
-			      	md-icon="info_outline"
-			      	md-label="No reviews for the moment"
-			      	md-description="There seems to be no review available for this professor.. Why not be the first to write one?">
-			     	<md-button class="md-primary md-raised"
-			     		:to="{name: 'rateProfessor', 
-			     			params:{
-			     				id: professor.id,
-			     				slug: professor.slug,
-			     			}
-			     		}"
-			     	>Write a review</md-button>
-			    </md-empty-state>
-			</div>
-		</div>
-		<div
-			class="md-layout md-alignment-center-center"
-			style="margin-top: 3em" 
-			v-else
-		>
-			<md-progress-spinner 
-				:md-diameter="60"
-				:md-stroke="6"
-				md-mode="indeterminate"
-			></md-progress-spinner>
-		</div>
+		</ReviewsContainer>
 	</ProfileContainer>
 </template>
 
@@ -58,6 +31,7 @@
 	import Fetcher from 'Js/lib/Fetcher';
 	import ProfileContainer from '../components/ProfileContainer';
 	import ProfessorDetailsCard from '../components/ProfessorDetailsCard';
+	import ReviewsContainer from '../components/ReviewsContainer';
 	import ProfessorReview from '../components/ProfessorReview';
 	import QuickReview from '../components/QuickReview';
 	import { loadReviews } from 'Js/store/api';
@@ -65,7 +39,7 @@
 	export default {
 		name: 'Professor',
 		components: {
-			ProfileContainer, ProfessorDetailsCard, ProfessorReview, QuickReview,
+			ProfileContainer, ProfessorDetailsCard, ProfessorReview, ReviewsContainer, QuickReview,
 		},	
 		/**
 		 * Fetch the professor's additional data like department and the reviews
@@ -103,6 +77,17 @@
 					school: 2,
 					department: 7,
 				};
+			},
+			/**
+			 * Return the target of the rating button
+			 * @return {Object} 
+			 */
+			buttonTarget() {
+				const {id, slug} = this.professor;
+				return { 
+					name: 'rateProfessor', 
+	     			params:{ id, slug }
+	     		}
 			},
 
 			/**
