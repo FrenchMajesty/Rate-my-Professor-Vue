@@ -4,6 +4,7 @@ const reviews = {
 			quick: '',
 			type: '',
 			inView: [],
+			beingFetched: false,
 		},
 	},
 	getters: {
@@ -37,6 +38,7 @@ const reviews = {
 		updateTheReviewsInView(state, {reviews, type}) {
 			state.reviews.inView = reviews;
 			state.reviews.type = type;
+			state.reviews.beingFetched = false;
 		},
 
 		/**
@@ -50,7 +52,17 @@ const reviews = {
 			const review = state.reviews.inView.find(review => review.id == id);
 
 			// ...
-		}
+		},
+
+		/**
+		 * Update the status of the fetching status of the reviews
+		 * @param  {Object} state The app's state
+		 * @param  {Boolean} value New fetching status
+		 * @return {Void}       
+		 */
+		updateReviewsDataFetchingStatus(state, value) {
+			state.reviews.beingFetched = value;
+		},
 	}
 };
 
