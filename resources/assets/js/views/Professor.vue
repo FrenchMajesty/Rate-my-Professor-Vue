@@ -48,7 +48,7 @@
 		 * @return {Void} 
 		 */
 		created() {
-			Fetcher.depts(this);
+			Fetcher.all(this);
 		},
 		data() {
 			return {
