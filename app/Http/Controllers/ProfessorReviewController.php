@@ -8,7 +8,17 @@ use App\Models\Professor\ProfessorReview;
 use Illuminate\Http\Request;
 
 class ProfessorReviewController extends Controller
-{	
+{		
+	/**
+	 * Return all the reviews a particular professor has received
+	 * @param  Professor $prof The professor entry
+	 * @return array          
+	 */
+	public function professor(Professor $prof)
+	{
+		return $prof->reviews();
+	}
+
 	/**
 	 * Return a professor review's model
 	 * @param  ProfessorReview $review The review entry
