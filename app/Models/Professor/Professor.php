@@ -100,7 +100,7 @@ class Professor extends Model
      * Get the reviews that this professor has received
      * @return array 
      */
-    public function review()
+    public function reviews()
     {
      	return $this->hasMany('\App\Models\Professor\ProfessorReview');
     }
