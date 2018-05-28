@@ -73,6 +73,8 @@ Route::group(['prefix' => '/prof'], function() {
 
 		Route::delete('{prof.review}', 'ProfessorReviewController@delete')->middleware('auth:api');
 
+		Route::post('/feedback', 'Review\ReviewFeedbackController@professor')->middleware('auth:api');
+
 	});
 
 	Route::group(['middleware' => ['auth:api','isAdmin']], function() {
