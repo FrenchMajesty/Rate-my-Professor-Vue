@@ -1,7 +1,7 @@
 const profs = {
 	state: {
 		prof: {
-			data: null,
+			data: [],
 			beingFetched: false,
 		},
 	},
@@ -45,8 +45,8 @@ const profs = {
 		 */
 		fullProfessorWithSlug(state, getters) {
 			return (slug) => {
-				const {id} = state.prof.data.find((prof) => prof.slug == slug);
-				return id ? getters.fullProfessor(id) : null;
+				const prof = state.prof.data.find((prof) => prof.slug == slug);
+				return prof ? getters.fullProfessor(prof.id) : null;
 			}
 		}
 	},
