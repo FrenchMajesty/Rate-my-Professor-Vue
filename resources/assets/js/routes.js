@@ -4,6 +4,7 @@ import store from './store/store';
 // Page components
 import Index from './views/Index';
 import Professor from './views/Professor';
+import School from './views/School';
 import Register from './views/Register';
 import SignIn from './views/SignIn';
 import ChangePassword from './views/Auth/ChangePassword';
@@ -56,6 +57,11 @@ const routes = [
 		path: '/prof/:slug',
 		name: 'professor',
 		component: Professor,
+	},
+	{
+		path: '/school/:slug',
+		name: 'school',
+		component: School,
 	},
 	{
 		path: '/not-found',
