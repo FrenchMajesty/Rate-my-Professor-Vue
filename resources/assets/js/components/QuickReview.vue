@@ -1,6 +1,6 @@
 <template>
 	<form 
-		class="md-layout md-layout-item md-size-95 ml-auto mr-auto"
+		class="md-layout md-layout-item md-size-95 ml-auto mr-auto vertical-spacing"
 		@submit.preventDefault="continueReview"
 	>
 		<md-field class="md-layout-item md-size-70 md-xsmall-size-100">
