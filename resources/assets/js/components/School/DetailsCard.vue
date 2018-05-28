@@ -2,33 +2,16 @@
 	<md-card class="md-layout md-gutter no-margin padding-above text-align-sm">
 		<!-- Ratings container -->
       	<md-content 
-      		class="md-layout-item md-xsmall-size-100 md-small-size-26 vertical-spacing md-layout text-center"
+      		class="md-layout-item md-xsmall-size-100 md-small-size-26 vertical-spacing md-layout text-center md-alignment-center"
       		v-if="ratings"
       	>
 	      	<table class="md-layout-item md-medium-size-100 md-size-80">
-	      		<tr class="md-layout md-alignment-center">
-	      			<td :class="`${scoreNumberClass} ${overallRankingScale}`">{{avgOverall}}</td>
-	      			<td :class="scoreTextClass">Average Rating</td>
-	      		</tr>
-	      		<br/>
-	      		<tr class="md-layout md-alignment-center">
-	      			<td :class="`${scoreNumberClass} ${overallRankingScale}`">{{avgOverall}}</td>
-	      			<td :class="scoreTextClass">Average Rating</td>
-	      		</tr>
-	      		<br/>
-	      		<tr class="md-layout md-alignment-center">
-	      			<td :class="`${scoreNumberClass} ${overallRankingScale}`">{{avgOverall}}</td>
-	      			<td :class="scoreTextClass">Average Rating</td>
-	      		</tr>
-	      		<br/>
-	      		<tr class="md-layout md-alignment-center">
-	      			<td :class="`${scoreNumberClass} ${overallRankingScale}`">{{avgOverall}}</td>
-	      			<td :class="scoreTextClass">Average Rating</td>
-	      		</tr>
-	      		<br/>
-	      		<tr class="md-layout md-alignment-center">
-	      			<td :class="`${scoreNumberClass} ${difficultyRankingScale}`">{{avgDifficulty}}</td> 
-	      			<td :class="scoreTextClass">Average Difficulty</td>
+	      		<tr 
+	      			class="md-layout md-alignment-center row-margin"
+	      			v-for="average in averages"
+	      		>
+	      			<td :class="`${scoreNumberClass} ${scoreRankingScale(average.value)}`">{{average.value}}</td>
+	      			<td :class="scoreTextClass">{{average.label}}</td>
 	      		</tr>
 	      	</table>
      	</md-content>
@@ -107,68 +90,55 @@
 			profsInSchool() {
 				return 7;
 			},
-			/**
-			 * Calculate the average of the overall ratings
-			 * @return {Number|Null} 
-			 */
-			avgOverall() {
-				if(this.ratings.length > 0) { 
-					const total = this.ratings.reduce((accu, rating) => rating.overall_rating + accu, 0);
-					return Number(total / this.ratings.length).toFixed(1);
-				}
 
-				return null;
+			averages() {
+				if(this.ratings.length == 0) return null;
+
+				const averages = [
+					{label: 'Overall', value: this.average('overall')},
+					{label: 'Location', value: this.average('location')},
+					{label: 'Facilities', value: this.average('facilities')},
+					{label: 'Opportunity', value: this.average('opportunity')},
+					{label: 'Social', value: this.average('social')},
+				];
+
+				return averages;
+			},
+		},
+		methods: {
+			/**
+			 * Calculate the average of a given rating
+			 * @param  {String} ratingName The rating to calculate
+			 * @return {Number}        
+			 */
+			average(ratingName) {
+				const total = this.ratings.reduce((accu, rating) => Number(eval(`rating.${ratingName}_rating`)) + accu, 0);
+				return Number(total / this.ratings.length).toFixed(1);
 			},
 
-			/**
-			 * Calculate the average of the difficulty ratings
-			 * @return {Number|Null} 
-			 */
-			avgDifficulty() {
-				if(this.ratings.length > 0) {
-					const total = this.ratings.reduce((accu, rating) => rating.difficulty_rating + accu, 0);
-					return Number(total / this.ratings.length).toFixed(1);
-				}
-
-				return null;
-			},
 
 			/**
-			 * Determine the smiley and text color for the given overall rating
+			 * Determine the text color of the average rating
+			 * @param {Number} score The score to evaluate
 			 * @return {String} 
 			 */
-			overallRankingScale() {
-				const {avgOverall: overall} = this;
-
-				if(overall >= 3.8) {
+			scoreRankingScale(score) {
+				if(score >= 3.8) {
 					return 'text-success';
-				}else if(overall > 2.8) {
+				}else if(score > 2.8) {
 					return 'text-warning';
 				}
 				
 				return 'text-danger';
 			},
-
-			/**
-			 * Determine the smiley and text color for the given average difficulty
-			 * @return {String} 
-			 */
-			difficultyRankingScale() {
-				const {avgDifficulty: difficulty} = this;
-
-				if(difficulty >= 3.8) {
-					return 'text-danger';
-				}else if(difficulty > 2.7) {
-					return 'text-warning';
-				}
-				
-				return 'text-success';
-			},
-		},
+		}
 	};
 </script>
 
 <style scoped>
+	.row-margin {
+		margin-bottom: 1.8em;
+	}
 	.padding-above {
 		padding: 2em 0;
 	}
