@@ -104,6 +104,8 @@ Route::group(['prefix' => '/school'], function() {
 
 		Route::post('/', 'Review\SchoolReviewController@create');
 
+		Route::get('/{school.review}', 'Review\SchoolReviewController@index');
+
 		Route::get('/fetch', 'Review\SchoolReviewController@fetch');
 
 		Route::delete('/{school.review}', 'Review\SchoolReviewController@delete')->middleware('auth:api');

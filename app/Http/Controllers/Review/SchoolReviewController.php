@@ -32,6 +32,16 @@ class SchoolReviewController extends LaravelController
     }
 
     /**
+     * Return a school review's model
+     * @param  SchoolReview $review The review entry
+     * @return SchoolReview                  
+     */
+    public function index(SchoolReview $review)
+    {
+        return $review;
+    }
+
+    /**
      * Handle a request to create a new review to a school after validation
      * @param  Request $request Request
      * @return SchoolReview           
