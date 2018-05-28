@@ -34,13 +34,14 @@
 			</md-content>
 		</div>
 		<div class="md-layout md-alignment-top-right">
-			<span class="date"><md-icon>access_time</md-icon> January 1st, 2019 At 8:30am</span>
+			<span class="date"><md-icon>access_time</md-icon> {{moment(rating.created_at).format("MMMM Do YYYY, h:mmA")}}</span>
 			<a class="md-layout-item report-link" href="#">Report this rating</a>
 		</div>
 	</md-card>
 </template>
 
 <script>
+	import moment from 'moment';
 	import ReviewFeedback from './Profile/ReviewFeedback';
 
 	export default {
@@ -130,6 +131,10 @@
 				}else {
 					this.negativeVotes++;
 				}
+			},
+
+			moment(date) {
+				return moment(date);
 			},
 		},
 	};
