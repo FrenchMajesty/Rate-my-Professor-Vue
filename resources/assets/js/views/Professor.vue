@@ -34,7 +34,7 @@
 	import ProfessorReview from '../components/ProfessorReview';
 	import QuickReview from '../components/QuickReview';
 	import hasReviews from 'Js/mixins/hasReviews';
-	import { loadProfessorReviews } from 'Js/store/api';
+	import { loadProfessorReviews, loadReviewsFeedbackForProfessor as loadFeedback } from 'Js/store/api';
 
 	export default {
 		name: 'Professor',
@@ -151,28 +151,38 @@
 			 * @return {Void} 
 			 */
 			loadReviews() {
+				const {id} = this.professor;
 				const params = {
 				  	filter_groups: [{
 			      		filters: [
 					      	{
 						        key: 'professor_id',
-						        value: this.professor.id,
+						        value: id,
 						        operator: 'eq'
 					       	},
 					       	{
 						        key: 'approved',
-						        value: 0,
+						        value: 1,
 						        operator: 'eq'
 					       	},
 				      	]
 			    	}]
 				};
 
-				loadProfessorReviews(params).then(({data}) => {
+				Promise.all([loadProfessorReviews(params), loadFeedback(id)])
+				.then((res) => {
+					let {reviews} = res[0].data;
+					const {data: feedback} = res[1];
 					this.ratingsAreReady = true;
+
+					// Bind the feedback to the appropriate reviews
+					reviews = reviews.map((review) => {
+						review.feedback = feedback.filter(({review_id}) => review_id == review.id);
+						return review;
+					});
 					this.$store.commit({
 						type: 'updateTheReviewsInView',
-						reviews: data.reviews, 
+						reviews,
 					});
 				})
 				.catch(err => {
