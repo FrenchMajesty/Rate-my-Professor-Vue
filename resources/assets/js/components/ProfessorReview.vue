@@ -42,7 +42,7 @@
 
 <script>
 	import moment from 'moment';
-	import ReviewFeedback from './Profile/ReviewFeedback';
+	import ReviewFeedback from './Review/ReviewFeedback';
 
 	export default {
 		name: 'ProfessorReview',
