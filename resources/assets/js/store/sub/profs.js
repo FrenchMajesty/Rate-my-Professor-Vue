@@ -11,6 +11,15 @@ const profs = {
 		},
 
 		/**
+		 * Filter the professors that have been approved
+		 * @param  {Object} state The store's state
+		 * @return {Array}       
+		 */
+		approvedProfs(state) {
+			return state.prof.data.filter(prof => prof.approved);
+		},
+
+		/**
 		 * Determine whether professors and all aggregate data is ready for use
 		 * @param  {Object} state The store's state
 		 * @return {Boolean}       
@@ -22,14 +31,15 @@ const profs = {
 		/**
 		 * Return a function to find the full entry of a professor
 		 * @param  {Object} state The store's state
+		 * @param  {Object} getters The store's getters
 		 * @return {Function}       
 		 */
-		fullProfessor(state) {
+		fullProfessor(state, getters) {
 			return (profId) => {
-				const prof = state.prof.data.find(({id}) => id == profId);
+				const prof = getters.approvedProfs.find(({id}) => id == profId);
 
 				if(prof) {
-					prof.school = state.school.data.find(({id}) => id == prof.school_id);
+					prof.school = getters.approvedSchools.data.find(({id}) => id == prof.school_id);
 					prof.department = state.dept.data.find(({id}) => id == prof.department_id);
 				}
 
@@ -45,7 +55,7 @@ const profs = {
 		 */
 		fullProfessorWithSlug(state, getters) {
 			return (slug) => {
-				const prof = state.prof.data.find((prof) => prof.slug == slug);
+				const prof = getters.approvedProfs.find((prof) => prof.slug == slug);
 				return prof ? getters.fullProfessor(prof.id) : null;
 			}
 		}
