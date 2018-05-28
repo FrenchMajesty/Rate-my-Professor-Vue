@@ -41,7 +41,29 @@ class School extends Model
     ];
 
     /**
-     * Get all the professors that attend this school
+     * Update the slug when saving the model
+     * @return void 
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->slug = str_slug("$model->id $model->nick $model->name $model->location");
+        });
+    }
+
+    /**
+     * Change the column with which to bind the model route
+     * @return string 
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+     * Get all the professors that work at this school
      * @return array 
      */
     public function professors()
