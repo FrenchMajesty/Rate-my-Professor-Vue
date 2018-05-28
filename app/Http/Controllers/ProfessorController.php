@@ -15,7 +15,7 @@ class ProfessorController extends LaravelController
 
 	/**
 	 * Handle request to search and fetch professors
-	 * @return \Illuminate\Http\Response           
+	 * @return Response           
 	 */	
     public function fetch()
     {
@@ -28,14 +28,13 @@ class ProfessorController extends LaravelController
         // Parse the data using Optimus\Architect
         $parsedData = $this->parseData($profs, $resourceOptions, 'profs');
 
-        // Create JSON response of parsed data
         return $this->response($parsedData);
     }
 
     /**
      * Fetch and return a professor entry
-     * @param  \App\Professor\Professor $prof Professor
-     * @return \App\Professor\Professor               
+     * @param  Professor $prof Professor
+     * @return Professor               
      */
     public function index(Professor $prof)
     {
@@ -44,8 +43,8 @@ class ProfessorController extends LaravelController
 
     /**
      * Handle the request to approve/reject a professor
-     * @param  \App\Professor\Professor $prof    Professor
-     * @param  \Illuminate\Http\Request   $request Request
+     * @param  Professor $prof    Professor
+     * @param  Request   $request Request
      * @return void             
      */
     public function approve(Professor $prof, Request $request)
@@ -60,7 +59,7 @@ class ProfessorController extends LaravelController
 
     /**
      * Handle the request to create a new professor
-     * @param  \Illuminate\Http\Request $request Request
+     * @param  Request $request Request
      * @return void          
      */
     public function create(Request $request)
@@ -84,8 +83,8 @@ class ProfessorController extends LaravelController
 
     /**
      * Handle the request to update a professor's information
-     * @param  App\Professor\Professor $prof    Professor
-     * @param  \Illuminate\Http\Request $request Request
+     * @param  Professor $prof    Professor
+     * @param  Request $request Request
      * @return void            
      */
     public function update(Professor $prof, Request $request)
@@ -108,7 +107,7 @@ class ProfessorController extends LaravelController
 
     /**
      * Delete a professor entry
-     * @param  App\Professor\Professor $prof Professor
+     * @param  Professor $prof Professor
      * @return void          
      */
     public function delete(Professor $prof)
