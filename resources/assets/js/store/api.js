@@ -21,15 +21,11 @@ export function loadAllReviewTags() {
 }
 
 export function loadProfessorReviews(params) {
-	return axios.get(`${BASE_URL}/prof/review/fetch?${$.param(params)}`);
+	return axios.get(`${BASE_URL}/prof/review/fetch?${$.param(params)}&includes[]=feedback`);
 }
 
 export function loadSchoolReviews(params) {
-	return axios.get(`${BASE_URL}/school/review/fetch?${$.param(params)}`);
-}
-
-export function loadReviewsFeedbackForProfessor(id) {
-	return axios.get(`${BASE_URL}/prof/review/feedback/${id}`, auth());
+	return axios.get(`${BASE_URL}/school/review/fetch?${$.param(params)}&includes[]=feedback`);
 }
 
 export function submitStudentRegistration(data) {

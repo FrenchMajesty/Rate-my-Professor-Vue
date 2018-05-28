@@ -4,7 +4,7 @@
 			:prof="professor" 
 			:school="professor.school"
 			:department="professor.department"
-			:ratings="ratingsAreReady ? ratings : null"
+			:ratings="ratings"
 			:numberOfSimilarProfs="numberOfSimilarProfs"
 		></ProfessorDetailsCard>
 
@@ -34,7 +34,7 @@
 	import ProfessorReview from '../components/ProfessorReview';
 	import QuickReview from '../components/QuickReview';
 	import hasReviews from 'Js/mixins/hasReviews';
-	import { loadProfessorReviews, loadReviewsFeedbackForProfessor as loadFeedback } from 'Js/store/api';
+	import { loadProfessorReviews } from 'Js/store/api';
 
 	export default {
 		name: 'Professor',
@@ -70,7 +70,7 @@
 			 * @return {Boolean} 
 			 */
 			hasRatings() {
-				return this.ratings.length > 0;
+				return this.ratings && this.ratings.length > 0;
 			},
 
 			numberOfSimilarProfs() {
@@ -169,17 +169,8 @@
 			    	}]
 				};
 
-				Promise.all([loadProfessorReviews(params), loadFeedback(id)])
-				.then((res) => {
-					let {reviews} = res[0].data;
-					const {data: feedback} = res[1];
+				loadProfessorReviews(params).then(({data: {reviews}}) => {
 					this.ratingsAreReady = true;
-
-					// Bind the feedback to the appropriate reviews
-					reviews = reviews.map((review) => {
-						review.feedback = feedback.filter(({review_id}) => review_id == review.id);
-						return review;
-					});
 					this.$store.commit({
 						type: 'updateTheReviewsInView',
 						reviews,
