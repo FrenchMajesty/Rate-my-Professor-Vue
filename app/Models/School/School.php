@@ -79,4 +79,13 @@ class School extends Model
     {
         return $this->belongsToMany('\App\Models\School\Department','school_departments', 'school_id','department_id');
     }
+
+    /**
+     * Get the reviews that this school has received
+     * @return array 
+     */
+    public function reviews()
+    {
+        return $this->hasMany('\App\Models\School\SchoolReview');
+    }
 }
