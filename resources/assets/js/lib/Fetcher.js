@@ -2,6 +2,7 @@ import {
 	loadAllSchoolsData,
 	loadAllProfessorsData,
 	loadAllReviewTags,
+	loadUserIpAddress,
 	loadAllDeptsData } from '../store/api';
 
 export default class Fetcher {
@@ -12,7 +13,7 @@ export default class Fetcher {
 	 * @return {Fetcher}    
 	 */
 	static all(vm) {
-		return this.schools(vm).profs(vm).depts(vm).tags(vm);
+		return this.schools(vm).profs(vm).depts(vm).tags(vm).ip(vm);
 	}
 
 	/**
@@ -117,6 +118,28 @@ export default class Fetcher {
 			.catch(error => {
 				vm.$store.commit(status, false);
 				console.log(error);
+			});
+		}
+
+		return this;
+	}
+
+	/**
+	 * Fetch the user's IP address
+	 * @param  {Vue} vm The vue instance of the execution context
+	 * @return {Fetcher}    
+	 */
+	static ip(vm) {
+		const {beingFetched} = vm.$store.state.ip;
+
+		if(!beingFetched) {
+			vm.$store.commit('updateIpAddress', {beingFetched: true});
+			loadUserIpAddress().then(({data: ipAddress}) => {
+				vm.$store.commit('updateIpAddress', {ipAddress, lastUpdated: Date.now()});
+			})
+			.catch(error => {
+				console.log(error);
+				vm.$store.commit('updateIpAddress', {beingFetched: false});
 			});
 		}
 
