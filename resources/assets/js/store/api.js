@@ -70,4 +70,7 @@ export function createSchoolReview(data) {
 	return axios.post(`${BASE_URL}/school/review`, data, auth());
 }
 
+export function saveProfessorReviewFeedback(data) {
+	return axios.post(`${BASE_URL}/prof/review/feedback`, data, auth());
+}
 
