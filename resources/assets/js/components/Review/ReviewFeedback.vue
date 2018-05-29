@@ -2,7 +2,7 @@
 	<div class="section-container">
 		<span class="was-helpful" @click="reviewWasHelpful(true)">
 			<md-button class="md-icon-button">
-		    	<md-icon>thumb_up</md-icon>
+		    	<md-icon :class="{'selected-positive': didUserVote(true)}">thumb_up</md-icon>
 		    </md-button>
 			<span v-if="deviceIsAPhone">
 				{{positiveVotes > 0 ? `+${positiveVotes}` : '0'}}
@@ -13,7 +13,7 @@
 		</span>
 		<span class="not-helpful" @click="reviewWasHelpful(false)">
 			<md-button class="md-icon-button">
-		    	<md-icon>thumb_down</md-icon>
+		    	<md-icon :class="{'selected-negative': didUserVote(false)}">thumb_down</md-icon>
 		    </md-button>
 			<span v-if="deviceIsAPhone">
 				{{negativeVotes > 0 ? `-${negativeVotes}` : '0'}}
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+	import { saveProfessorReviewFeedback } from 'Js/store/api';
 
 	export default {
 		name: 'ReviewFeedback',
@@ -80,11 +81,31 @@
 			 */
 			negativeVotes() {
 				return this.feedback.filter(({positive}) => !positive).length;
+			},
+
+			/**
+			 * Get the user's IP address
+			 * @return {String} 
+			 */
+			ipAddress() {
+				return;
 			}
 		},
 		methods: {
-			reviewWasHelpful(isVotePositive) {
-				console.log('Submit form to change/set the vote!')
+			reviewWasHelpful(positive) {
+				const formData = {positive, review_id: this.itemId};
+
+				saveProfessorReviewFeedback(formData)
+				.then(({data}) => this.$emit('change', data))
+				.catch(res => console.log(res));
+			},
+
+			/**
+			 * Checks if the user has casted a vote on this review
+			 * @return {Boolean} 
+			 */
+			didUserVote(positiveVote) {
+				return false;
 			},
 		},
 	};
@@ -102,10 +123,10 @@
 	.was-helpful, .not-helpful {
 		line-height: 40px;
 	}
-	.was-helpful:hover {
-		color: green;
+	.was-helpful:hover, .selected-positive {
+		color: green !important;
 	}
-	.not-helpful:hover {
-		color: red;
+	.not-helpful:hover, .selected-negative {
+		color: red !important;
 	}
 </style>

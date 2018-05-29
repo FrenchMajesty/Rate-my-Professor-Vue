@@ -28,6 +28,7 @@
 						:itemId="rating.id"
 						:feedback="rating.feedback"
 						reviewType="professor"
+						@change="updateFeedback"
 					></ReviewFeedback>
 				</div>
 			</md-content>
@@ -106,6 +107,19 @@
 		},
 		methods: {
 			moment,
+
+			/**
+			 * Replace the feedback on this review to update it
+			 * @param  {Array} data The new feedback datas to replace
+			 * @return {Void}      
+			 */
+			updateFeedback(data) {
+				this.$store.commit({
+					type: 'updateVotesOnProfessorReview',
+					id: this.rating.id,
+					data,
+				});
+			}
 		},
 	};
 </script>
