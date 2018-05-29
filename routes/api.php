@@ -22,6 +22,8 @@ Route::model('department', 'App\Models\School\Department');
 
 Route::group(['prefix' => '/auth'], function() {
 
+	Route::get('ip', 'UserController@ip')->name('ip');
+
 	Route::post('login', 'Auth\LoginController@login')->name('login');
 
 	Route::post('logout', 'Auth\LoginController@logout')->middleware('auth:api')

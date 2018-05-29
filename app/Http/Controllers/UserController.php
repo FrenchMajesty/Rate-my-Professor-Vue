@@ -6,7 +6,16 @@ use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
-{   
+{       
+    /**
+     * Get the IP address of the user
+     * @return string 
+     */
+    public function ip()
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+    
     /**
      * Handle the request to authenticate an user
      * @param  \Illuminate\Http\Request $request Request
