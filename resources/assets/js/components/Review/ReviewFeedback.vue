@@ -26,13 +26,14 @@
 </template>
 
 <script>
+	import Fetcher from 'Js/lib/Fetcher';
 	import { saveProfessorReviewFeedback } from 'Js/store/api';
 
 	export default {
 		name: 'ReviewFeedback',
 		props: {
 			/**
-			 * The ID of the review for the feeback
+			 * The ID of the review for the feedback
 			 * @type {Number}
 			 */
 			itemId: {
@@ -57,6 +58,13 @@
 				type: Array,
 				required: true,
 			},
+		},
+
+		/**
+		 * Fetch the user's IP address for comparaison
+		 */
+		created() {
+			Fetcher.ip(this);
 		},
 		computed: {
 			/**
@@ -88,7 +96,7 @@
 			 * @return {String} 
 			 */
 			ipAddress() {
-				return;
+				return this.$store.state.ip.ipAddress;
 			}
 		},
 		methods: {
@@ -102,10 +110,12 @@
 
 			/**
 			 * Checks if the user has casted a vote on this review
+			 * @param {Boolean} voteToCheck The vote to check against
 			 * @return {Boolean} 
 			 */
-			didUserVote(positiveVote) {
-				return false;
+			didUserVote(voteToCheck) {
+				const res = this.feedback.find(feedback => feedback.ip_address == this.ipAddress);
+				return res && res.positive == voteToCheck;
 			},
 		},
 	};
