@@ -4,6 +4,10 @@ import store from './store';
 
 const BASE_URL= 'http://localhost/ratemy/api';
 
+export function loadUserIpAddress() {
+	return axios.get(`${BASE_URL}/auth/ip`);
+}
+
 export function loadAllProfessorsData() {
 	return axios.get(`${BASE_URL}/prof/fetch`);
 }
