@@ -14,7 +14,7 @@ class ReviewFeedbackController extends Controller
 	/**
 	 * Handle the request to update or save feedback on the review of a professor
 	 * @param  Request $request Request
-	 * @return \Professor\ReviewFeedback           
+	 * @return array          
 	 */
     public function setForProfessor(Request $request)
     {
@@ -23,9 +23,11 @@ class ReviewFeedbackController extends Controller
     		'positive' => 'required|boolean',
     	]);
 
-    	return ProfessorReviewFeedback::updateOrCreate([
+    	ProfessorReviewFeedback::updateOrCreate([
     		'ip_address' => $_SERVER['REMOTE_ADDR'],
     		'review_id' => $request->review_id,
     	], ['positive' => $request->positive]);
+
+        return ProfessorReviewFeedback::where('review_id', $request->review_id)->get();
     }
 }
