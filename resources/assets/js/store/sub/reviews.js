@@ -42,16 +42,18 @@ const reviews = {
 		},
 
 		/**
-		 * Update the state to cast a vote on a review
+		 * Update the state to change the votes on a review
 		 * @param  {Object} state        The app's state
-		 * @param  {Number} payload.voteType The type of vote that is being casted
+		 * @param  {Array} payload.data The new feedback data to replace
 		 * @param  {Number} payload.id   The ID of the review to rate
 		 * @return {Void}              
 		 */
-		voteOnReview(state, {voteType, id}) {
+		updateVotesOnProfessorReview(state, {data, id}) {
+			const filteredOut = state.reviews.inView.filter(review => review.id != id);
 			const review = state.reviews.inView.find(review => review.id == id);
+			review.feedback = data;
 
-			// ...
+			state.reviews.inView = [ ...filteredOut, review];
 		},
 
 		/**
